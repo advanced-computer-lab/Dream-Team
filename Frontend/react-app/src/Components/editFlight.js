@@ -3,90 +3,115 @@ import '../App.css';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 
-export default class EditExercise extends Component {
+export default class EditFlight extends Component {
     constructor(props) {
       super(props);
-  
-      this.onChangeUsername = this.onChangeUsername.bind(this);
-      this.onChangeDescription = this.onChangeDescription.bind(this);
-      this.onChangeDuration = this.onChangeDuration.bind(this);
-      this.onChangeDate = this.onChangeDate.bind(this);
+      
+      this.onChangeFlightNumber = this.onChangeFlightNumber.bind(this);
+      this.onChangeFlightDate = this.onChangeFlightDate.bind(this);
+      this.onChangeFrom = this.onChangeFrom.bind(this);
+      this.onChangeTo = this.onChangeTo.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
-  
+      this.onChangeDepartureTime = this.onChangeDepartureTime.bind(this);
+      this.onChangeArrivalTime = this.onChangeArrivalTime.bind(this);
+      this.onChangeEconomy = this.onChangeEconomy.bind(this);
+      this.onChangeBusiness = this.onChangeBusiness.bind(this);
+
       this.state = {
-        username: '',
-        description: '',
-        duration: 0,
-        date: new Date(),
-        users: []
+        flight_number=0,
+        flight_date: new Date(),
+        from: '',
+        to: '',
+        departure_time: '',
+        arrival_time:'',
+        economy_seats_available=0,
+        business_seats_available=0
       }
     }
   
     componentDidMount() {
-      axios.get('http://localhost:5000/exercises/'+this.props.match.params.id)
+      axios.get('http://localhost:8000/flights/'+this.props.match.params.id)
         .then(response => {
           this.setState({
-            username: response.data.username,
-            description: response.data.description,
-            duration: response.data.duration,
-            date: new Date(response.data.date)
+            flight_number=response.data.flight_number,
+            flight_date: new Date(response.data.flight_date),
+            from: response.data.from,
+            to: response.data.to,
+            departure_time: response.data.departure_time,
+            arrival_time:response.data.arrival_time,
+            economy_seats_available=response.data.economy_seats_available,
+            business_seats_available=response.data.business_seats_available,
+            
           })   
         })
         .catch(function (error) {
           console.log(error);
         })
   
-      axios.get('http://localhost:5000/users/')
-        .then(response => {
-          if (response.data.length > 0) {
-            this.setState({
-              users: response.data.map(user => user.username),
-            })
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        })
   
     }
   
-    onChangeUsername(e) {
+    onChangeFlightNumber(e) {
       this.setState({
-        username: e.target.value
+        flight_number: e.target.value
       })
     }
   
-    onChangeDescription(e) {
+    onChangeTo(e) {
       this.setState({
-        description: e.target.value
+        To: e.target.value
       })
     }
   
-    onChangeDuration(e) {
+    onChangeFrom(e) {
       this.setState({
-        duration: e.target.value
+        from: e.target.value
       })
     }
   
-    onChangeDate(date) {
+    onChangeFlightDate(date) {
       this.setState({
-        date: date
+        flight_date: date
+      })
+    }
+    onChangeDepartureTime(e) {
+      this.setState({
+        departure_time: e.target.value
+      })
+    }
+    onChangeArrivalTime(e) {
+      this.setState({
+        arrival_time: e.target.value
+      })
+    }
+    onChangeEconomy(e) {
+      this.setState({
+        economy_seats_available: e.target.value
+      })
+    }
+    onChangeBusiness(e) {
+      this.setState({
+        business_seats_available: e.target.value
       })
     }
   
     onSubmit(e) {
       e.preventDefault();
   
-      const exercise = {
-        username: this.state.username,
-        description: this.state.description,
-        duration: this.state.duration,
-        date: this.state.date
+      const flight = {
+            flight_number=this.state.flight_number,
+            flight_date: this.state.flight_date,
+            from: this.state.from,
+            to:this.state.to,
+            departure_time: this.state.departure_time,
+            arrival_time:this.state.arrival_time,
+            economy_seats_available=this.state.economy_seats_available,
+            business_seats_available=this.state.business_seats_available
       }
   
-      console.log(exercise);
+      console.log(flight);
   
-      axios.post('http://localhost:8000/flights/update/' + this.props.match.params.id, exercise)
+      axios.post('http://localhost:8000/flights/update/' + this.props.match.params.id, flight)
         .then(res => console.log(res.data));
   
       window.location = '/';
@@ -95,55 +120,85 @@ export default class EditExercise extends Component {
     render() {
       return (
       <div>
-        <h3>Edit Exercise Log</h3>
+        <h3>Edit Flight Log</h3>
         <form onSubmit={this.onSubmit}>
+
           <div className="form-group"> 
-            <label>Username: </label>
-            <select ref="userInput"
-                required
-                className="form-control"
-                value={this.state.username}
-                onChange={this.onChangeUsername}>
-                {
-                  this.state.users.map(function(user) {
-                    return <option 
-                      key={user}
-                      value={user}>{user}
-                      </option>;
-                  })
-                }
-            </select>
-          </div>
-          <div className="form-group"> 
-            <label>Description: </label>
+            <label>Flight Number: </label>
             <input  type="text"
-                required
                 className="form-control"
-                value={this.state.description}
-                onChange={this.onChangeDescription}
+                value={this.state.flight_number}
+                onChange={this.onChangeFlightNumber}
                 />
           </div>
           <div className="form-group">
-            <label>Duration (in minutes): </label>
-            <input 
-                type="text" 
-                className="form-control"
-                value={this.state.duration}
-                onChange={this.onChangeDuration}
-                />
-          </div>
-          <div className="form-group">
-            <label>Date: </label>
+            <label>Flight Date: </label>
             <div>
               <DatePicker
-                selected={this.state.date}
-                onChange={this.onChangeDate}
+                selected={this.state.flight_date}
+                onChange={this.onChangeFlightDate}
               />
             </div>
           </div>
+
+          <div className="form-group">
+            <label>From: </label>
+            <input 
+                type="text" 
+                className="form-control"
+                value={this.state.from}
+                onChange={this.onChangeFrom}
+                />
+          </div>
+          <div className="form-group">
+            <label>To: </label>
+            <input 
+                type="text" 
+                className="form-control"
+                value={this.state.to}
+                onChange={this.onChangeTo}
+                />
+          </div>
+          <div className="form-group">
+            <label>Departure Time: </label>
+            <input 
+                type="text" 
+                className="form-control"
+                value={this.state.departure_time}
+                onChange={this.onChangeDepartureTime}
+                />
+          </div>
+          <div className="form-group">
+            <label>Arrival Time: </label>
+            <input 
+                type="text" 
+                className="form-control"
+                value={this.state.arrival_time}
+                onChange={this.onChangeArrivalTime}
+                />
+          </div>
+          <div className="form-group">
+            <label>Economy Seats: </label>
+            <input 
+                type="text" 
+                className="form-control"
+                value={this.state.economy_seats_available}
+                onChange={this.onChangeEconomy}
+                />
+          </div>
+          <div className="form-group">
+            <label>Business: </label>
+            <input 
+                type="text" 
+                className="form-control"
+                value={this.state.business_seats_available}
+                onChange={this.onChangeBusiness}
+                />
+          </div>
+         
   
           <div className="form-group">
-            <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+            <input type="submit" value="Edit Flight Log" className="btn btn-primary" />
           </div>
         </form>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import flightCard from './Components/flightCard';
+
 import axios from 'axios';
 import { Component, useState, useEffect } from 'react';
 
@@ -58,7 +58,6 @@ class App extends Component {
               <p className="left-txt"> <b>Business: </b> {flight.business_seats_available}</p>
               <button onClick="button">Edit</button>
               <button onClick={()=>this.deleteFlight(flight._id)}>Delete</button>
-
 
             </div>
           </li>

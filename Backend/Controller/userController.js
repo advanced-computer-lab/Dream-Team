@@ -35,6 +35,13 @@ const listFlights=(req,res)=>
         res.send(JSON.stringify(result, null, 4));
     });
 };
+const showFlight=(req,res)=>
+{
+    Flight.findById(req.params.id).then((result)=>{
+        res.header("Content-Type",'application/json');
+        res.send(JSON.stringify(result, null, 4));
+    });
+};
 
 
 const deleteFlight=(req,res)=>
@@ -120,5 +127,6 @@ module.exports=
     listFlights,
     deleteFlight,
     updateFlight,
+    showFlight
     
 }
