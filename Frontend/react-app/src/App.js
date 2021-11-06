@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import flightCard from './Components/flightCard';
 import axios from 'axios';
-import { Component } from 'react';
+import { Component, useState, useEffect } from 'react';
 
 class App extends Component {
   constructor(props) {
@@ -10,6 +10,14 @@ class App extends Component {
     this.state = {
       flights: []
     };
+  }
+
+
+  deleteFlight(id){
+    const path='http://localhost:8000/flights/delete/'+id;
+    axios.delete(path);
+
+
   }
 
   componentDidMount() {
@@ -31,19 +39,6 @@ class App extends Component {
     console.log("PrintFLight: " + flights);
     let flightList;
 
-    // if(!flights) {
-    //   flightList = "there is no book record!";
-    // } else {
-     
-
-
-
-
-
-      // flightList = flights.map((flight, k) =>
-      //   <flightCard flight={flight} key={k} />
-      // );
-    // }
 
     return (
       <ul>
@@ -59,8 +54,12 @@ class App extends Component {
               <p className="left-txt"> <b>To: </b> {flight.to}   </p>
               <p className="left-txt"> <b>Departure Time: </b> {flight.departure_time}   </p>
               <p className="left-txt"> <b>Arrival Time: </b> {flight.arrival_time}  </p>
-              <p className="left-txt"> <b>Economy: </b> {flight.economy_seats_avaialble}   </p>
-              <p className="left-txt"> <b>Business: </b> {flight.business_seats_avaialble}</p>
+              <p className="left-txt"> <b>Economy: </b> {flight.economy_seats_available}   </p>
+              <p className="left-txt"> <b>Business: </b> {flight.business_seats_available}</p>
+              <button onClick="button">Edit</button>
+              <button onClick={()=>this.deleteFlight(flight._id)}>Delete</button>
+
+
             </div>
           </li>
 
@@ -72,6 +71,7 @@ class App extends Component {
 
     );
   }
+
 }
 
 
@@ -90,7 +90,7 @@ class App extends Component {
 
 
 //   function search(e){
-//     return e.flter(e =>
+//     return e.filter(e =>
 //        e.flight_number.toStirng().toUpperCase().indexOf(searchFlights)>-1 ||
 //        e.flight_date.toStirng().toUpperCase().indexOf(searchFlights)>-1 ||
 //        e.from.toUpperCase().indexOf(searchFlights)>-1 ||
