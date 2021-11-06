@@ -31,39 +31,45 @@ class App extends Component {
     console.log("PrintFLight: " + flights);
     let flightList;
 
-    if(!flights) {
-      flightList = "there is no book record!";
-    } else {
-      flightList = flights.map((flight, k) =>
-        <flightCard flight={flight} key={k} />
-      );
-    }
+    // if(!flights) {
+    //   flightList = "there is no book record!";
+    // } else {
+     
+
+
+
+
+
+      // flightList = flights.map((flight, k) =>
+      //   <flightCard flight={flight} key={k} />
+      // );
+    // }
 
     return (
-      <div className="ShowBookList">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <br />
-              <h2 className="display-4 text-center">Flight List</h2>
+      <ul>
+
+      { 
+        flights.map(flight =>
+          <li key={flight._id}>
+          
+            <div className="row">
+              <p className="left-txt"> <b>Flight Number: </b> {flight.flight_number} </p>
+              <p className="left-txt"> <b>Flight Date: </b> {flight.flight_date}   </p>
+              <p className="left-txt"> <b>From: </b> {flight.from}   </p>
+              <p className="left-txt"> <b>To: </b> {flight.to}   </p>
+              <p className="left-txt"> <b>Departure Time: </b> {flight.departure_time}   </p>
+              <p className="left-txt"> <b>Arrival Time: </b> {flight.arrival_time}  </p>
+              <p className="left-txt"> <b>Economy: </b> {flight.economy_seats_avaialble}   </p>
+              <p className="left-txt"> <b>Business: </b> {flight.business_seats_avaialble}</p>
             </div>
+          </li>
 
-            {/* <div className="col-md-11">
-              <Link to="/create-book" className="btn btn-outline-warning float-right">
-                + Add New Book
-              </Link>
-              <br />
-              <br />
-              <hr />
-            </div> */}
 
-          </div>
+        )
+      }
 
-          <div className="list">
-                {flightList}
-          </div>
-        </div>
-      </div>
+    </ul>
+
     );
   }
 }
