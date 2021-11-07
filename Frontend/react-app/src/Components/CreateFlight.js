@@ -6,31 +6,11 @@ import {TextField} from '@material-ui/core';
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 
-const EditFlight = () => {
+const CreateFlight = () => {
     const [flight,setFlight]=useState({})
-    const {id}=useParams();
+    
 
-    useEffect(() => {
-        axios.get('http://localhost:8000/flights/'+id)
-        .then(response => {
-          setFlight({
-            _id:response.data._id,
-            flight_number:response.data.flight_number,
-            flight_date: new Date(response.data.flight_date),
-            from: response.data.from,
-            to: response.data.to,
-            departure_time: response.data.departure_time,
-            arrival_time:response.data.arrival_time,
-            economy_seats_available:response.data.economy_seats_available,
-            business_seats_available:response.data.business_seats_available,
-            
-          })   
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-        
-    }, [])
+  
 
     const handleChange= (e)=>{
       
@@ -45,7 +25,7 @@ const EditFlight = () => {
     
         console.log(flight);
     
-        axios.put('http://localhost:8000/flights/update/' + id, flight)
+        axios.post('http://localhost:8000/flights/create', flight)
           .then(res => console.log(res.data));
     
         
@@ -55,10 +35,11 @@ const EditFlight = () => {
 
 
 
+
     return (
-        flight?._id?(
+        
         <div>
-            <h3>Edit Flight Log</h3>
+            <h3>Create Flight</h3>
         <form onSubmit={onSubmit}>
 
           <div className="form-group"> 
@@ -66,16 +47,15 @@ const EditFlight = () => {
             <input  type="text"
                 className="form-control"
                 name='flight_number'
-                value={flight.flight_number}
+               
                 onChange={handleChange}
                 />
           </div>
           <div className="form-group">
-            <label>Flight Date: </label>
             <div>
               <TextField
                 name='flight_date'
-                value={flight.flight_date}
+                
                 onChange={handleChange}
                 variant="outlined"
                 label="Date"
@@ -91,7 +71,7 @@ const EditFlight = () => {
                 type="text" 
                 className="form-control"
                 name='from'
-                value={flight.from}
+                
                 onChange={handleChange}
                 />
           </div>
@@ -101,7 +81,7 @@ const EditFlight = () => {
                 type="text" 
                 className="form-control"
                 name='to'
-                value={flight.to}
+                
                 onChange={handleChange}
                 />
           </div>
@@ -111,7 +91,7 @@ const EditFlight = () => {
                 type="text" 
                 className="form-control"
                 name='departure_time'
-                value={flight.departure_time}
+                
                 onChange={handleChange}
                 />
           </div>
@@ -121,7 +101,7 @@ const EditFlight = () => {
                 type="text" 
                 className="form-control"
                 name='arrival_time'
-                value={flight.arrival_time}
+                
                 onChange={handleChange}
                 />
           </div>
@@ -131,7 +111,7 @@ const EditFlight = () => {
                 type="text" 
                 className="form-control"
                 name='economy_seats_available'
-                value={flight.economy_seats_available}
+                
                 onChange={handleChange}
                 />
           </div>
@@ -141,20 +121,20 @@ const EditFlight = () => {
                 type="text" 
                 className="form-control"
                 name='business_seats_available'
-                value={flight.business_seats_available}
+                
                 onChange={handleChange}
                 />
           </div>
          
   
           <div className="form-group">
-            <input type="submit" value="Edit Flight Log" className="btn btn-primary" />
+            <input type="submit" value="Create Flight" className="btn btn-primary" />
           </div>
         </form>
       </div>
-        ):null
+        
     
     )
 }
 
-export default EditFlight
+export default CreateFlight
