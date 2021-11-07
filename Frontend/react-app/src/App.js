@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-
+import EditFlight from './Components/editFlight';
 import axios from 'axios';
 import { Component, useState, useEffect } from 'react';
 
@@ -14,10 +14,13 @@ class App extends Component {
 
 
   deleteFlight(id){
+
+    if(window.confirm("Delete?")){
+
     const path='http://localhost:8000/flights/delete/'+id;
     axios.delete(path);
-
-
+    }
+    
   }
 
   componentDidMount() {
@@ -37,7 +40,7 @@ class App extends Component {
   render() {
     const flights = this.state.flights;
     console.log("PrintFLight: " + flights);
-    let flightList;
+   
 
 
     return (
@@ -56,7 +59,7 @@ class App extends Component {
               <p className="left-txt"> <b>Arrival Time: </b> {flight.arrival_time}  </p>
               <p className="left-txt"> <b>Economy: </b> {flight.economy_seats_available}   </p>
               <p className="left-txt"> <b>Business: </b> {flight.business_seats_available}</p>
-              <button onClick="button">Edit</button>
+              <button >Edit <EditFlight id={flight._id}/> </button>
               <button onClick={()=>this.deleteFlight(flight._id)}>Delete</button>
 
             </div>

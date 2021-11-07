@@ -2,6 +2,7 @@ import React from "react";
 import '../App.css';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
+import { Component, useState, useEffect } from 'react';
 
 export default class EditFlight extends Component {
     constructor(props) {
@@ -18,29 +19,29 @@ export default class EditFlight extends Component {
       this.onChangeBusiness = this.onChangeBusiness.bind(this);
 
       this.state = {
-        flight_number=0,
+        flight_number:0,
         flight_date: new Date(),
         from: '',
         to: '',
         departure_time: '',
         arrival_time:'',
-        economy_seats_available=0,
-        business_seats_available=0
+        economy_seats_available:0,
+        business_seats_available:0
       }
     }
   
     componentDidMount() {
-      axios.get('http://localhost:8000/flights/'+this.props.match.params.id)
+      axios.get('http://localhost:8000/flights/'+this.props.id)
         .then(response => {
           this.setState({
-            flight_number=response.data.flight_number,
+            flight_number:response.data.flight_number,
             flight_date: new Date(response.data.flight_date),
             from: response.data.from,
             to: response.data.to,
             departure_time: response.data.departure_time,
             arrival_time:response.data.arrival_time,
-            economy_seats_available=response.data.economy_seats_available,
-            business_seats_available=response.data.business_seats_available,
+            economy_seats_available:response.data.economy_seats_available,
+            business_seats_available:response.data.business_seats_available,
             
           })   
         })
@@ -99,22 +100,22 @@ export default class EditFlight extends Component {
       e.preventDefault();
   
       const flight = {
-            flight_number=this.state.flight_number,
+            flight_number:this.state.flight_number,
             flight_date: this.state.flight_date,
             from: this.state.from,
             to:this.state.to,
             departure_time: this.state.departure_time,
             arrival_time:this.state.arrival_time,
-            economy_seats_available=this.state.economy_seats_available,
-            business_seats_available=this.state.business_seats_available
+            economy_seats_available:this.state.economy_seats_available,
+            business_seats_available:this.state.business_seats_available
       }
   
       console.log(flight);
   
-      axios.post('http://localhost:8000/flights/update/' + this.props.match.params.id, flight)
+      axios.put('http://localhost:8000/flights/update/' + this.props.id, flight)
         .then(res => console.log(res.data));
   
-      window.location = '/';
+      
     }
   
     render() {
