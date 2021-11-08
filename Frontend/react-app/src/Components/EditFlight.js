@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useParams } from "react-router";
 import { TextField } from "@material-ui/core";
-import moment from "moment";
+import moment from 'moment'
 
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const EditFlight = () => {
   const [flight, setFlight] = useState({});
   const { id } = useParams();
-  const history = useHistory();
+  const history=useHistory();
 
   useEffect(() => {
     axios
@@ -35,13 +35,12 @@ const EditFlight = () => {
   const handleChange = (e) => {
     setFlight({ ...flight, [e.target.name]: e.target.value });
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
     axios
       .put("http://localhost:8000/flights/update/" + id, flight)
-      .then(() => history.push("/"));
+      .then(()=>history.push('/'));
   };
 
   return flight?._id ? (
@@ -58,13 +57,12 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
-        <br />
         <div className="form-group">
           <label>Flight Date: </label>
           <div>
             <TextField
               name="flight_date"
-              value={moment(flight.flight_date).format("YYYY-MM-DD")}
+              value={moment(flight.flight_date).format('YYYY-MM-DD')}
               onChange={handleChange}
               variant="outlined"
               label="Date"
@@ -73,7 +71,6 @@ const EditFlight = () => {
             />
           </div>
         </div>
-        <br />
 
         <div className="form-group">
           <label>From: </label>
@@ -85,7 +82,6 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
-        <br />
         <div className="form-group">
           <label>To: </label>
           <input
@@ -96,7 +92,6 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
-        <br />
         <div className="form-group">
           <label>Departure Time: </label>
           <input
@@ -107,7 +102,6 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
-        <br />
         <div className="form-group">
           <label>Arrival Time: </label>
           <input
@@ -118,7 +112,6 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
-        <br />
         <div className="form-group">
           <label>Economy Seats: </label>
           <input
@@ -129,7 +122,6 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
-        <br />
         <div className="form-group">
           <label>Business: </label>
           <input
@@ -140,7 +132,6 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
-        <br />
 
         <div className="form-group">
           <input
