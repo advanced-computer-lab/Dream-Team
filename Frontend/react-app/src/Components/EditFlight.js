@@ -26,16 +26,14 @@ const EditFlight = () => {
           economy_seats_available: response.data.economy_seats_available,
           business_seats_available: response.data.business_seats_available,
         });
-        console.log(response.data.flight_date);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     setFlight({ ...flight, [e.target.name]: e.target.value });
-    console.log(flight);
   };
 
   const onSubmit = (e) => {
@@ -43,7 +41,7 @@ const EditFlight = () => {
 
     axios
       .put("http://localhost:8000/flights/update/" + id, flight)
-      .then(()=>history.push("/"));
+      .then(() => history.push("/"));
   };
 
   return flight?._id ? (
@@ -60,6 +58,7 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
+        <br />
         <div className="form-group">
           <label>Flight Date: </label>
           <div>
@@ -74,6 +73,7 @@ const EditFlight = () => {
             />
           </div>
         </div>
+        <br />
 
         <div className="form-group">
           <label>From: </label>
@@ -85,6 +85,7 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
+        <br />
         <div className="form-group">
           <label>To: </label>
           <input
@@ -95,6 +96,7 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
+        <br />
         <div className="form-group">
           <label>Departure Time: </label>
           <input
@@ -105,6 +107,7 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
+        <br />
         <div className="form-group">
           <label>Arrival Time: </label>
           <input
@@ -115,6 +118,7 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
+        <br />
         <div className="form-group">
           <label>Economy Seats: </label>
           <input
@@ -125,6 +129,7 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
+        <br />
         <div className="form-group">
           <label>Business: </label>
           <input
@@ -135,6 +140,7 @@ const EditFlight = () => {
             onChange={handleChange}
           />
         </div>
+        <br />
 
         <div className="form-group">
           <input
