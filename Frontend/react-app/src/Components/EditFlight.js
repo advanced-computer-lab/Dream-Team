@@ -43,7 +43,7 @@ const EditFlight = () => {
 
     axios
       .put("http://localhost:8000/flights/update/" + id, flight)
-      .then(history.push("/"));
+      .then(()=>history.push("/"));
   };
 
   return flight?._id ? (

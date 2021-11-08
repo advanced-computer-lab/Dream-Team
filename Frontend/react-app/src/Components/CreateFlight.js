@@ -18,7 +18,7 @@ const CreateFlight = () => {
 
     axios
       .post("http://localhost:8000/flights/create", flight)
-      .then(history.push("/"));
+      .then(()=>history.push("/"));
 
     
   };
