@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 const ListFlights = () => {
@@ -75,14 +76,15 @@ const ListFlights = () => {
                 {" "}
                 <b>Business: </b> {flight.business_seats_available}
               </p>
-              <button onClick={() => editFlight(flight._id)}>Edit</button>
-              <button onClick={() => deleteFlight(flight._id)}>Delete</button>
+              
             </div>
+            <button className="btn btn-primary" onClick={() => editFlight(flight._id)}>Edit</button>
+              <button className="btn btn-danger" onClick={() => deleteFlight(flight._id)}>Delete</button>
           </li>
         ))}
       </ul>
-      <button onClick={() => createFlight()}>Create</button>
-      <button onClick={() => searchFlight()}>Search</button>
+      <button className="btn btn-primary" onClick={() => createFlight()}>Create</button>
+      <button className="btn btn-primary" onClick={() => searchFlight()}>Search</button>
     </>
   );
 };

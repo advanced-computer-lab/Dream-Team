@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import { TextField } from "@material-ui/core";
 
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const CreateFlight = () => {
   const history = useHistory();

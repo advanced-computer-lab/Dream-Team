@@ -8,6 +8,8 @@ flightRouter.use(express.urlencoded({extended: false}));
 
 flightRouter.get('/',userController.listFlights);
 
+flightRouter.get('/search',userController.searchFlights);
+
 flightRouter.get('/:id',userController.showFlight);
 
 flightRouter.put('/update/:id',userController.updateFlight);
