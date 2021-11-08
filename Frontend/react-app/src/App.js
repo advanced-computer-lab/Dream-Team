@@ -11,7 +11,7 @@ import SearchFlights from './Components/SearchFlights';
 import SearchResults from './Components/SearchResults';
 
 
-function App() {
+const App=()=>{
   return (
     <Router>
       <div className="container">
