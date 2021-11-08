@@ -1,189 +1,90 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { useParams } from "react-router";
+import { TextField } from "@material-ui/core";
 
-//import EditFlight from './Components/editFlight';
-import axios from 'axios';
-import { Component, useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
+const ListFlights = () => {
+  let history = useHistory();
+  const [flights, setFlights] = useState([]);
+  const [deleted, setDeleted] = useState(false);
 
-
-
-
-export default class ListFlights extends Component {
-
-    
-  constructor() {
-    
-    super();
-    this.state = {
-      flights: []
-    };
-  }
-
-
-  deleteFlight(id){
-
-    if(window.confirm("Delete?")){
-
-    const path='http://localhost:8000/flights/delete/'+id;
-    axios.delete(path);
+  useEffect(() => {
+    axios.get("http://localhost:8000/flights").then((result) => {
+      setFlights(result.data);
+    });
+    if(deleted){
+        setDeleted(false)
     }
     
-  }
+  }, [deleted]);
 
-  editFlight(id){
-      this.props.history.push('/edit/'+id)
-
-  }
-  createFlight(id){
-    this.props.history.push('/create')
-
-}
-
-  componentDidMount() {
-    
-      axios.get('http://localhost:8000/flights/')
-      .then(res => {
-        this.setState({
-          flights: res.data
-        })
-      })
-      .catch(err =>{
-        console.log('Error from ShowBookList');
-      })
+  const deleteFlight = (id) => {
+    if (window.confirm("Delete?")) {
+      const path = "http://localhost:8000/flights/delete/" + id;
+      axios.delete(path);
+      setFlights(flights.filter((flight)=> flight._id!==id));
+      setDeleted(true)
+    }
   };
 
+  const editFlight = (id) => {
+    history.push("/edit/" + id);
+  };
+  const createFlight = (id) => {
+    history.push("/create");
+  };
+  const searchFlight = (id) => {
+    history.push("/search");
+  };
 
-  render() {
-    const flights = this.state.flights;
-    console.log("PrintFLight: " + flights);
-   
-
-
-    return (
-     <>
-
+  return (
+    <>
       <ul>
-
-      { 
-        flights.map(flight =>
+        {flights.map((flight) => (
           <li key={flight._id}>
-          
             <div className="row">
-              <p className="left-txt"> <b>Flight Number: </b> {flight.flight_number} </p>
-              <p className="left-txt"> <b>Flight Date: </b> {flight.flight_date}   </p>
-              <p className="left-txt"> <b>From: </b> {flight.from}   </p>
-              <p className="left-txt"> <b>To: </b> {flight.to}   </p>
-              <p className="left-txt"> <b>Departure Time: </b> {flight.departure_time}   </p>
-              <p className="left-txt"> <b>Arrival Time: </b> {flight.arrival_time}  </p>
-              <p className="left-txt"> <b>Economy: </b> {flight.economy_seats_available}   </p>
-              <p className="left-txt"> <b>Business: </b> {flight.business_seats_available}</p>
-              <button onClick={()=>this.editFlight(flight._id)}>Edit</button>
-              <button onClick={()=>this.deleteFlight(flight._id)}>Delete</button>
-
-
+              <p className="left-txt">
+                {" "}
+                <b>Flight Number: </b> {flight.flight_number}{" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>Flight Date: </b> {flight.flight_date}{" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>From: </b> {flight.from}{" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>To: </b> {flight.to}{" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>Departure Time: </b> {flight.departure_time}{" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>Arrival Time: </b> {flight.arrival_time}{" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>Economy: </b> {flight.economy_seats_available}{" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>Business: </b> {flight.business_seats_available}
+              </p>
+              <button onClick={() => editFlight(flight._id)}>Edit</button>
+              <button onClick={() => deleteFlight(flight._id)}>Delete</button>
             </div>
-            
           </li>
-         
-
-        )
-      }
-                          
-
-          
-    </ul>
-    <button onClick={()=>this.createFlight()}>Create</button>
+        ))}
+      </ul>
+      <button onClick={() => createFlight()}>Create</button>
+      <button onClick={() => searchFlight()}>Search</button>
     </>
-    );
-  }
-
-}
-
-
-// function App(){
-//   const [flights,setFlights] = useState([]);
-//   const [searchFlights,setSearchedFlights] = useState("");
- 
-
-
-//   useEffect(() => {
-//     axios.get('http://localhost:8000/')
-//     .then((res) =>{
-//       setFlights(res.data)
-//     })
-//   },[])
-
-
-//   function search(e){
-//     return e.filter(e =>
-//        e.flight_number.toStirng().toUpperCase().indexOf(searchFlights)>-1 ||
-//        e.flight_date.toStirng().toUpperCase().indexOf(searchFlights)>-1 ||
-//        e.from.toUpperCase().indexOf(searchFlights)>-1 ||
-//        e.to.toUpperCase().indexOf(searchFlights)>-1 ||
-//        e.departure_time.toUpperCase().indexOf(searchFlights)>-1 ||
-//        e.arrival_time.toUpperCase().indexOf(searchFlights)>-1 
-//     )
-//   }
-
-
-
-
-//   return (
-//     <div className="">
-//       <div className="container">
-//         <h1>Dream Team Airlines</h1>  
-//         <div className = "form-group">
-//           <label>Search for flights</label>
-//           <input class="form-control me-2" type="search" placeholder="Search" onChange={(e) => setSearchedFlights(e.target.value)}></input>
-//           <div>
-//             <App>flights={search(flights)}</App>
-//           </div>
-//           <table class="table">
-//             <thread>
-//               <tr>
-//                 <th scope="col">Flight Number</th>
-//                 <th scope="col">Flight Date</th>
-//                 <th scope="col">From</th>
-//                 <th scope="col">To</th>
-//                 <th scope="col">Departure</th>
-//                 <th scope="col">Arrival</th>
-//               </tr>
-//             </thread>
-//             <tbody>
-//               {
-//                 flights.map((fly) => (
-//                 <tr>
-//                   <tb>{fly.flight_number}</tb>
-//                   <tb>{fly.flight_date}</tb>
-//                   <tb>{fly.from}</tb>
-//                   <tb>{fly.to}</tb>
-//                   <tb>{fly.departure_time}</tb>
-//                   <tb>{fly.arrival_time}</tb>
-//                 </tr>
-                
-//                 )
-//               )}
-                
-              
-
-              
-
-
-
-
-
-
-//             </tbody>
-//           </table>
-
-            
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-
-// }
-
-
-
+  );
+};
+export default ListFlights;

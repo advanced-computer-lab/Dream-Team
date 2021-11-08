@@ -3,9 +3,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 
+
 import ListFlights from "./Components/ListFlights";
 import EditFlight from "./Components/EditFlight";
 import CreateFlight from './Components/CreateFlight';
+import SearchFlights from './Components/SearchFlights';
+import SearchResults from './Components/SearchResults';
 
 
 function App() {
@@ -18,6 +21,8 @@ function App() {
       <Route exact path="/"  component={ListFlights} />
       <Route exact path="/edit/:id" component={EditFlight} />
       <Route exact path="/create" component={CreateFlight} />
+      <Route exact path="/search" component={SearchFlights} />
+      <Route exact path="/search/results" component={SearchResults} />
       </Switch>
       </div>
     </Router>

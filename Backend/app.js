@@ -7,7 +7,7 @@ const User=require('./model/user.js');
 
 const mongoose=require('mongoose');
 const cors = require('cors');
-const dbPath = "mongodb+srv://watidy:dreamteam@cluster0.nso6g.mongodb.net/myFirstDatabase?retryWrites=true&w=majority" ;
+const dbPath = process.env.URI ;
 
 mongoose.connect(dbPath).then((result)=>console.log('connected to DB'))
 .catch((err)=>console.log(err));
