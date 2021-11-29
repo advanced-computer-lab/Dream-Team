@@ -41,7 +41,29 @@ const flightSchema = new Schema({
     type: Number,
     required: true,
   },
+  price:{
+    type: Number,
+    required:true,
+  },
+  departure_terminal:{
+    type: Number,
+    required: true,
+  },
+  arrival_terminal:{
+    type: Number,
+    required: true,
+  },
+  baggage_allowance:{
+    type: String,
+    required: true,
+  },
+  duration:{
+    type: String,
+    required: true,
+  }
+
 });
 
 const Flight = mongoose.model("Flight", flightSchema);
 module.exports = Flight;
+

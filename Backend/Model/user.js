@@ -2,40 +2,42 @@ const mongoose=require('mongoose');
 const Schema =mongoose.Schema;
 
 const userSchema = new Schema({
-    Name: {
+    first_name: {
       type: String,
       required: true,
     },
-    Admin: {
+    last_name: {
+      type:String,
+      required: true,
+    },
+    admin: {
         type:Boolean,
         required: true,
-    }
-    /*Email: {
+    },
+    email: {
       type: String,
       required: true
     },
-    Age: {
+    passport_number: {
+      type: String,
+      required: true,
+    },
+    age: {
       type: Number,
       required: true,
     },
-   
-    LivesIn: {
+
+    phone_number: {
       type: String,
       required: true
     },
-    MartialStatus: {
+    password: {
       type: String,
       required: true
     },
-    PhoneNumber: {
-      type: String,
-      required: true
-    },
-    Job: {
-      type: String,
-      required: true
-      */
-    
+    reservations: {
+      type: Array,
+    }
     },
     { timestamps: true });
 
