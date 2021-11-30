@@ -1,6 +1,7 @@
 const Flight = require("../model/flight");
 
 const createFlight = (req, res) => {
+  // const flight = req.body.flight;
   const flight = new Flight({
     flight_number: req.body.flight_number,
     flight_date: req.body.flight_date,
@@ -15,10 +16,11 @@ const createFlight = (req, res) => {
     departure_terminal: req.body.departure_terminal,
     arrival_terminal: req.body.arrival_terminal,
     baggage_allowance: req.body.baggage_allowance,
+    duration: req.body.duration,
     array_business: new Array(req.body.business_seats_available).fill(false),
     array_economy: new Array(req.body.economy_seats_available).fill(false),
   })
-
+console.log(req.body);
   flight
     .save()
     .then((result) => {

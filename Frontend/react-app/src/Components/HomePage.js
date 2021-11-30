@@ -104,6 +104,26 @@ return (
           />
         </div>
         <br />
+        <div className="form-group">
+          <label>Number of Children: </label>
+          <input
+            type="text"
+            className="form-control"
+            name="to"
+            onChange={handleChange}
+          />
+        </div>
+        <br />
+        <div className="form-group">
+          <label>Number of Adults: </label>
+          <input
+            type="text"
+            className="form-control"
+            name="to"
+            onChange={handleChange}
+          />
+        </div>
+        <br />
 
         <div className="form-group">
           <input

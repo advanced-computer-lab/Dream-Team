@@ -9,7 +9,7 @@ const flightSchema = new Schema({
 
   flight_date: {
     type: Date,
-    required: false,
+    required: true,
   },
 
   from: {
@@ -50,11 +50,11 @@ const flightSchema = new Schema({
     required:true,
   },
   departure_terminal:{
-    type: Number,
+    type: String,
     required: true,
   },
   arrival_terminal:{
-    type: Number,
+    type: String,
     required: true,
   },
   baggage_allowance:{
@@ -65,14 +65,13 @@ const flightSchema = new Schema({
     type: String,
     required: true,
   },
-  array_business:{
-    type: Array,
-    required: true,
-  },
-  array_economy:{
-    type: Array,
-    required: true,
-  }
+  array_business:[{
+    type: Boolean,
+  }],
+  array_economy:[{
+    type: Boolean,
+    required: false,
+  }]
 
 });
 

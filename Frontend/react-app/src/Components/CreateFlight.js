@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import { TextField } from "@material-ui/core";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 
 const CreateFlight = () => {
   const history = useHistory();
@@ -14,7 +14,10 @@ const CreateFlight = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-
+    // const flightBody = {
+    //   flight: flight
+    // };
+    console.log(flight)
     axios
       .post("http://localhost:8000/flights/create", flight)
       .then(() => history.push("/"));
@@ -29,6 +32,7 @@ const CreateFlight = () => {
         <div className="form-group">
           <TextField
             required
+            name="flight_number"
             id="outlined-required"
             label="Flight Number"
             onChange={handleChange}
@@ -55,6 +59,7 @@ const CreateFlight = () => {
           
           <TextField
             required
+            name="from"
             id="outlined-required"
             label="From"
             onChange={handleChange}
@@ -68,6 +73,7 @@ const CreateFlight = () => {
           
           <TextField
             required
+            name="to"
             id="outlined-required"
             label="To"
             onChange={handleChange}
@@ -80,6 +86,7 @@ const CreateFlight = () => {
           
           <TextField
             required
+            name="departure_time"
             id="outlined-required"
             label="Departure Time"
             onChange={handleChange}
@@ -92,6 +99,7 @@ const CreateFlight = () => {
           
           <TextField
             required
+            name="arrival_time"
             id="outlined-required"
             label="Arrival Time"
             onChange={handleChange}
@@ -104,6 +112,8 @@ const CreateFlight = () => {
        
           <TextField
             required
+            type="number"
+            name="price_business"
             id="outlined-required"
             label="Business Price"
             onChange={handleChange}
@@ -116,6 +126,8 @@ const CreateFlight = () => {
        
           <TextField
             required
+            type="number"
+            name="price_economy"
             id="outlined-required"
             label="Economy Price"
             onChange={handleChange}
@@ -128,6 +140,8 @@ const CreateFlight = () => {
        
           <TextField
             required
+            type="number"
+            name="economy_seats_available"
             id="outlined-required"
             label="Economy Seats"
             onChange={handleChange}
@@ -140,6 +154,8 @@ const CreateFlight = () => {
           
           <TextField
             required
+            type="number"
+            name="business_seats_available"
             id="outlined-required"
             label="Business Seats"
             onChange={handleChange}
@@ -152,6 +168,7 @@ const CreateFlight = () => {
        
           <TextField
             required
+            name="departure_terminal"
             id="outlined-required"
             label="Departure Terminal"
             onChange={handleChange}
@@ -164,6 +181,7 @@ const CreateFlight = () => {
        
           <TextField
             required
+            name="arrival_terminal"
             id="outlined-required"
             label="Arrival Terminal"
             onChange={handleChange}
@@ -175,6 +193,7 @@ const CreateFlight = () => {
        
        <TextField
          required
+         name="baggage_allowance"
          id="outlined-required"
          label="Baggage Allowance"
          onChange={handleChange}
@@ -182,9 +201,21 @@ const CreateFlight = () => {
          //InputLabelProps={{ shrink: true }}
        />
      </div>
+     
         <br />
         <br />
-
+        <div className="form-group">
+       
+       <TextField
+         required
+         name="duration"
+         id="outlined-required"
+         label="Duration"
+         onChange={handleChange}
+         variant="outlined"
+         //InputLabelProps={{ shrink: true }}
+       />
+     </div>
 
         <div className="form-group">
           <input

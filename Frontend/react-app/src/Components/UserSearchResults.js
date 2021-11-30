@@ -7,7 +7,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@mui/material/Button';
-
 const SearchResults = () => {
   const location = useLocation();
 
@@ -73,12 +72,12 @@ const SearchResults = () => {
                 {" "}
                 <b>Business: </b> {flight.business_seats_available}
               </p>
+              
             </Typography>
             </AccordionDetails>
             </Accordion>
-            <Button variant="contained">Book Flight</Button>
-
           </li>
+          
         ))}
       </ul>
     </div>
