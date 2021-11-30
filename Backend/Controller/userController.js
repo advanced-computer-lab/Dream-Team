@@ -1,4 +1,5 @@
 const Flight = require("../model/flight");
+const User = require("../model/user");
 
 const createFlight = (req, res) => {
   const flight = new Flight({
@@ -97,6 +98,47 @@ const updateFlight = (req, res) => {
   });
 };
 
+const viewReservedFlight = (req,res) => {
+  User.find(reservations).then((result) => {
+    res.header("Content-Type", "application/json");
+    res.send(JSON.stringify(result, null, 4));
+  })
+};
+
+const updateExistingUser = (req, res) => {
+  var id = req.params.id;
+
+  User.findOne({ _id: id }).then((result) => {
+    if (req.body.first_name) {
+      result.first_name = req.body.first_name;
+    }
+    if (req.body.last_name) {
+      result.last_name = req.body.last_name;
+    }
+    if (req.body.passport_number) {
+      result.passport_number = req.body.passport_number;
+    }
+    if (req.body.email) {
+      result.email = req.body.email;
+    }
+
+    result
+      .save()
+      .then((result) => {
+        res.send("update is done");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+};
+
+
+
+
+
+
+
 module.exports = {
   createFlight,
   listFlights,
@@ -104,4 +146,6 @@ module.exports = {
   updateFlight,
   showFlight,
   searchFlights,
+  viewReservedFlight,
+  updateExistingUser
 };
