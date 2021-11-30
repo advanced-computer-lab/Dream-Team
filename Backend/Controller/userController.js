@@ -10,7 +10,15 @@ const createFlight = (req, res) => {
     arrival_time: req.body.arrival_time,
     economy_seats_available: req.body.economy_seats_available,
     business_seats_available: req.body.business_seats_available,
-  });
+    price_economy: req.body.price_economy,
+    price_business: req.body.price_business,
+    departure_terminal: req.body.departure_terminal,
+    arrival_terminal: req.body.arrival_terminal,
+    baggage_allowance: req.body.baggage_allowance,
+    array_business: new Array(req.body.business_seats_available).fill(false),
+    array_economy: new Array(req.body.economy_seats_available).fill(false),
+  })
+
   flight
     .save()
     .then((result) => {

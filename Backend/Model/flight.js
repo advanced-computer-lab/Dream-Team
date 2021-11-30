@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const flightSchema = new Schema({
   flight_number: {
-    type: Number,
+    type: String,
     required: true,
   },
 
@@ -41,7 +41,11 @@ const flightSchema = new Schema({
     type: Number,
     required: true,
   },
-  price:{
+  price_economy:{
+    type: Number,
+    required:true,
+  },
+  price_business:{
     type: Number,
     required:true,
   },
@@ -59,6 +63,14 @@ const flightSchema = new Schema({
   },
   duration:{
     type: String,
+    required: true,
+  },
+  array_business:{
+    type: Array,
+    required: true,
+  },
+  array_economy:{
+    type: Array,
     required: true,
   }
 

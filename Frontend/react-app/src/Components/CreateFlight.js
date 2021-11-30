@@ -23,14 +23,17 @@ const CreateFlight = () => {
   return (
     <div>
       <h3>Create Flight</h3>
+      <br />
+
       <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label>Flight Number: </label>
-          <input
-            type="text"
-            className="form-control"
-            name="flight_number"
+          <TextField
+            required
+            id="outlined-required"
+            label="Flight Number"
             onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
           />
         </div>
         <br />
@@ -49,65 +52,139 @@ const CreateFlight = () => {
         <br />
 
         <div className="form-group">
-          <label>From: </label>
-          <input
-            type="text"
-            className="form-control"
-            name="from"
+          
+          <TextField
+            required
+            id="outlined-required"
+            label="From"
             onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
+          />
+        </div>
+        <br />
+      
+        <div className="form-group">
+          
+          <TextField
+            required
+            id="outlined-required"
+            label="To"
+            onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
           />
         </div>
         <br />
         <div className="form-group">
-          <label>To: </label>
-          <input
-            type="text"
-            className="form-control"
-            name="to"
+          
+          <TextField
+            required
+            id="outlined-required"
+            label="Departure Time"
             onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
           />
         </div>
         <br />
         <div className="form-group">
-          <label>Departure Time: </label>
-          <input
-            type="text"
-            className="form-control"
-            name="departure_time"
+          
+          <TextField
+            required
+            id="outlined-required"
+            label="Arrival Time"
             onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
           />
         </div>
         <br />
         <div className="form-group">
-          <label>Arrival Time: </label>
-          <input
-            type="text"
-            className="form-control"
-            name="arrival_time"
+       
+          <TextField
+            required
+            id="outlined-required"
+            label="Business Price"
             onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
           />
         </div>
         <br />
         <div className="form-group">
-          <label>Economy Seats: </label>
-          <input
-            type="text"
-            className="form-control"
-            name="economy_seats_available"
+       
+          <TextField
+            required
+            id="outlined-required"
+            label="Economy Price"
             onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
           />
         </div>
         <br />
         <div className="form-group">
-          <label>Business Seats: </label>
-          <input
-            type="text"
-            className="form-control"
-            name="business_seats_available"
+       
+          <TextField
+            required
+            id="outlined-required"
+            label="Economy Seats"
             onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
           />
         </div>
         <br />
+        <div className="form-group">
+          
+          <TextField
+            required
+            id="outlined-required"
+            label="Business Seats"
+            onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
+          />
+        </div>
+        <br />
+        <div className="form-group">
+       
+          <TextField
+            required
+            id="outlined-required"
+            label="Departure Terminal"
+            onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
+          />
+        </div>
+        <br />
+        <div className="form-group">
+       
+          <TextField
+            required
+            id="outlined-required"
+            label="Arrival Terminal"
+            onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
+          />
+        </div>
+        <div className="form-group">
+       
+       <TextField
+         required
+         id="outlined-required"
+         label="Baggage Allowance"
+         onChange={handleChange}
+         variant="outlined"
+         //InputLabelProps={{ shrink: true }}
+       />
+     </div>
+        <br />
+        <br />
+
 
         <div className="form-group">
           <input

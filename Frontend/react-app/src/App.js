@@ -9,7 +9,7 @@ import EditFlight from "./Components/EditFlight";
 import CreateFlight from './Components/CreateFlight';
 import SearchFlights from './Components/SearchFlights';
 import SearchResults from './Components/SearchResults';
-
+import HomePage from './Components/HomePage';
 
 const App=()=>{
   return (
@@ -19,6 +19,7 @@ const App=()=>{
       <br/>
       <Switch>
       <Route exact path="/"  component={ListFlights} />
+      <Route exact path="/home"  component={HomePage} />
       <Route exact path="/edit/:id" component={EditFlight} />
       <Route exact path="/create" component={CreateFlight} />
       <Route exact path="/search" component={SearchFlights} />
