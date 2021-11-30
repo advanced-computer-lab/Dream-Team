@@ -14,7 +14,7 @@ const CreateFlight = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-
+    console.log("hi");
     axios
       .post("http://localhost:8000/flights/create", flight)
       .then(() => history.push("/"));
