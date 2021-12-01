@@ -11,6 +11,7 @@ import SearchFlights from './Components/SearchFlights';
 import SearchResults from './Components/SearchResults';
 import HomePage from './Components/HomePage';
 import UserSearchFlights from './Components/UserSearchFlights';
+import SummaryOfReservation from './Components/SummaryOfReservation';
 
 const App=()=>{
   return (
@@ -26,6 +27,8 @@ const App=()=>{
       <Route exact path="/create" component={CreateFlight} />
       <Route exact path="/search" component={SearchFlights} />
       <Route exact path="/search/results" component={SearchResults} />
+      <Route exact path="/summary" component={SummaryOfReservation} />
+      
       
       </Switch>
       </div>

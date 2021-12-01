@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-//import { useLocation } from "react-router";
+import { useHistory } from "react-router";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -8,9 +8,10 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@mui/material/Button';
 
+
 const UserSearchFlights = (props) => {
   
-  
+  const history=useHistory();
 
   const departureSearch = props.location.state.departureFlight;
   const returnSearch = props.location.state.returnFlight;
@@ -18,6 +19,9 @@ const UserSearchFlights = (props) => {
 
   const [departureFlights, setDepartureFlights] = useState([]);
   const [returnFlights, setReturnFlights] = useState([]);
+
+  const [chosenDeparture, setChosenDeparture] = useState({});
+  const [chosenReturn, setChosenReturn] = useState({})
 
   useEffect(() => {
     console.log(departureSearch);
@@ -30,8 +34,24 @@ const UserSearchFlights = (props) => {
       console.log(result.data);
     });
 
+
   }, []);
 
+  const handleDeparture = (flight) => {
+    setChosenDeparture(flight);
+    console.log(flight)
+  };
+  const handleReturn = (flight) => {
+    setChosenReturn(flight);
+    console.log(flight)
+
+  };
+  const handleProceed = () => {
+    history.push ("/summary", {
+      departureFlight: chosenDeparture,
+      returnFlight: chosenReturn,
+    })
+  }
   return (
     
     <div>
@@ -60,12 +80,12 @@ const UserSearchFlights = (props) => {
               </p>
               <p className="left-txt">
                 {" "}
-                <b>To: </b> {flight.from } {flight.arrival_time}{" "}
+                <b>To: </b> {flight.to } {flight.arrival_time}{" "}
               </p>
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {flight.price}{" "}
+                <b>Price: </b> {departureSearch.cabin === "business" ? flight.price_business : flight.price_economy}
               </p>
                 </Typography>
               </p>
@@ -87,7 +107,7 @@ const UserSearchFlights = (props) => {
             </Typography>
             </AccordionDetails>
             </Accordion>
-           
+            <Button variant="contained" onClick={() => {handleDeparture(flight)}}>Book Flight</Button>
 
           </li>
           
@@ -122,12 +142,12 @@ const UserSearchFlights = (props) => {
               </p>
               <p className="left-txt">
                 {" "}
-                <b>To: </b> {flight.from } {flight.arrival_time}{" "}
+                <b>To: </b> {flight.to } {flight.arrival_time}{" "}
               </p>
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {flight.price_economy}{" "}
+                <b>Price: </b> {returnSearch.cabin === "business" ? flight.price_business : flight.price_economy}
               </p>
                 </Typography>
               </p>
@@ -149,11 +169,13 @@ const UserSearchFlights = (props) => {
             </Typography>
             </AccordionDetails>
             </Accordion>
-            <Button variant="contained">Book Flight</Button>
+            <Button variant="contained" onClick={() => {handleReturn(flight)}}>Book Flight</Button>
           </li>
           
         ))}
       </ul>
+      <Button variant="contained" onClick={() => {handleProceed()}}>Proceed</Button>
+
     </div>
   );
 };
