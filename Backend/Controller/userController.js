@@ -103,6 +103,7 @@ const updateFlight = (req, res) => {
 const userSearchFlights = (req, res) => {
 
   const flight= req.body;
+  console.log(req.body);
   const cabin=flight.cabin;
   const seats=flight.seats;
   delete flight.cabin;
@@ -111,6 +112,7 @@ const userSearchFlights = (req, res) => {
 
     Flight.find({...flight, economy_seats_available:{$gte:seats}}).then((result) => {
       res.header("Content-Type", "application/json");
+      console.log("hi");
       res.send(JSON.stringify(result, null, 4));
     });
 

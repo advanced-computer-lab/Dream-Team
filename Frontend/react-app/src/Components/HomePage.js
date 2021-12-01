@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 
 const HomePage = () => {
   const history = useHistory();
-  console.log("hi");
+  
 
   const [departureFlight, setDepartureFlight] = useState({});
   const [returnFlight, setReturnFlight] = useState({});

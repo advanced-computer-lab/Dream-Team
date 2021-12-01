@@ -21,11 +21,11 @@ const UserSearchFlights = (props) => {
 
   useEffect(() => {
     console.log(departureSearch);
-    axios.get("http://localhost:8000/user/search",departureSearch).then((result) => {
+    axios.post("http://localhost:8000/user/search",departureSearch).then((result) => {
       setDepartureFlights(result.data);
       console.log(result.data);
     });
-    axios.get("http://localhost:8000/user/search",returnSearch).then((result) => {
+    axios.post("http://localhost:8000/user/search",returnSearch).then((result) => {
       setReturnFlights(result.data);
       console.log(result.data);
     });
