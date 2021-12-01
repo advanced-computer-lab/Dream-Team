@@ -65,13 +65,11 @@ const flightSchema = new Schema({
     type: String,
     required: true,
   },
-  array_business:[{
-    type: Boolean,
+  seats:[{
+    seatNo: {type: String, required:true},
+    reserved: {type: Boolean, required:true}
   }],
-  array_economy:[{
-    type: Boolean,
-    required: false,
-  }]
+  
 
 });
 

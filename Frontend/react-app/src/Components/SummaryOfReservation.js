@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 
 
 const SummaryOfReservation = (props) => {
+    const history=useHistory();
     const departureFlight= props.location.state.departureFlight;
     const returnFlight= props.location.state.returnFlight;
 
@@ -127,7 +128,8 @@ const SummaryOfReservation = (props) => {
 
     
 
-      <Button variant="contained" onClick={() => {}}>Proceed</Button>
+      <Button variant="contained" onClick={() => { history.push ("/seats_departure", {
+      departureFlight: departureFlight, returnFlight: returnFlight })}}>Choose Seats</Button>
         </div>
     )
 }

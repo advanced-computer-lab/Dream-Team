@@ -12,6 +12,7 @@ import SearchResults from './Components/SearchResults';
 import HomePage from './Components/HomePage';
 import UserSearchFlights from './Components/UserSearchFlights';
 import SummaryOfReservation from './Components/SummaryOfReservation';
+import SeatReservationDeparture from './Components/SeatReservationDeparture';
 
 const App=()=>{
   return (
@@ -28,6 +29,8 @@ const App=()=>{
       <Route exact path="/search" component={SearchFlights} />
       <Route exact path="/search/results" component={SearchResults} />
       <Route exact path="/summary" component={SummaryOfReservation} />
+      <Route exact path="/seats_departure" component={SeatReservationDeparture} />
+
       
       
       </Switch>
