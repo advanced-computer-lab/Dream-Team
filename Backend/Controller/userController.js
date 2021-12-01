@@ -99,6 +99,35 @@ const updateFlight = (req, res) => {
   });
 };
 
+
+const userSearchFlights = (req, res) => {
+
+  const flight= req.body;
+  const cabin=flight.cabin;
+  const seats=flight.seats;
+  delete flight.cabin;
+  delete flight.seats;
+  if (cabin==="economy"){
+
+    Flight.find({...flight, economy_seats_available:{$gte:seats}}).then((result) => {
+      res.header("Content-Type", "application/json");
+      res.send(JSON.stringify(result, null, 4));
+    });
+
+  }
+  else{
+    Flight.find({...flight, business_seats_available:{$gte:seats}}).then((result) => {
+      res.header("Content-Type", "application/json");
+      res.send(JSON.stringify(result, null, 4));
+    });
+  }
+
+};
+
+
+
+
+
 module.exports = {
   createFlight,
   listFlights,
@@ -106,4 +135,5 @@ module.exports = {
   updateFlight,
   showFlight,
   searchFlights,
+  userSearchFlights,
 };

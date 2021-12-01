@@ -76,7 +76,7 @@ const SearchResults = () => {
             </Typography>
             </AccordionDetails>
             </Accordion>
-            <Button variant="contained">Book Flight</Button>
+           
 
           </li>
         ))}

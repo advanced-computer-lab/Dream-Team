@@ -10,6 +10,7 @@ import CreateFlight from './Components/CreateFlight';
 import SearchFlights from './Components/SearchFlights';
 import SearchResults from './Components/SearchResults';
 import HomePage from './Components/HomePage';
+import UserSearchFlights from './Components/UserSearchFlights';
 
 const App=()=>{
   return (
@@ -18,12 +19,14 @@ const App=()=>{
   
       <br/>
       <Switch>
+      <Route exact path="/user/search" component={UserSearchFlights} />
       <Route exact path="/"  component={ListFlights} />
       <Route exact path="/home"  component={HomePage} />
       <Route exact path="/edit/:id" component={EditFlight} />
       <Route exact path="/create" component={CreateFlight} />
       <Route exact path="/search" component={SearchFlights} />
       <Route exact path="/search/results" component={SearchResults} />
+      
       </Switch>
       </div>
     </Router>

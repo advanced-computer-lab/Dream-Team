@@ -7,18 +7,30 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@mui/material/Button';
-const SearchResults = () => {
-  const location = useLocation();
 
-  const url = "http://localhost:8000/flights/search" + location.search;
+const UserSearchFlights = (props) => {
+  
+  
 
-  const [flights, setFlights] = useState([]);
+  const departureSearch = props.location.state.departureFlight;
+  const returnSearch = props.location.state.returnFlight;
+  
+
+  const [departureFlights, setDepartureFlights] = useState([]);
+  const [returnFlights, setReturnFlights] = useState([]);
 
   useEffect(() => {
-    axios.get(url).then((result) => {
-      setFlights(result.data);
+    console.log(departureSearch);
+    axios.get("http://localhost:8000/user/search",departureSearch).then((result) => {
+      setDepartureFlights(result.data);
+      console.log(result.data);
     });
-  }, [url]);
+    axios.get("http://localhost:8000/user/search",returnSearch).then((result) => {
+      setReturnFlights(result.data);
+      console.log(result.data);
+    });
+
+  }, []);
 
   return (
     
@@ -26,8 +38,8 @@ const SearchResults = () => {
       
 
       <ul>
-        
-        {flights.map((flight) => (
+      <h3>Departure Flights</h3>
+        {departureFlights.map((flight) => (
           
           <li key={flight._id}>
             <Accordion>
@@ -39,7 +51,11 @@ const SearchResults = () => {
               <p className="left-txt">
                 {" "}
                 <Typography>
-                <b>Flight Number: </b> {flight.flight_number}{" "}
+                <p className="left-txt">
+                {" "}
+                <b>Flight Date: </b> {flight.flight_date}{" "}
+              </p>
+                
                 
                 <p className="left-txt">
                 {" "}
@@ -53,17 +69,16 @@ const SearchResults = () => {
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {flight.price}{" "}
+                <b>Price: </b> {flight.price_economy}{" "}
               </p>
                 </Typography>
               </p>
             </AccordionSummary>
             <AccordionDetails>
             <Typography>
-            <p className="left-txt">
-                {" "}
-                <b>Flight Date: </b> {flight.flight_date}{" "}
-              </p>
+
+            <b>Flight Number: </b> {flight.flight_number}{" "}
+            
               <p className="left-txt">
                 {" "}
                 <b>Economy: </b> {flight.economy_seats_available}{" "}
@@ -76,6 +91,7 @@ const SearchResults = () => {
             </Typography>
             </AccordionDetails>
             </Accordion>
+            <Button variant="contained">Book Flight</Button>
           </li>
           
         ))}
@@ -84,4 +100,4 @@ const SearchResults = () => {
   );
 };
 
-export default SearchResults;
+export default UserSearchFlights;

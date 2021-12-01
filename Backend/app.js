@@ -2,6 +2,7 @@ const express=require('express');
 const app =express();
 require('dotenv').config();
 const flightRouter=require('./routes/flightRoutes');
+const userRouter=require('./routes/userRoutes');
 const User=require('./model/user.js');
 
 
@@ -14,6 +15,7 @@ mongoose.connect(dbPath).then((result)=>console.log('connected to DB'))
 
 app.use(cors());
 app.use('/flights',flightRouter)
+app.use('/user',userRouter)
 
 app.post('/createUser',(req,res)=>
 {
