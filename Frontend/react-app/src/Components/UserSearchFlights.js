@@ -10,12 +10,14 @@ import Button from '@mui/material/Button';
 
 
 const UserSearchFlights = (props) => {
+  let cabin=true;
+  
   
   const history=useHistory();
 
   const departureSearch = props.location.state.departureFlight;
   const returnSearch = props.location.state.returnFlight;
-  
+  departureSearch.cabin === "business"? cabin =true:cabin =false;
 
   const [departureFlights, setDepartureFlights] = useState([]);
   const [returnFlights, setReturnFlights] = useState([]);
@@ -38,10 +40,12 @@ const UserSearchFlights = (props) => {
   }, []);
 
   const handleDeparture = (flight) => {
+    cabin? flight={...flight,cabin:"Business",price:flight.price_business} : flight={...flight,cabin:"Economy",price:flight.price_economy}
     setChosenDeparture(flight);
     console.log(flight)
   };
   const handleReturn = (flight) => {
+    cabin? flight={...flight,cabin:"Business",price:flight.price_business}:flight={...flight,cabin:"Economy",price:flight.price_economy}
     setChosenReturn(flight);
     console.log(flight)
 
@@ -85,7 +89,7 @@ const UserSearchFlights = (props) => {
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {departureSearch.cabin === "business" ? flight.price_business : flight.price_economy}
+                <b>Price: </b> {cabin ? flight.price_business : flight.price_economy}
               </p>
                 </Typography>
               </p>
