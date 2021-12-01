@@ -8,7 +8,7 @@ userRouter.use(express.urlencoded({extended: false}));
 
 // flightRouter.get('/',userController.listFlights);
 
-userRouter.get('/search',userController.userSearchFlights);
+userRouter.post('/search',userController.userSearchFlights);
 
 // flightRouter.get('/:id',userController.showFlight);
 
