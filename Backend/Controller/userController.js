@@ -1,8 +1,7 @@
 const Flight = require("../model/flight");
-const User = require("../model/user");
 const Reservations = require("../model/reservations");
 const user = require("../model/user");
-
+const nodemailer = require('nodemailer');
 
 
 const createFlight = (req, res) => {
@@ -137,6 +136,11 @@ const updateExistingUser = (req, res) => {
   });
 };
 
+const cancelReservedFlight = (req,res) => {
+  Reservations.findByIdAndRemove(req.params.id, req.body)
+    .then((result) => res.json({ mgs: " Reservations canceled successfully" }))
+    .catch((err) => res.status(404).json({ error: "No such Reservation" }));
+}
 
 
 
@@ -153,5 +157,6 @@ module.exports = {
   showFlight,
   searchFlights,
   viewReservedFlight,
-  updateExistingUser
+  updateExistingUser,
+  cancelReservedFlight
 };
