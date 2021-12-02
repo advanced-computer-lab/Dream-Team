@@ -1,6 +1,9 @@
 const Flight = require("../model/flight");
 const User = require("../model/user");
 const Reservations = require("../model/reservations");
+const user = require("../model/user");
+
+
 
 const createFlight = (req, res) => {
   const flight = new Flight({
@@ -109,7 +112,7 @@ const viewReservedFlight = (req,res) => {
 const updateExistingUser = (req, res) => {
   var id = req.params.id;
 
-  User.findOne({ _id: id }).then((result) => {
+  user.findOne({ _id: id }).then((result) => {
     if (req.body.first_name) {
       result.first_name = req.body.first_name;
     }
@@ -128,11 +131,13 @@ const updateExistingUser = (req, res) => {
       .then((result) => {
         res.send("update is done");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
       });
   });
 };
+
+
 
 
 
