@@ -29,11 +29,10 @@ const UserSearchFlights = (props) => {
     console.log(departureSearch);
     axios.post("http://localhost:8000/user/search",departureSearch).then((result) => {
       setDepartureFlights(result.data);
-      console.log(result.data);
+     
     });
     axios.post("http://localhost:8000/user/search",returnSearch).then((result) => {
       setReturnFlights(result.data);
-      console.log(result.data);
     });
 
 
@@ -41,16 +40,19 @@ const UserSearchFlights = (props) => {
 
   const handleDeparture = (flight) => {
     cabin? flight={...flight,cabin:"Business",price:flight.price_business} : flight={...flight,cabin:"Economy",price:flight.price_economy}
-    setChosenDeparture(flight);
+    
+    setChosenDeparture({...flight,passengers:departureSearch.passengers});
     console.log(flight)
   };
   const handleReturn = (flight) => {
     cabin? flight={...flight,cabin:"Business",price:flight.price_business}:flight={...flight,cabin:"Economy",price:flight.price_economy}
-    setChosenReturn(flight);
+    setChosenReturn({...flight,passengers:returnSearch.passengers});
     console.log(flight)
 
   };
   const handleProceed = () => {
+    console.log(chosenDeparture);
+    console.log(chosenReturn);
     history.push ("/summary", {
       departureFlight: chosenDeparture,
       returnFlight: chosenReturn,

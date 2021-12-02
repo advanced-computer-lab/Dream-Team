@@ -13,6 +13,8 @@ import HomePage from './Components/HomePage';
 import UserSearchFlights from './Components/UserSearchFlights';
 import SummaryOfReservation from './Components/SummaryOfReservation';
 import SeatReservationDeparture from './Components/SeatReservationDeparture';
+import SeatReservationReturn from './Components/SeatReservationReturn';
+//import Login from './Components/Login';
 
 const App=()=>{
   return (
@@ -30,7 +32,8 @@ const App=()=>{
       <Route exact path="/search/results" component={SearchResults} />
       <Route exact path="/summary" component={SummaryOfReservation} />
       <Route exact path="/seats_departure" component={SeatReservationDeparture} />
-
+      <Route exact path="/seats_return" component={SeatReservationReturn} />
+   
       
       
       </Switch>

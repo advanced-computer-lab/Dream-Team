@@ -94,16 +94,16 @@ const SummaryOfReservation = (props) => {
               </p>
               <p className="left-txt">
                 {" "}
-                <b>To: </b> {departureFlight.to } {" "}
+                <b>To: </b> {returnFlight.to } {" "}
               </p>
               <p className="left-txt">
                 {" "}
-                <b>Arrival Time: </b> {departureFlight.arrival_time } {" "}
+                <b>Arrival Time: </b> {returnFlight.arrival_time } {" "}
               </p>
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {departureFlight.price}
+                <b>Price: </b> {returnFlight.price}
               </p>
                 </Typography>
               </p>

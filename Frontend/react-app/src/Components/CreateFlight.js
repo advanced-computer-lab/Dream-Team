@@ -17,7 +17,7 @@ const CreateFlight = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     let seatsA=[];
-    for (let i=0;i<businessSeats;i++){
+    for (let i=1;i<=businessSeats;i++){
       const seat={
         seatNo:i,
         reserved:false,
@@ -25,7 +25,7 @@ const CreateFlight = () => {
       }
       seatsA.push(seat);
     }
-    for (let i=businessSeats;i<businessSeats+economySeats;i++){
+    for (let i=businessSeats+1;i<=businessSeats+economySeats;i++){
       const seat={
         seatNo:i,
         reserved:false,
@@ -33,9 +33,8 @@ const CreateFlight = () => {
       }
       seatsA.push(seat);
     }
-    setFlight({ ...flight,seats:seatsA });
     const flightBody = {
-      flight: flight,
+      flight: {...flight,seats:seatsA}
     };
     console.log(seatsA);
     axios

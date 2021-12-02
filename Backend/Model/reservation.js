@@ -16,10 +16,16 @@ const reservationSchema =new Schema({
         type: Object,
         required: true,
     },
-    seats:{
-        type: Number,
-        required: true,
-    },
+    departure_seats:[{
+        seatNo: {type: String, required:true},
+        reserved: {type: Boolean, required:true},
+        cabin: {type: String, required:true}
+      }],
+    return_seats:[{
+        seatNo: {type: String, required:true},
+        reserved: {type: Boolean, required:true},
+        cabin: {type: String, required:true}
+      }],
     cabin:{
         type:String,
         required:true,

@@ -6,6 +6,7 @@ flightRouter.use(express.urlencoded({extended: false}));
 
 
 
+
 flightRouter.get('/',userController.listFlights);
 
 flightRouter.get('/search',userController.searchFlights);
