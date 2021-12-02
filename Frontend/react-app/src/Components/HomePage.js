@@ -137,7 +137,7 @@ const HomePage = () => {
         <div className="form-group">
           <div>
             <TextField
-              name="seats"
+              name="passengers"
               onChange={handleChange}
               variant="outlined"
               label="Number of Passengers"

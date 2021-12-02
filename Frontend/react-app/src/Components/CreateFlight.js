@@ -5,21 +5,41 @@ import { TextField } from "@material-ui/core";
 
 //import "bootstrap/dist/css/bootstrap.min.css";
 
+
 const CreateFlight = () => {
   const history = useHistory();
   const [flight, setFlight] = useState({});
-
+  const businessSeats=+flight.business_seats_available;
+  const economySeats=+flight.economy_seats_available;
   const handleChange = (e) => {
     setFlight({ ...flight, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    // const flightBody = {
-    //   flight: flight
-    // };
-    console.log(flight)
+    let seatsA=[];
+    for (let i=0;i<businessSeats;i++){
+      const seat={
+        seatNo:i,
+        reserved:false,
+        cabin:"business"
+      }
+      seatsA.push(seat);
+    }
+    for (let i=businessSeats;i<businessSeats+economySeats;i++){
+      const seat={
+        seatNo:i,
+        reserved:false,
+        cabin:"economy"
+      }
+      seatsA.push(seat);
+    }
+    setFlight({ ...flight,seats:seatsA });
+    const flightBody = {
+      flight: flight,
+    };
+    console.log(seatsA);
     axios
-      .post("http://localhost:8000/flights/create", flight)
+      .post("http://localhost:8000/flights/create", flightBody)
       .then(() => history.push("/"));
   };
 
@@ -56,7 +76,6 @@ const CreateFlight = () => {
         <br />
 
         <div className="form-group">
-          
           <TextField
             required
             name="from"
@@ -68,9 +87,8 @@ const CreateFlight = () => {
           />
         </div>
         <br />
-      
+
         <div className="form-group">
-          
           <TextField
             required
             name="to"
@@ -83,7 +101,6 @@ const CreateFlight = () => {
         </div>
         <br />
         <div className="form-group">
-          
           <TextField
             required
             name="departure_time"
@@ -96,7 +113,6 @@ const CreateFlight = () => {
         </div>
         <br />
         <div className="form-group">
-          
           <TextField
             required
             name="arrival_time"
@@ -109,7 +125,6 @@ const CreateFlight = () => {
         </div>
         <br />
         <div className="form-group">
-       
           <TextField
             required
             type="number"
@@ -123,7 +138,6 @@ const CreateFlight = () => {
         </div>
         <br />
         <div className="form-group">
-       
           <TextField
             required
             type="number"
@@ -137,7 +151,6 @@ const CreateFlight = () => {
         </div>
         <br />
         <div className="form-group">
-       
           <TextField
             required
             type="number"
@@ -151,7 +164,6 @@ const CreateFlight = () => {
         </div>
         <br />
         <div className="form-group">
-          
           <TextField
             required
             type="number"
@@ -165,7 +177,6 @@ const CreateFlight = () => {
         </div>
         <br />
         <div className="form-group">
-       
           <TextField
             required
             name="departure_terminal"
@@ -178,7 +189,6 @@ const CreateFlight = () => {
         </div>
         <br />
         <div className="form-group">
-       
           <TextField
             required
             name="arrival_terminal"
@@ -190,32 +200,30 @@ const CreateFlight = () => {
           />
         </div>
         <div className="form-group">
-       
-       <TextField
-         required
-         name="baggage_allowance"
-         id="outlined-required"
-         label="Baggage Allowance"
-         onChange={handleChange}
-         variant="outlined"
-         //InputLabelProps={{ shrink: true }}
-       />
-     </div>
-     
+          <TextField
+            required
+            name="baggage_allowance"
+            id="outlined-required"
+            label="Baggage Allowance"
+            onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
+          />
+        </div>
+
         <br />
         <br />
         <div className="form-group">
-       
-       <TextField
-         required
-         name="duration"
-         id="outlined-required"
-         label="Duration"
-         onChange={handleChange}
-         variant="outlined"
-         //InputLabelProps={{ shrink: true }}
-       />
-     </div>
+          <TextField
+            required
+            name="duration"
+            id="outlined-required"
+            label="Duration"
+            onChange={handleChange}
+            variant="outlined"
+            //InputLabelProps={{ shrink: true }}
+          />
+        </div>
 
         <div className="form-group">
           <input

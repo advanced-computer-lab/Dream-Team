@@ -1,28 +1,27 @@
 const Flight = require("../model/flight");
 
 const createFlight = (req, res) => {
-  // const flight = req.body.flight;
-  const flight = new Flight({
-    flight_number: req.body.flight_number,
-    flight_date: req.body.flight_date,
-    from: req.body.from,
-    to: req.body.to,
-    departure_time: req.body.departure_time,
-    arrival_time: req.body.arrival_time,
-    economy_seats_available: req.body.economy_seats_available,
-    business_seats_available: req.body.business_seats_available,
-    price_economy: req.body.price_economy,
-    price_business: req.body.price_business,
-    departure_terminal: req.body.departure_terminal,
-    arrival_terminal: req.body.arrival_terminal,
-    baggage_allowance: req.body.baggage_allowance,
-    duration: req.body.duration,
-    array_business: new Array(req.body.business_seats_available).fill(false),
-    array_economy: new Array(req.body.economy_seats_available).fill(false),
-  })
-console.log(req.body);
-  flight
-    .save()
+  const flight = req.body.flight;
+  // const flight = new Flight({
+  //   flight_number: req.body.flight_number,
+  //   flight_date: req.body.flight_date,
+  //   from: req.body.from,
+  //   to: req.body.to,
+  //   departure_time: req.body.departure_time,
+  //   arrival_time: req.body.arrival_time,
+  //   economy_seats_available: req.body.economy_seats_available,
+  //   business_seats_available: req.body.business_seats_available,
+  //   price_economy: req.body.price_economy,
+  //   price_business: req.body.price_business,
+  //   departure_terminal: req.body.departure_terminal,
+  //   arrival_terminal: req.body.arrival_terminal,
+  //   baggage_allowance: req.body.baggage_allowance,
+  //   duration: req.body.duration,
+  
+  // })
+console.log(req.body.flight);
+  Flight
+    .create(flight)
     .then((result) => {
       res.header("Content-Type", "application/json");
       res.send(JSON.stringify(result, null, 4));
@@ -105,9 +104,9 @@ const userSearchFlights = (req, res) => {
   const flight= req.body;
   console.log(req.body);
   const cabin=flight.cabin;
-  const seats=flight.seats;
+  const seats=flight.passengers;
   delete flight.cabin;
-  delete flight.seats;
+  delete flight.passengers;
   if (cabin==="economy"){
 
     Flight.find({...flight, economy_seats_available:{$gte:seats}}).then((result) => {

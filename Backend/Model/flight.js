@@ -67,7 +67,8 @@ const flightSchema = new Schema({
   },
   seats:[{
     seatNo: {type: String, required:true},
-    reserved: {type: Boolean, required:true}
+    reserved: {type: Boolean, required:true},
+    cabin: {type: String, required:true}
   }],
   
 

@@ -1,4 +1,5 @@
-import React from 'react'
+
+import React, { useEffect, useState } from "react";
 
 const SeatReservationDeparture = (props) => {
     const [departureFlight, setDepartureFlight] = useState(props.location.state.departureFlight);
@@ -10,6 +11,8 @@ const SeatReservationDeparture = (props) => {
     return (
         <div>
             
+
+
         </div>
     )
 }
