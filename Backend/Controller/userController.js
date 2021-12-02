@@ -124,6 +124,48 @@ const userSearchFlights = (req, res) => {
   }
 
 };
+const viewReservedFlight = (req,res) => {
+  Reservations.find().then((result) => {
+    res.header("Content-Type", "application/json");
+    res.send(JSON.stringify(result, null, 4));
+  })
+};
+
+const updateExistingUser = (req, res) => {
+  var id = req.params.id;
+
+  user.findOne({ _id: id }).then((result) => {
+    if (req.body.first_name) {
+      result.first_name = req.body.first_name;
+    }
+    if (req.body.last_name) {
+      result.last_name = req.body.last_name;
+    }
+    if (req.body.passport_number) {
+      result.passport_number = req.body.passport_number;
+    }
+    if (req.body.email) {
+      result.email = req.body.email;
+    }
+
+    result
+      .save()
+      .then((result) => {
+        res.send("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+};
+
+const cancelReservedFlight = (req,res) => {
+  Reservations.findByIdAndRemove(req.params.id, req.body)
+    .then((result) => res.json({ mgs: " Reservations canceled successfully" }))
+    .catch((err) => res.status(404).json({ error: "No such Reservation" }));
+}
+
+
 
 
 
@@ -137,4 +179,7 @@ module.exports = {
   showFlight,
   searchFlights,
   userSearchFlights,
+  viewReservedFlight,
+  updateExistingUser,
+  cancelReservedFlight
 };
