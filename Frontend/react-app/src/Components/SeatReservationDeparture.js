@@ -5,24 +5,28 @@ import { useHistory } from "react-router";
 import axios from "axios";
 const SeatReservationDeparture = (props) => {
     const [departureFlight, setDepartureFlight] = useState(props.location.state.departureFlight);
-    console.log(departureFlight);
     const history=useHistory();
     const [arraySeats, setArraySeats]=useState([]);
-    let seatsClicked=0;
+    const [seatsClicked, setSeatsClicked] = useState(0);
 
     const handleClick = (clickedSeat) => {
      if(arraySeats.includes(clickedSeat)){
          setArraySeats((prev) => prev.filter((seat)=> clickedSeat._id !== seat._id))
+         setSeatsClicked((prev) => prev - 1);
      }
-     else if(seatsClicked==departureFlight.passengers){
+    //  else if(seatsClicked==departureFlight.passengers){
          
-       }
+    //    }
        
        else{
-           seatsClicked++;
-           setArraySeats((prev)=>prev.push(clickedSeat))
+         setSeatsClicked((prev) => prev + 1);
+           console.log(seatsClicked);
+           
+           setArraySeats((prev)=>[...prev, clickedSeat])
 
        }
+       console.log(arraySeats);
+       
       };
 
 
@@ -43,13 +47,13 @@ const SeatReservationDeparture = (props) => {
             <ul>
         {departureFlight.seats.map((seat) => (
           <li key={seat._id}>
-            <Button variant="contained" href="#contained-buttons" onClick={() =>{handleClick(seat)}} >
+            <Button variant="contained"  onClick={() =>{handleClick(seat)}} >
         {seat.seatNo}
       </Button>
           </li>
         ))}
       </ul>
-      <Button variant="contained" href="#contained-buttons" onClick={() =>{onSubmit()}} >
+      <Button variant="contained"  onClick={() =>{onSubmit()}} >
         Choose Return Flight Seats
       </Button>
 
