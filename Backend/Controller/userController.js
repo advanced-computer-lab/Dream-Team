@@ -1,5 +1,6 @@
 const Flight = require("../model/flight");
 const User = require("../model/user");
+const Reservations = require("../model/reservations");
 
 const createFlight = (req, res) => {
   const flight = new Flight({
@@ -99,7 +100,7 @@ const updateFlight = (req, res) => {
 };
 
 const viewReservedFlight = (req,res) => {
-  User.find(reservations).then((result) => {
+  Reservations.find().then((result) => {
     res.header("Content-Type", "application/json");
     res.send(JSON.stringify(result, null, 4));
   })
