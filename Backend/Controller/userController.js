@@ -172,6 +172,23 @@ const cancelReservedFlight = (req,res) => {
     .then((result) => res.json({ mgs: " Reservations canceled successfully" }))
     .catch((err) => res.status(404).json({ error: "No such Reservation" }));
 }
+const addReservation = (req, res) => {
+  var email = req.body.user.email;
+
+  User.find({email:email}).then((result) =>{
+    result.reservations=[...result.reservations, {departure_flight:req.body.departureFlight, return_flight:req.body.returnFlight}]
+    
+    result
+      .save()
+      .then((result) => {
+        res.send("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+  
+}
 
 
 
@@ -191,5 +208,7 @@ module.exports = {
   userSearchFlights,
   viewReservedFlight,
   updateExistingUser,
-  cancelReservedFlight
+  cancelReservedFlight,
+  addReservation
+
 };

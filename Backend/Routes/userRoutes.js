@@ -12,10 +12,6 @@ userRouter.post('/search',userController.userSearchFlights);
 
 userRouter.get('/:email',userController.findUser);
 
-// flightRouter.put('/update/:id',userController.updateFlight);
-
-// flightRouter.delete('/delete/:id',userController.deleteFlight);
-
-// flightRouter.post('/create',userController.createFlight);
+userRouter.put('/confirm_reservation',userController.addReservation);
 
 module.exports=userRouter;

@@ -36,11 +36,7 @@ const userSchema = new Schema({
     required: true,
   },
   reservations: [{
-    user:{
-      type: String,
-      required: true,
-  },
-
+    
   departure_flight:{
       type: Object,
       required: true,

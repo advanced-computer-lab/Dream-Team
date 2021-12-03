@@ -61,18 +61,25 @@ const SummaryOfReservation = (props) => {
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {departureFlight.price} {" "}
+                <b>Price: </b> {departureFlight.price * (+departureFlight.passengers)} {" "}
               </p>
                 </Typography>
               </p>
             </AccordionSummary>
             <AccordionDetails>
             <Typography>
-            <p className="left-txt">
+              <p className="left-txt">
                 {" "}
                 <b>Flight Date: </b> {departureFlight.flight_date}{" "}
               </p>
-          
+              <p className="left-txt">
+                {" "}
+                <b>Price per seat: </b> {departureFlight.price} {" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>Total Number of Seats: </b> {departureFlight.passengers} {" "}
+              </p>
             </Typography>
             </AccordionDetails>
             </Accordion>
@@ -115,7 +122,7 @@ const SummaryOfReservation = (props) => {
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {returnFlight.price}
+                <b>Price: </b> {returnFlight.price* (+returnFlight.passengers)}
               </p>
                 </Typography>
               </p>
@@ -125,6 +132,14 @@ const SummaryOfReservation = (props) => {
             <p className="left-txt">
                 {" "}
                 <b>Flight Date: </b> {returnFlight.flight_date}{" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>Price per seat: </b> {returnFlight.price} {" "}
+              </p>
+              <p className="left-txt">
+                {" "}
+                <b>Total Number of Seats: </b> {returnFlight.passengers} {" "}
               </p>
           
             </Typography>
@@ -137,9 +152,11 @@ const SummaryOfReservation = (props) => {
         
       </ul>
 
-      
+      <p className="left-txt">
+                {" "}
+                <b>Total Price: </b> {(returnFlight.price* (+returnFlight.passengers))+(departureFlight.price * (+departureFlight.passengers))} {" "}
+              </p>
     
-
       <Button variant="contained" onClick={() => onProceed()}>Choose Seats</Button>
         </div>
     )
