@@ -1,24 +1,10 @@
 const Flight = require("../model/flight");
+const User = require("../model/user");
+const Reservation = require("../model/reservation");
 
 const createFlight = (req, res) => {
   const flight = req.body.flight;
-  // const flight = new Flight({
-  //   flight_number: req.body.flight_number,
-  //   flight_date: req.body.flight_date,
-  //   from: req.body.from,
-  //   to: req.body.to,
-  //   departure_time: req.body.departure_time,
-  //   arrival_time: req.body.arrival_time,
-  //   economy_seats_available: req.body.economy_seats_available,
-  //   business_seats_available: req.body.business_seats_available,
-  //   price_economy: req.body.price_economy,
-  //   price_business: req.body.price_business,
-  //   departure_terminal: req.body.departure_terminal,
-  //   arrival_terminal: req.body.arrival_terminal,
-  //   baggage_allowance: req.body.baggage_allowance,
-  //   duration: req.body.duration,
   
-  // })
 console.log(req.body.flight);
   Flight
     .create(flight)
@@ -30,6 +16,28 @@ console.log(req.body.flight);
       res.status(400).send(err);
     });
 };
+
+const createUser = (req, res) => {
+  const user = req.body.user;
+  console.log(req.body.user);
+  User
+    .create(user)
+    .then((result) => {
+      res.header("Content-Type", "application/json");
+      res.send(JSON.stringify(result, null, 4));
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+};
+
+const findUser=(req,res)=>{
+  User.find({email:req.params.email}).then((result) => {
+    res.header("Content-Type", "application/json");
+    res.send(JSON.stringify(result, null, 4));
+  });
+
+}
 
 const listFlights = (req, res) => {
   Flight.find().then((result) => {
@@ -125,7 +133,7 @@ const userSearchFlights = (req, res) => {
 
 };
 const viewReservedFlight = (req,res) => {
-  Reservations.find().then((result) => {
+  Reservation.find().then((result) => {
     res.header("Content-Type", "application/json");
     res.send(JSON.stringify(result, null, 4));
   })
@@ -134,7 +142,7 @@ const viewReservedFlight = (req,res) => {
 const updateExistingUser = (req, res) => {
   var id = req.params.id;
 
-  user.findOne({ _id: id }).then((result) => {
+  User.findOne({ _id: id }).then((result) => {
     if (req.body.first_name) {
       result.first_name = req.body.first_name;
     }
@@ -160,7 +168,7 @@ const updateExistingUser = (req, res) => {
 };
 
 const cancelReservedFlight = (req,res) => {
-  Reservations.findByIdAndRemove(req.params.id, req.body)
+  Reservation.findByIdAndRemove(req.params.id, req.body)
     .then((result) => res.json({ mgs: " Reservations canceled successfully" }))
     .catch((err) => res.status(404).json({ error: "No such Reservation" }));
 }
@@ -172,6 +180,8 @@ const cancelReservedFlight = (req,res) => {
 
 
 module.exports = {
+  findUser,
+  createUser,
   createFlight,
   listFlights,
   deleteFlight,

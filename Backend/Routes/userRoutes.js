@@ -6,11 +6,11 @@ userRouter.use(express.urlencoded({extended: false}));
 
 
 
-// flightRouter.get('/',userController.listFlights);
+userRouter.post('/create',userController.createUser);
 
 userRouter.post('/search',userController.userSearchFlights);
 
-// flightRouter.get('/:id',userController.showFlight);
+userRouter.get('/:email',userController.findUser);
 
 // flightRouter.put('/update/:id',userController.updateFlight);
 

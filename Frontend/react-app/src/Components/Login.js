@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import  { useState, useEffect } from "react";
+import  { useHistory } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -28,15 +31,47 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn(props) {
+
+  const [user,setUser]=useState({});
+  const history=useHistory();
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    axios.get("http://localhost:8000/user/"+ data.get('email')).then((result) => {
+     
+      if(result.data.length ==0){
+
+      }
+      else if(data.get('password')===result.data[0].password){
+       setUser(result.data[0]); 
+        if(props.location.state==null){
+          history.push("/user_home",{
+            user:user
+          })
+
+        }
+        else{
+
+          history.push("/seats_departure",{...props.location.state,user:user})
+
+        }
+
+      }
+      else{
+
+      }
     });
+    // // eslint-disable-next-line no-console
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+
+
+
   };
 
   return (

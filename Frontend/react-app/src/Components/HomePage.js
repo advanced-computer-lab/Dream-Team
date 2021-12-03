@@ -57,6 +57,9 @@ const HomePage = () => {
       returnFlight: returnFlight,
     });
   };
+  const handleClick=()=>{
+    history.push("/login");
+  }
 
   return (
     <div>
@@ -76,7 +79,9 @@ const HomePage = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Welcome
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit" onClick={() => {
+                handleClick();
+              }}>Login</Button>
           </Toolbar>
         </AppBar>
       </Box>

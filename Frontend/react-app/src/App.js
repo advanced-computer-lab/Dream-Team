@@ -14,7 +14,8 @@ import UserSearchFlights from './Components/UserSearchFlights';
 import SummaryOfReservation from './Components/SummaryOfReservation';
 import SeatReservationDeparture from './Components/SeatReservationDeparture';
 import SeatReservationReturn from './Components/SeatReservationReturn';
-//import Login from './Components/Login';
+import Login from './Components/Login';
+import UserHomePage from './Components/UserHomePage';
 
 const App=()=>{
   return (
@@ -33,6 +34,8 @@ const App=()=>{
       <Route exact path="/summary" component={SummaryOfReservation} />
       <Route exact path="/seats_departure" component={SeatReservationDeparture} />
       <Route exact path="/seats_return" component={SeatReservationReturn} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/user_home" component={UserHomePage} />
    
       
       

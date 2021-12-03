@@ -17,7 +17,13 @@ const SummaryOfReservation = (props) => {
     const returnFlight= props.location.state.returnFlight;
 
     const onProceed = () => {
-      history.push ("/seats_departure", {departureFlight: departureFlight, returnFlight: returnFlight })
+      if(props.location.state.hasOwnProperty('user')){
+        history.push ("/seats_departure", props.location.state)
+      }
+      else{
+        history.push ("/login", props.location.state)
+      }
+      
     };
     
 
