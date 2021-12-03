@@ -53,7 +53,7 @@ const UserSearchFlights = (props) => {
   const handleProceed = () => {
     console.log(chosenDeparture);
     console.log(chosenReturn);
-    history.push ("/summary", {
+    history.push ("/summary", {...props.location.state,
       departureFlight: chosenDeparture,
       returnFlight: chosenReturn,
     })
