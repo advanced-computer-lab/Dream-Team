@@ -6,7 +6,7 @@ const SeatReservationReturn = (props) => {
   const [returnFlight, setReturnFlight] = useState(
     props.location.state.returnFlight
   );
-  console.log(returnFlight);
+  console.log(props.location.state);
   const history = useHistory();
   const [arraySeats, setArraySeats] = useState([]);
   const [seatsClicked, setSeatsClicked] = useState(0);
@@ -18,9 +18,9 @@ const SeatReservationReturn = (props) => {
       );
       setSeatsClicked((prev) => prev - 1);
     }
-    //  else if(seatsClicked==departureFlight.passengers){
+     else if(seatsClicked==returnFlight.passengers){
 
-    //    }
+       }
     else {
       setSeatsClicked((prev) => prev + 1);
       console.log(seatsClicked);
@@ -31,11 +31,11 @@ const SeatReservationReturn = (props) => {
   };
 
   const onSubmit = () => {
-    setReturnFlight({ ...returnFlight, chosenSeats: arraySeats });
+    // setReturnFlight({ ...returnFlight, chosenSeats: arraySeats });
     console.log(returnFlight);
-    history.push("/seats_return", {
-      departureFlight: props.location.state.departureFlight,
-      returnFlight: returnFlight,
+    history.push("/confirm", {
+      ...props.location.state,
+      returnFlight: { ...returnFlight, chosenSeats: arraySeats },
     });
   };
 

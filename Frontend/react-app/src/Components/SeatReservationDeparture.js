@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router";
 import axios from "axios";
+
 const SeatReservationDeparture = (props) => {
+
+  console.log(props.location.state);
   const [departureFlight, setDepartureFlight] = useState(
     props.location.state.departureFlight
   );
@@ -17,9 +20,9 @@ const SeatReservationDeparture = (props) => {
       );
       setSeatsClicked((prev) => prev - 1);
     }
-    //  else if(seatsClicked==departureFlight.passengers){
+     else if(seatsClicked==departureFlight.passengers){
 
-    //    }
+       }
     else {
       setSeatsClicked((prev) => prev + 1);
       console.log(seatsClicked);
@@ -30,11 +33,11 @@ const SeatReservationDeparture = (props) => {
   };
 
   const onSubmit = () => {
-    setDepartureFlight({ ...departureFlight, chosenSeats: arraySeats });
+    // setDepartureFlight({ ...departureFlight, chosenSeats: arraySeats });
     console.log(departureFlight);
     history.push("/seats_return", {
-      departureFlight: departureFlight,
-      returnFlight: props.location.state.returnFlight,
+      ...props.location.state,
+      departureFlight: {...departureFlight,chosenSeats: arraySeats}
     });
   };
 

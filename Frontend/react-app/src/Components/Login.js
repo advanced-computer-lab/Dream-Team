@@ -52,12 +52,12 @@ export default function SignIn(props) {
 
           if (props.location.state == null) {
             history.push("/user_home", {
-              user: user,
+              user: result.data[0],
             });
           } else {
             history.push("/seats_departure", {
               ...props.location.state,
-              user: user,
+              user: result.data[0],
             });
           }
         } else {

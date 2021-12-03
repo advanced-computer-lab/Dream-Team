@@ -15,6 +15,7 @@ import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const UserHomePage = (props) => {
+    console.log(props.location.state);
   const history = useHistory();
   
 
@@ -76,7 +77,8 @@ const UserHomePage = (props) => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Welcome
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">Edit Info</Button>
+            <Button color="inherit">Show Reservastions</Button>
           </Toolbar>
         </AppBar>
       </Box>
