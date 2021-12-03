@@ -1,6 +1,7 @@
 const Flight = require("../model/flight");
 const User = require("../model/user");
 const Reservation = require("../model/reservation");
+const { emit } = require("../model/flight");
 
 const createFlight = (req, res) => {
   const flight = req.body.flight;
@@ -172,16 +173,20 @@ const cancelReservedFlight = (req,res) => {
     .then((result) => res.json({ mgs: " Reservations canceled successfully" }))
     .catch((err) => res.status(404).json({ error: "No such Reservation" }));
 }
-const addReservation = (req, res) => {
-  var email = req.body.user.email;
 
-  User.find({email:email}).then((result) =>{
+const addReservation = (req, res) => {
+  var em = req.body.user.email;
+
+  User.findOne({email:em}).then((result) =>{
+    
+     
     result.reservations=[...result.reservations, {departure_flight:req.body.departureFlight, return_flight:req.body.returnFlight}]
     
     result
       .save()
       .then((result) => {
-        res.send("update is done");
+        res.header("Content-Type", "application/json");
+      res.send(JSON.stringify(result, null, 4));
       })
       .catch(() => {
         console.log("Someting is wrong,Try again");
