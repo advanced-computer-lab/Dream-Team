@@ -23,7 +23,9 @@ const SeatReservationDeparture = (props) => {
         prev.filter((seat) => clickedSeat._id !== seat._id)
       );
       setSeatsClicked((prev) => prev - 1);
-    }  else {
+    } 
+    
+    else {
       setSeatsClicked((prev) => prev + 1);
       console.log(seatsClicked);
 
@@ -33,7 +35,10 @@ const SeatReservationDeparture = (props) => {
   };
 
   const onSubmit = () => {
-    // setDepartureFlight({ ...departureFlight, chosenSeats: arraySeats });
+    if (seatsClicked<Number(departureFlight.passengers)){
+        alert("Please choose "+ (Number(departureFlight.passengers)-seatsClicked) +" more seat(s)")
+      return;
+    }
     console.log(departureFlight);
     history.push("/seats_return", {
       ...props.location.state,
@@ -62,7 +67,7 @@ const SeatReservationDeparture = (props) => {
       <Button
         variant="contained"
         onClick={() => {
-          onSubmit();
+          onSubmit()
         }}
       >
         Choose Return Flight Seats

@@ -14,8 +14,9 @@ const ShowReservations = (props) => {
   const [deleted, setDeleted] = useState(false);
   const [user, setUser] = useState(props.location.state.user);
   const [reservations, setReservations] = useState(props.location.state.user.reservations);
-  console.log( props.location.state);
-  console.log( reservations);
+//   console.log( props.location.state);
+//   console.log( reservations);
+
 
 
   useEffect(() => {
@@ -26,18 +27,23 @@ const ShowReservations = (props) => {
     }
     
   }, [deleted]);
-
-  const onCancel = (email,id) => {
+console.log(props.location.state);
+  const onCancel = (user,id) => {
     if (window.confirm("Delete?")) {
-      const path = "http://localhost:8000/user/delete_reservation/" + email+"/"+id;
+      const path = "http://localhost:8000/user/delete_reservation/" + user.email+"/"+id;
+      const chosenReservation= reservations.find((reservation)=> reservation._id===id)
+      const price=chosenReservation.departure_flight.price* Number(chosenReservation.departure_flight.passengers)+chosenReservation.return_flight.price* Number(chosenReservation.return_flight.passengers)
+
       axios.put(path);
       setReservations(reservations.filter((reservation)=> reservation._id!==id));
 
       setDeleted(true)
+
+      axios.post("http://localhost:8000/user/send_confirmation",{user,price})
     }
   };
   const onHome = (email,id) => {
-    
+
     history.push("/user_home",{user:{...user,reservations:reservations}});
   };
 
@@ -188,7 +194,7 @@ const ShowReservations = (props) => {
             <Button
               variant="contained"
               onClick={() => {
-                onCancel(user.email,reservation._id);
+                onCancel(user,reservation._id);
               }}
             >
               Cancel Reservation

@@ -2,6 +2,7 @@ const Flight = require("../model/flight");
 const User = require("../model/user");
 const Reservation = require("../model/reservation");
 const { emit } = require("../model/flight");
+const email = require("../Confirmation/email")
 
 const createFlight = (req, res) => {
   const flight = req.body.flight;
@@ -163,11 +164,14 @@ const updateExistingUser = (req, res) => {
   });
 };
 
-const cancelReservation = (req, res) => {
+const cancelReservation = async(req, res) => {
   var email = req.params.email;
   var id=req.params.id;
   // console.log(id);
-  User.findOne({ email: email }).then((result) => {
+  console.log(email)
+  console.log(id)
+
+ await User.findOne({ email: email }).then((result) => {
     result.reservations = (result.reservations).filter((reservation)=>reservation._id !=id);
     // console.log((result.reservations).filter((reservation)=>reservation._id !=id));
 
@@ -181,9 +185,22 @@ const cancelReservation = (req, res) => {
       });
   });
   res.status(200).json({msg:"deleted"});
+
 };
 
+const sendConfirmation = (req, res, next) => {
+  var user=req.body.user;
+  var price=req.body.price;
 
+  var mailOptions = {
+    to: user.email,
+    subject: "Reservation cancellation",
+    text: `Your reservation has been cancelled. Total refunded price is ${price}`,
+  };
+  req.mailOptions = mailOptions;
+  email.sendMail(req, res, next);
+  res.status(200).json({message:"Sent successfully"});
+}
 
 
 
@@ -266,4 +283,5 @@ module.exports = {
   updateExistingUser,
   cancelReservation,
   addReservation,
+  sendConfirmation,
 };

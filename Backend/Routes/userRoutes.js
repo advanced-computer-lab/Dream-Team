@@ -18,5 +18,8 @@ userRouter.put('/delete_reservation/:email/:id',userController.cancelReservation
 
 userRouter.put('/edit_user/:email', userController.updateExistingUser);
 
+userRouter.post('/send_confirmation', userController.sendConfirmation);
+
+
 
 module.exports=userRouter;

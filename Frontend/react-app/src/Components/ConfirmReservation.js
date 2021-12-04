@@ -124,7 +124,7 @@ const ConfirmReservation = (props) => {
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {returnFlight.price * (+returnFlight.passengers)}
+                <b>Price: </b> {returnFlight.price * returnFlight.chosenSeats.length}
               </p>
                 </Typography>
               </p>
