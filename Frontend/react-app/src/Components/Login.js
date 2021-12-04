@@ -48,9 +48,14 @@ export default function SignIn(props) {
       .then((result) => {
         if (result.data.length == 0) {
         } else if (data.get("password") === result.data[0].password) {
-          setUser(result.data[0]);
+          
+          if(result.data[0].admin===true){
+            history.push("/", {
+              user: result.data[0],
+            });
+          }
 
-          if (props.location.state == null) {
+          else if (props.location.state == null) {
             history.push("/user_home", {
               user: result.data[0],
             });

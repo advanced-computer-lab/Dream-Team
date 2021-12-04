@@ -17,11 +17,9 @@ const ConfirmReservation = (props) => {
     const returnFlight= props.location.state.returnFlight;
 
     const onProceed = () => {
-
       axios
-      .put("http://localhost:8000/user/confirm_reservation/", props.location.state)
-      .then(()=>history.push('/home'));
-      
+      .put("http://localhost:8000/user/confirm_reservation", props.location.state)
+      .then(()=>history.push('/user_home', {user:props.location.state.user}));
     };
     
 
