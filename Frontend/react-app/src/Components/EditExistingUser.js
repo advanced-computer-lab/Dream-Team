@@ -8,25 +8,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const EditExistingUser = () => {
   const [user, setUser] = useState({});
-  const { id } = useParams();
+  const { email } = useParams();
   const history=useHistory();
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/edit_user/" + id)
+      .get("http://localhost:8000/user/" + email)
       .then((response) => {
-        setUser({
-          _id: response.data._id,
-          first_name: response.data.first_name,
-          last_name: response.data.last_name,
-          passport_number: response.data.passport_number,
-          email: response.data.email
-        });
+        setUser(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, [id]);
+  }, [email]);
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -35,8 +29,8 @@ const EditExistingUser = () => {
     e.preventDefault();
 
     axios
-      .put("http://localhost:8000/user/edit_user/" + id, user)
-      .then(()=>history.push('/edit_user'));
+      .put("http://localhost:8000/user/edit_user/" +email, user)
+      .then(()=>history.push('/user_home',{user:user}));
   };
 
   return user?._id ? (

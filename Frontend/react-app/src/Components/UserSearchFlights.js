@@ -23,7 +23,11 @@ const UserSearchFlights = (props) => {
   const [returnFlights, setReturnFlights] = useState([]);
 
   const [chosenDeparture, setChosenDeparture] = useState({});
-  const [chosenReturn, setChosenReturn] = useState({})
+  const [chosenReturn, setChosenReturn] = useState({});
+
+  const [selectedDepId, setSelectedDepId] = useState("");
+  const [selectedRetId, setSelectedRetId] = useState("");
+
 
   useEffect(() => {
     console.log(departureSearch);
@@ -39,24 +43,33 @@ const UserSearchFlights = (props) => {
   }, []);
 
   const handleDeparture = (flight) => {
+    console.log(typeof flight._id);
     cabin? flight={...flight,cabin:"Business",price:flight.price_business} : flight={...flight,cabin:"Economy",price:flight.price_economy}
-    
-    setChosenDeparture({...flight,passengers:departureSearch.passengers});
+    setSelectedDepId((prev)=>prev===flight._id?"":flight._id);
+    setChosenDeparture((prev)=>prev!=={...flight,passengers:departureSearch.passengers}?{...flight,passengers:departureSearch.passengers}:{});
     console.log(flight)
   };
   const handleReturn = (flight) => {
     cabin? flight={...flight,cabin:"Business",price:flight.price_business}:flight={...flight,cabin:"Economy",price:flight.price_economy}
-    setChosenReturn({...flight,passengers:returnSearch.passengers});
+    
+    setSelectedRetId((prev)=>prev===flight._id?"":flight._id);
+    setChosenReturn((prev)=>prev!=={...flight,passengers:departureSearch.passengers}?{...flight,passengers:departureSearch.passengers}:{});
     console.log(flight)
 
   };
   const handleProceed = () => {
     console.log(chosenDeparture);
     console.log(chosenReturn);
-    history.push ("/summary", {...props.location.state,
-      departureFlight: chosenDeparture,
-      returnFlight: chosenReturn,
-    })
+    if(selectedDepId===""||selectedRetId===""){
+      alert("please select both")
+
+    }else{
+      
+      history.push ("/summary", {...props.location.state,
+        departureFlight: chosenDeparture,
+        returnFlight: chosenReturn,
+      })
+    }
   }
   return (
     
@@ -113,7 +126,8 @@ const UserSearchFlights = (props) => {
             </Typography>
             </AccordionDetails>
             </Accordion>
-            <Button variant="contained" onClick={() => {handleDeparture(flight)}}>Book Flight</Button>
+            <Button style={{backgroundColor:selectedDepId===flight._id?"#519259":"#344CB7"}} variant="contained" onClick={() => {handleDeparture(flight)}}>
+              {selectedDepId===flight._id? "Selected":"Book Flight"}</Button>
 
           </li>
           
@@ -175,7 +189,7 @@ const UserSearchFlights = (props) => {
             </Typography>
             </AccordionDetails>
             </Accordion>
-            <Button variant="contained" onClick={() => {handleReturn(flight)}}>Book Flight</Button>
+            <Button style={{backgroundColor:selectedRetId===flight._id?"#519259":"#344CB7"}} variant="contained" onClick={() => {handleReturn(flight)}}>{selectedRetId===flight._id? "Selected":"Book Flight"}</Button>
           </li>
           
         ))}

@@ -28,7 +28,6 @@ const ConfirmReservation = (props) => {
             <ul>
       <h3>Departure Flight</h3>
         
-          
           <li key={departureFlight._id}>
             <Accordion>
             <AccordionSummary

@@ -14,9 +14,9 @@ userRouter.get('/:email',userController.findUser);
 
 userRouter.put('/confirm_reservation',userController.addReservation);
 
-userRouter.delete('/delete_reservation',userController.cancelReservedFlight);
+userRouter.put('/delete_reservation/:email/:id',userController.cancelReservation);
 
-userRouter.put('edit_user/:id', userController.updateExistingUser);
+userRouter.put('/edit_user/:email', userController.updateExistingUser);
 
 
 module.exports=userRouter;

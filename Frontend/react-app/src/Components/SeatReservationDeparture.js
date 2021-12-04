@@ -4,7 +4,6 @@ import { useHistory } from "react-router";
 import axios from "axios";
 
 const SeatReservationDeparture = (props) => {
-
   console.log(props.location.state);
   const [departureFlight, setDepartureFlight] = useState(
     props.location.state.departureFlight
@@ -14,16 +13,17 @@ const SeatReservationDeparture = (props) => {
   const [seatsClicked, setSeatsClicked] = useState(0);
 
   const handleClick = (clickedSeat) => {
+    if (seatsClicked === Number(departureFlight.passengers)&&!arraySeats.includes(clickedSeat)) {
+      
+      alert("You cant choose more than "+departureFlight.passengers+" seats")
+      return;}
+
     if (arraySeats.includes(clickedSeat)) {
       setArraySeats((prev) =>
         prev.filter((seat) => clickedSeat._id !== seat._id)
       );
       setSeatsClicked((prev) => prev - 1);
-    }
-     else if(seatsClicked==departureFlight.passengers){
-
-       }
-    else {
+    }  else {
       setSeatsClicked((prev) => prev + 1);
       console.log(seatsClicked);
 
@@ -37,7 +37,7 @@ const SeatReservationDeparture = (props) => {
     console.log(departureFlight);
     history.push("/seats_return", {
       ...props.location.state,
-      departureFlight: {...departureFlight,chosenSeats: arraySeats}
+      departureFlight: { ...departureFlight, chosenSeats: arraySeats },
     });
   };
 
@@ -47,6 +47,8 @@ const SeatReservationDeparture = (props) => {
         {departureFlight.seats.map((seat) => (
           <li key={seat._id}>
             <Button
+              disabled={departureFlight.cabin.toLowerCase()!==seat.cabin||seat.reserved?true:false}
+              style={{backgroundColor:arraySeats.includes(seat)?"#519259":""}}
               variant="contained"
               onClick={() => {
                 handleClick(seat);

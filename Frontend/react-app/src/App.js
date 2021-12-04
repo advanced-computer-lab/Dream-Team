@@ -27,6 +27,7 @@ const App=()=>{
   
       <br/>
       <Switch>
+      <Route exact path="/user_reservations" component={ShowReservations} />
       <Route exact path="/user/search" component={UserSearchFlights} />
       <Route exact path="/"  component={ListFlights} />
       <Route exact path="/home"  component={HomePage} />
@@ -40,8 +41,8 @@ const App=()=>{
       <Route exact path="/login" component={Login} />
       <Route exact path="/user_home" component={UserHomePage} />
       <Route exact path="/confirm" component={ConfirmReservation} />
-      <Route exact path="/user_reservations" component={ShowReservations} />
-      <Route exact path="/edit_user/:id" component={EditExistingUser} />
+      
+      <Route exact path="/edit_user/:email" component={EditExistingUser} />
 
    
       

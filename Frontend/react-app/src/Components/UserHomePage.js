@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,10 +18,22 @@ const UserHomePage = (props) => {
     console.log(props.location.state);
   const history = useHistory();
   
-
+  const [user, setUser] = useState(props.location.state.user);
+  const email=props.location.state.user.email;
   const [departureFlight, setDepartureFlight] = useState({});
   const [returnFlight, setReturnFlight] = useState({});
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/user/" + email)
+      .then((response) => {
+        console.log(response.data);
+        setUser(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.name === "departure_date") {
@@ -43,11 +55,12 @@ const UserHomePage = (props) => {
     }
   };
 
-  const handleClick=()=>{
-    history.push("/edit_user/:id");
+  const handleClick=(email)=>{
+    history.push("/edit_user/"+ email);
   }
   const handleClick2=()=>{
-    history.push("/user_reservation");
+      console.log(user);
+    history.push("/user_reservations",{user:user});
   }
   const onSubmit = (e) => {
     e.preventDefault();
@@ -61,7 +74,7 @@ const UserHomePage = (props) => {
     //     return (searchUrl += key + "=" + value + last);
     //   });
 
-    history.push("/user/search", {...props.location.state,
+    history.push("/user/search", {user:user,
       departureFlight: departureFlight,
       returnFlight: returnFlight,
     });
@@ -86,7 +99,7 @@ const UserHomePage = (props) => {
               Welcome
             </Typography>
             <Button color="inherit"onClick={() => {
-                handleClick();
+                handleClick(user.email);
               }}>Edit Info</Button>
             <Button color="inherit" onClick={() => {
                 handleClick2();

@@ -12,15 +12,19 @@ const SeatReservationReturn = (props) => {
   const [seatsClicked, setSeatsClicked] = useState(0);
 
   const handleClick = (clickedSeat) => {
+
+    if (seatsClicked === Number(returnFlight.passengers)&&!arraySeats.includes(clickedSeat)) {
+      
+      alert("You cant choose more than "+returnFlight.passengers+" seats")
+      return;}
+
     if (arraySeats.includes(clickedSeat)) {
       setArraySeats((prev) =>
         prev.filter((seat) => clickedSeat._id !== seat._id)
       );
       setSeatsClicked((prev) => prev - 1);
     }
-     else if(seatsClicked==returnFlight.passengers){
-
-       }
+    
     else {
       setSeatsClicked((prev) => prev + 1);
       console.log(seatsClicked);
@@ -45,6 +49,8 @@ const SeatReservationReturn = (props) => {
         {returnFlight.seats.map((seat) => (
           <li key={seat._id}>
             <Button
+              disabled={returnFlight.cabin.toLowerCase()!==seat.cabin||seat.reserved?true:false}
+              style={{backgroundColor:arraySeats.includes(seat)?"#519259":""}}
               variant="contained"
               onClick={() => {
                 handleClick(seat);

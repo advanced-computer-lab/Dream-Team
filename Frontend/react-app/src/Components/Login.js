@@ -47,9 +47,9 @@ export default function SignIn(props) {
       .get("http://localhost:8000/user/" + data.get("email"))
       .then((result) => {
         if (result.data.length == 0) {
-        } else if (data.get("password") === result.data[0].password) {
+        } else if (data.get("password") === result.data.password) {
           
-          if(result.data[0].admin===true){
+          if(result.data.admin===true){
             history.push("/", {
               user: result.data[0],
             });
@@ -57,12 +57,12 @@ export default function SignIn(props) {
 
           else if (props.location.state == null) {
             history.push("/user_home", {
-              user: result.data[0],
+              user: result.data,
             });
           } else {
             history.push("/seats_departure", {
               ...props.location.state,
-              user: result.data[0],
+              user: result.data,
             });
           }
         } else {
