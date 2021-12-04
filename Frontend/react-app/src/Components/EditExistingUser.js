@@ -13,7 +13,7 @@ const EditExistingUser = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000//" + id)
+      .get("http://localhost:8000/edit_user/" + id)
       .then((response) => {
         setUser({
           _id: response.data._id,
@@ -35,8 +35,8 @@ const EditExistingUser = () => {
     e.preventDefault();
 
     axios
-      .put("http://localhost:8000/flights/user/update/" + id, user)
-      .then(()=>history.push('/'));
+      .put("http://localhost:8000/user/edit_user/" + id, user)
+      .then(()=>history.push('/edit_user'));
   };
 
   return user?._id ? (

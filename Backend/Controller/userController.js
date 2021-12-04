@@ -164,7 +164,14 @@ const updateExistingUser = (req, res) => {
 };
 
 const cancelReservedFlight = (req, res) => {
-  Reservation.findByIdAndRemove(req.params.id, req.body)
+  var em = req.body.user.email;
+  var depId=req.body.departureFlight._id;
+  var retId=req.body.returnFlight._id;
+  var depChosenSeats=req.body.departureFlight.chosenSeats
+  var retChosenSeats=req.body.returnFlight.chosenSeats
+  User.findOne({email: em }).then ((result) => {
+    reesult.reservations
+  })
     .then((result) => res.json({ mgs: " Reservations canceled successfully" }))
     .catch((err) => res.status(404).json({ error: "No such Reservation" }));
 };

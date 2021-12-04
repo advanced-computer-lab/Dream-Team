@@ -17,6 +17,8 @@ import SeatReservationReturn from './Components/SeatReservationReturn';
 import Login from './Components/Login';
 import UserHomePage from './Components/UserHomePage';
 import ConfirmReservation from './Components/ConfirmReservation';
+import ShowReservations from './Components/ShowReservations';
+import EditExistingUser from './Components/EditExistingUser';
 
 const App=()=>{
   return (
@@ -38,6 +40,9 @@ const App=()=>{
       <Route exact path="/login" component={Login} />
       <Route exact path="/user_home" component={UserHomePage} />
       <Route exact path="/confirm" component={ConfirmReservation} />
+      <Route exact path="/user_reservations" component={ShowReservations} />
+      <Route exact path="/edit_user/:id" component={EditExistingUser} />
+
    
       
       

@@ -22,6 +22,7 @@ const UserHomePage = (props) => {
   const [departureFlight, setDepartureFlight] = useState({});
   const [returnFlight, setReturnFlight] = useState({});
 
+
   const handleChange = (e) => {
     if (e.target.name === "departure_date") {
       setDepartureFlight({ ...departureFlight, flight_date: e.target.value });
@@ -41,6 +42,13 @@ const UserHomePage = (props) => {
       setReturnFlight({ ...returnFlight, [e.target.name]: e.target.value });
     }
   };
+
+  const handleClick=()=>{
+    history.push("/edit_user/:id");
+  }
+  const handleClick2=()=>{
+    history.push("/user_reservation");
+  }
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(departureFlight);
@@ -77,8 +85,12 @@ const UserHomePage = (props) => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Welcome
             </Typography>
-            <Button color="inherit">Edit Info</Button>
-            <Button color="inherit">Show Reservastions</Button>
+            <Button color="inherit"onClick={() => {
+                handleClick();
+              }}>Edit Info</Button>
+            <Button color="inherit" onClick={() => {
+                handleClick2();
+                }}>Show Reservastions</Button>
           </Toolbar>
         </AppBar>
       </Box>
