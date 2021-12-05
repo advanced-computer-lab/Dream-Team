@@ -59,13 +59,17 @@ const ConfirmReservation = (props) => {
                 
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {departureFlight.price * departureFlight.chosenSeats.length} {" "}
+                <b>Total Price: </b> {departureFlight.price * departureFlight.chosenSeats.length} {" "}
               </p>
                 </Typography>
               </p>
             </AccordionSummary>
             <AccordionDetails>
             <Typography>
+            <p className="left-txt">
+                {" "}
+                <b>Flight Number: </b> {departureFlight.flight_number}{" "}
+              </p>
             <p className="left-txt">
                 {" "}
                 <b>Flight Date: </b> {departureFlight.flight_date}{" "}
@@ -125,18 +129,19 @@ const ConfirmReservation = (props) => {
               </p>
               </p>
                 
-              
-              
-                
               <p className="left-txt">
                 {" "}
-                <b>Price: </b> {returnFlight.price * returnFlight.chosenSeats.length}
+                <b>Total Price: </b> {returnFlight.price * returnFlight.chosenSeats.length}
               </p>
                 </Typography>
               </p>
             </AccordionSummary>
             <AccordionDetails>
             <Typography>
+            <p className="left-txt">
+                {" "}
+                <b>Flight Number: </b> {returnFlight.flight_number}{" "}
+              </p>
             <p className="left-txt">
                 {" "}
                 <b>Flight Date: </b> {returnFlight.flight_date}{" "}
@@ -164,7 +169,12 @@ const ConfirmReservation = (props) => {
         
       </ul>
 
-      
+      <p className="left-txt">
+        {" "}
+        <b>Total Price: </b>{" "}
+        {returnFlight.price * +returnFlight.passengers +
+          departureFlight.price * +departureFlight.passengers}{" "}
+      </p>
     
 
       <Button variant="contained" onClick={() => onProceed()}>Confirm Reservation</Button>

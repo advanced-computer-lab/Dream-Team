@@ -90,11 +90,15 @@ const UserSearchFlights = (props) => {
               <p className="left-txt">
                 {" "}
                 <Typography>
-                <b>Flight Number: </b> {flight.flight_number}{" "}
+                <p className="left-txt">
+                {" "}
+                
+                <b> Flight Date: </b> {flight.flight_date}{" "}
+              </p>
                 
                 <p className="left-txt">
                 {" "}
-                <br/>
+                
                 <b> From: </b> {flight.from } {flight.departure_time}{" "}
               </p>
               <p className="left-txt">
@@ -113,15 +117,15 @@ const UserSearchFlights = (props) => {
             <Typography>
             <p className="left-txt">
                 {" "}
-                <b>Flight Date: </b> {flight.flight_date}{" "}
+                <b>Flight Number: </b> {flight.flight_number}{" "}
               </p>
               <p className="left-txt">
                 {" "}
-                <b>Economy: </b> {flight.economy_seats_available}{" "}
+                <b>Baggage Allowance: </b> {flight.baggage_allowance}{" "}
               </p>
               <p className="left-txt">
                 {" "}
-                <b>Business: </b> {flight.business_seats_available}
+                <b>Duration: </b> {flight.duration}
               </p>
             </Typography>
             </AccordionDetails>
@@ -140,57 +144,59 @@ const UserSearchFlights = (props) => {
         {returnFlights.map((flight) => (
           
           <li key={flight._id}>
-            <Accordion>
-            <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header">
-            
+          <Accordion>
+          <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header">
+          
+            <p className="left-txt">
+              {" "}
+              <Typography>
               <p className="left-txt">
-                {" "}
-                <Typography>
-                <b>Flight Date: </b> {flight.flight_date}{" "}
-                <p className="left-txt">
-                {" "}
-              </p>
-                
-                
-                <p className="left-txt">
-                {" "}
-                <br/>
-                <b> From: </b> {flight.from } {flight.departure_time}{" "}
-              </p>
-              <p className="left-txt">
-                {" "}
-                <b>To: </b> {flight.to } {flight.arrival_time}{" "}
-              </p>
-                
-              <p className="left-txt">
-                {" "}
-                <b>Price: </b> {returnSearch.cabin === "business" ? flight.price_business : flight.price_economy}
-              </p>
-                </Typography>
-              </p>
-            </AccordionSummary>
-            <AccordionDetails>
-            <Typography>
-
-            <b>Flight Number: </b> {flight.flight_number}{" "}
-            
-              <p className="left-txt">
-                {" "}
-                <b>Economy: </b> {flight.economy_seats_available}{" "}
-              </p>
-              <p className="left-txt">
-                {" "}
-                <b>Business: </b> {flight.business_seats_available}
-              </p>
+              {" "}
               
-            </Typography>
-            </AccordionDetails>
-            </Accordion>
-            <Button style={{backgroundColor:selectedRetId===flight._id?"#519259":"#344CB7"}} variant="contained" onClick={() => {handleReturn(flight)}}>{selectedRetId===flight._id? "Selected":"Book Flight"}</Button>
-          </li>
+              <b> Flight Date: </b> {flight.flight_date}{" "}
+            </p>
+              
+              <p className="left-txt">
+              {" "}
+              
+              <b> From: </b> {flight.from } {flight.departure_time}{" "}
+            </p>
+            <p className="left-txt">
+              {" "}
+              <b>To: </b> {flight.to } {flight.arrival_time}{" "}
+            </p>
+              
+            <p className="left-txt">
+              {" "}
+              <b>Price: </b> {cabin ? flight.price_business : flight.price_economy}
+            </p>
+              </Typography>
+            </p>
+          </AccordionSummary>
+          <AccordionDetails>
+          <Typography>
+          <p className="left-txt">
+              {" "}
+              <b>Flight Number: </b> {flight.flight_number}{" "}
+            </p>
+            <p className="left-txt">
+              {" "}
+              <b>Baggage Allowance: </b> {flight.baggage_allowance}{" "}
+            </p>
+            <p className="left-txt">
+              {" "}
+              <b>Duration: </b> {flight.duration}
+            </p>
+          </Typography>
+          </AccordionDetails>
+          </Accordion>
+          <Button style={{backgroundColor:selectedRetId===flight._id?"#519259":"#344CB7"}} variant="contained" onClick={() => {handleReturn(flight)}}>
+            {selectedRetId===flight._id? "Selected":"Book Flight"}</Button>
+
+        </li>
           
         ))}
       </ul>

@@ -67,6 +67,10 @@ const SummaryOfReservation = (props) => {
                 </p>
                 <p className="left-txt">
                   {" "}
+                  <b>Cabin Class: </b> {departureFlight.cabin}{" "}
+                </p>
+                <p className="left-txt">
+                  {" "}
                   <b>Price per seat: </b> {departureFlight.price}{" "}
                 </p>
                 <p className="left-txt">
@@ -75,7 +79,7 @@ const SummaryOfReservation = (props) => {
                 </p>
                 <p className="left-txt">
                     {" "}
-                    <b>Price: </b>{" "}
+                    <b>Total Price: </b>{" "}
                     {departureFlight.price * +departureFlight.passengers}{" "}
                   </p>
               </Typography>
@@ -125,6 +129,10 @@ const SummaryOfReservation = (props) => {
                 </p>
                 <p className="left-txt">
                   {" "}
+                  <b>Cabin Class: </b> {returnFlight.cabin}{" "}
+                </p>
+                <p className="left-txt">
+                  {" "}
                   <b>Price per seat: </b> {returnFlight.price}{" "}
                 </p>
                 <p className="left-txt">
@@ -133,7 +141,7 @@ const SummaryOfReservation = (props) => {
                 </p>
                 <p className="left-txt">
                     {" "}
-                    <b>Price: </b>{" "}
+                    <b>Total Price: </b>{" "}
                     {returnFlight.price * +returnFlight.passengers}
                   </p>
               </Typography>

@@ -88,7 +88,7 @@ console.log(props.location.state);
                     </p>
                     <p className="left-txt">
                       {" "}
-                      <b>From: {reservation.departure_flight.from} </b>{" "}
+                      <b>From:  </b>{reservation.departure_flight.from}{" "}
                     </p>
                     <p className="left-txt">
                       {" "}
@@ -152,7 +152,7 @@ console.log(props.location.state);
                     </p>
                     <p className="left-txt">
                       {" "}
-                      <b>From: {reservation.return_flight.from} </b>{" "}
+                      <b>From:  </b>{reservation.return_flight.from}{" "}
                     </p>
                     <p className="left-txt">
                       {" "}
@@ -162,7 +162,7 @@ console.log(props.location.state);
                     <p className="left-txt">
                       {" "}
                       <b>Departure Time: </b>{" "}
-                      {reservation.return_flight.return_time}{" "}
+                      {reservation.return_flight.departure_time}{" "}
                     </p>
                     <p className="left-txt">
                       {" "}
