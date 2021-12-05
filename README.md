@@ -1,12 +1,12 @@
 # Dream-Team
-Sprint #1:
+Sprint #2:
 
-Nadeen Sayed: CreateFlight and EditFlight components with connections to backend(showFlight function), user schema
+Nadeen Sayed: requirements 15 to 18, non-functional requirements
 
-Moustafa Elwatidy: ListFlights component with connections to backend , App Component with Routing, flight Schema
+Mostafa Elwatidy: requirements 11 to 14, non-functional requirements
 
-Haya Tawakol: List and update functions in the backend, flight routes
+Haya Tawakol: requirements 19 to 22
 
-John Magdy: Search operation in both the backend and frontend (SearchFlighs and SearchResults Components)
+John Magdy: requirements 26 to 29
 
-Ahmed Hisham: Create and delete functions in the backend 
+Ahmed Hisham: requirements 23 to 25 
