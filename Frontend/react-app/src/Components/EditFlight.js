@@ -40,7 +40,8 @@ const EditFlight = () => {
 
     axios
       .put("http://localhost:8000/flights/update/" + id, flight)
-      .then(()=>history.push('/'));
+      .then(()=>{ alert("Flight Edited Successfully")
+        history.push('/admin_home')});
   };
 
   return flight?._id ? (

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,19 +7,19 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/material/Menu";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const UserHomePage = (props) => {
-    console.log(props.location.state);
+  console.log(props.location.state);
   const history = useHistory();
-  
+
   const [user, setUser] = useState(props.location.state.user);
-  const email=props.location.state.user.email;
+  const email = props.location.state.user.email;
   const [departureFlight, setDepartureFlight] = useState({});
   const [returnFlight, setReturnFlight] = useState({});
 
@@ -55,13 +55,13 @@ const UserHomePage = (props) => {
     }
   };
 
-  const handleClick=(email)=>{
-    history.push("/edit_user/"+ email);
-  }
-  const handleClick2=()=>{
-      console.log(user);
-    history.push("/user_reservations",{user:user});
-  }
+  const handleClick = (email) => {
+    history.push("/edit_user/" + email);
+  };
+  const handleClick2 = () => {
+    console.log(user);
+    history.push("/user_reservations", { user: user });
+  };
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(departureFlight);
@@ -74,7 +74,8 @@ const UserHomePage = (props) => {
     //     return (searchUrl += key + "=" + value + last);
     //   });
 
-    history.push("/user/search", {user:user,
+    history.push("/user/search", {
+      user: user,
       departureFlight: departureFlight,
       returnFlight: returnFlight,
     });
@@ -98,12 +99,22 @@ const UserHomePage = (props) => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Welcome
             </Typography>
-            <Button color="inherit"onClick={() => {
+            <Button
+              color="inherit"
+              onClick={() => {
                 handleClick(user.email);
-              }}>Edit Info</Button>
-            <Button color="inherit" onClick={() => {
+              }}
+            >
+              Edit Info
+            </Button>
+            <Button
+              color="inherit"
+              onClick={() => {
                 handleClick2();
-                }}>Show Reservastions</Button>
+              }}
+            >
+              Show Reservastions
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>
@@ -176,18 +187,19 @@ const UserHomePage = (props) => {
         <br />
         <div className="form-group">
           <div>
-            <TextField
+            {/* <TextField
               name="cabin"
               onChange={handleChange}
               variant="outlined"
               label="Cabin Class"
               InputLabelProps={{ shrink: true }}
-            />
-            {/* <InputLabel id="demo-simple-select-label">Cabin Class</InputLabel>
-            <Select name="cabin" label="Age" onChange={handleChange}>
-              <MenuItem value={"economy"}>Ecocnomy</MenuItem>
+            /> 
+          */}
+            <InputLabel id="demo-simple-select-label">Cabin Class</InputLabel>
+            <Select name="cabin" placeholder="Cabin" onChange={handleChange}>
+              <MenuItem value={"economy"}>Economy</MenuItem>
               <MenuItem value={"business"}>Business</MenuItem>
-  </Select>*/}
+            </Select>
           </div>
         </div>
 

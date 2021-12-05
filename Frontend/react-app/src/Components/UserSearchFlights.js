@@ -44,13 +44,13 @@ const UserSearchFlights = (props) => {
 
   const handleDeparture = (flight) => {
     console.log(typeof flight._id);
-    cabin? flight={...flight,cabin:"Business",price:flight.price_business} : flight={...flight,cabin:"Economy",price:flight.price_economy}
+    cabin? flight={...flight,cabin:"business",price:flight.price_business} : flight={...flight,cabin:"economy",price:flight.price_economy}
     setSelectedDepId((prev)=>prev===flight._id?"":flight._id);
     setChosenDeparture((prev)=>prev!=={...flight,passengers:departureSearch.passengers}?{...flight,passengers:departureSearch.passengers}:{});
     console.log(flight)
   };
   const handleReturn = (flight) => {
-    cabin? flight={...flight,cabin:"Business",price:flight.price_business}:flight={...flight,cabin:"Economy",price:flight.price_economy}
+    cabin? flight={...flight,cabin:"business",price:flight.price_business}:flight={...flight,cabin:"economy",price:flight.price_economy}
     
     setSelectedRetId((prev)=>prev===flight._id?"":flight._id);
     setChosenReturn((prev)=>prev!=={...flight,passengers:departureSearch.passengers}?{...flight,passengers:departureSearch.passengers}:{});

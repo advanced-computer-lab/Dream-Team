@@ -38,8 +38,9 @@ const CreateFlight = () => {
     };
     console.log(seatsA);
     axios
-      .post("http://localhost:8000/flights/create", flightBody)
-      .then(() => history.push("/"));
+    .post("http://localhost:8000/flights/create", flightBody)
+    .then(() =>{alert("Flight Created Successfully");
+      history.push("/admin_home");} );
   };
 
   return (

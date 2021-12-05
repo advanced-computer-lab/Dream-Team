@@ -35,6 +35,10 @@ const SeatReservationReturn = (props) => {
   };
 
   const onSubmit = () => {
+    if (seatsClicked<Number(returnFlight.passengers)){
+      alert("Please choose "+ (Number(returnFlight.passengers)-seatsClicked) +" more seat(s)")
+    return;
+  }
     // setReturnFlight({ ...returnFlight, chosenSeats: arraySeats });
     console.log(returnFlight);
     history.push("/confirm", {
@@ -46,6 +50,7 @@ const SeatReservationReturn = (props) => {
   return (
     <div>
       <ul>
+      <h3>Please Choose the Seats for the Return Flight:</h3>
         {returnFlight.seats.map((seat) => (
           <li key={seat._id}>
             <Button
@@ -67,7 +72,7 @@ const SeatReservationReturn = (props) => {
           onSubmit();
         }}
       >
-        Confirm Reservation
+        Done
       </Button>
     </div>
   );

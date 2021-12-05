@@ -154,13 +154,11 @@ const HomePage = () => {
         <br />
         <div className="form-group">
           <div>
-            <TextField
-              name="cabin"
-              onChange={handleChange}
-              variant="outlined"
-              label="Cabin Class"
-              InputLabelProps={{ shrink: true }}
-            />
+          <InputLabel id="demo-simple-select-label">Cabin Class</InputLabel>
+            <Select name="cabin" placeholder="Cabin" onChange={handleChange}>
+              <MenuItem value={"economy"}>Economy</MenuItem>
+              <MenuItem value={"business"}>Business</MenuItem>
+            </Select>
             {/* <InputLabel id="demo-simple-select-label">Cabin Class</InputLabel>
             <Select name="cabin" label="Age" onChange={handleChange}>
               <MenuItem value={"economy"}>Ecocnomy</MenuItem>

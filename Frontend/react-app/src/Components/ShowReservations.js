@@ -28,13 +28,15 @@ const ShowReservations = (props) => {
     
   }, [deleted]);
 console.log(props.location.state);
+
+
   const onCancel = (user,id) => {
     if (window.confirm("Delete?")) {
       const path = "http://localhost:8000/user/delete_reservation/" + user.email+"/"+id;
       const chosenReservation= reservations.find((reservation)=> reservation._id===id)
       const price=chosenReservation.departure_flight.price* Number(chosenReservation.departure_flight.passengers)+chosenReservation.return_flight.price* Number(chosenReservation.return_flight.passengers)
 
-      axios.put(path);
+      axios.put(path,{departureFlight:chosenReservation.departure_flight,returnFlight:chosenReservation.return_flight});
       setReservations(reservations.filter((reservation)=> reservation._id!==id));
 
       setDeleted(true)

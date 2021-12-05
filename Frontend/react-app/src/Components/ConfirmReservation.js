@@ -19,13 +19,15 @@ const ConfirmReservation = (props) => {
     const onProceed = () => {
       axios
       .put("http://localhost:8000/user/confirm_reservation", props.location.state)
-      .then(()=>history.push('/user_home', {user:props.location.state.user}));
+      .then(()=>{alert("reservation confirmed")
+          history.push('/user_home', {user:props.location.state.user})});
     };
     
 
     return (
         <div>
             <ul>
+            <h3>Itinerary of the Reservation:</h3>
       <h3>Departure Flight</h3>
         
           <li key={departureFlight._id}>

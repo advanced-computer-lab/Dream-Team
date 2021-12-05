@@ -49,6 +49,7 @@ const SeatReservationDeparture = (props) => {
   return (
     <div>
       <ul>
+      <h3>Please Choose the Seats for the Departure Flight:</h3>
         {departureFlight.seats.map((seat) => (
           <li key={seat._id}>
             <Button

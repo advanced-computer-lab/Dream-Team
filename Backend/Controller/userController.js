@@ -109,7 +109,7 @@ const userSearchFlights = (req, res) => {
   const flight = req.body;
   console.log(req.body);
   const cabin = flight.cabin;
-  const seats = flight.passengers;
+  const seats = Number(flight.passengers);
   delete flight.cabin;
   delete flight.passengers;
   if (cabin === "economy") {
@@ -167,6 +167,12 @@ const updateExistingUser = (req, res) => {
 const cancelReservation = async(req, res) => {
   var email = req.params.email;
   var id=req.params.id;
+  var depId=req.body.departureFlight._id;
+  var retId=req.body.returnFlight._id;
+  var depCabin=req.body.departureFlight.cabin;
+  var retCabin=req.body.returnFlight.cabin;
+  var depChosenSeats=req.body.departureFlight.chosenSeats
+  var retChosenSeats=req.body.returnFlight.chosenSeats
   // console.log(id);
   console.log(email)
   console.log(id)
@@ -184,6 +190,50 @@ const cancelReservation = async(req, res) => {
         console.log("Someting is wrong,Try again");
       });
   });
+  await Flight.findOne({ _id: depId }).then((result) => {
+
+    for (let i=0;i<depChosenSeats.length;i++){
+      var seat= (+depChosenSeats[i].seatNo) -1;
+      result.seats[seat].reserved=false;
+      if(depCabin==="economy"){
+        result.economy_seats_available++;
+      }else{
+        result.business_seats_available++;
+      }
+      
+    }
+  
+    result
+      .save()
+      .then((result) => {
+        console.log("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+   await Flight.findOne({ _id: retId }).then((result) => {
+
+    for (let i=0;i < retChosenSeats.length;i++){
+      var seat= (+retChosenSeats[i].seatNo )-1;
+      result.seats[seat].reserved=false;
+      if(retCabin==="economy"){
+        result.economy_seats_available++;
+      }else{
+        result.business_seats_available++;
+      }
+    }
+  
+    result
+      .save()
+      .then((result) => {
+        console.log("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+
   res.status(200).json({msg:"deleted"});
 
 };
@@ -208,6 +258,8 @@ const addReservation = async(req, res) => {
   var em = req.body.user.email;
   var depId=req.body.departureFlight._id;
   var retId=req.body.returnFlight._id;
+  var depCabin=req.body.departureFlight.cabin;
+  var retCabin=req.body.returnFlight.cabin;
   var depChosenSeats=req.body.departureFlight.chosenSeats
   var retChosenSeats=req.body.returnFlight.chosenSeats
 
@@ -236,6 +288,12 @@ const addReservation = async(req, res) => {
     for (let i=0;i<depChosenSeats.length;i++){
       var seat= (+depChosenSeats[i].seatNo) -1;
       result.seats[seat].reserved=true;
+      if(depCabin==="economy"){
+        result.economy_seats_available--;
+      }else{
+        result.business_seats_available--;
+      }
+      
     }
   
     result
@@ -252,6 +310,11 @@ const addReservation = async(req, res) => {
     for (let i=0;i < retChosenSeats.length;i++){
       var seat= (+retChosenSeats[i].seatNo )-1;
       result.seats[seat].reserved=true;
+      if(retCabin==="economy"){
+        result.economy_seats_available--;
+      }else{
+        result.business_seats_available--;
+      }
     }
   
     result

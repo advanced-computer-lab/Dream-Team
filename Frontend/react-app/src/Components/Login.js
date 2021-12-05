@@ -47,10 +47,11 @@ export default function SignIn(props) {
       .get("http://localhost:8000/user/" + data.get("email"))
       .then((result) => {
         if (result.data.length == 0) {
+          alert("This email is not signed up. Please Sign Up")
         } else if (data.get("password") === result.data.password) {
           
           if(result.data.admin===true){
-            history.push("/", {
+            history.push("/admin_home", {
               user: result.data[0],
             });
           }
@@ -66,6 +67,7 @@ export default function SignIn(props) {
             });
           }
         } else {
+          alert("Wrong Password Please Try Again")
         }
       });
     // // eslint-disable-next-line no-console

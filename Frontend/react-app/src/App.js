@@ -29,8 +29,8 @@ const App=()=>{
       <Switch>
       <Route exact path="/user_reservations" component={ShowReservations} />
       <Route exact path="/user/search" component={UserSearchFlights} />
-      <Route exact path="/"  component={ListFlights} />
-      <Route exact path="/home"  component={HomePage} />
+      <Route exact path="/"  component={HomePage} />
+      <Route exact path="/admin_home"  component={ListFlights} />
       <Route exact path="/edit/:id" component={EditFlight} />
       <Route exact path="/create" component={CreateFlight} />
       <Route exact path="/search" component={SearchFlights} />
