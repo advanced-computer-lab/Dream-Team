@@ -30,7 +30,8 @@ const EditExistingUser = () => {
 
     axios
       .put("http://localhost:8000/user/edit_user/" +email, user)
-      .then(()=>history.push('/user_home',{user:user}));
+      .then(()=>{alert("Profile Updated.")
+      history.push('/user_home',{user:user})});
   };
 
   return user?._id ? (

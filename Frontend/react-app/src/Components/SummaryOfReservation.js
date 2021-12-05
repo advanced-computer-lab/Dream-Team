@@ -39,25 +39,23 @@ const SummaryOfReservation = (props) => {
               <p className="left-txt">
                 {" "}
                 <Typography>
-                  <b>From: </b> {departureFlight.from}{" "}
+                  
                   <p className="left-txt">
+                  <b>From: </b> {departureFlight.from}{" "}
                     {" "}
-                    <br />
+                    <br/>
                     <b> Departure Time: </b> {departureFlight.departure_time}{" "}
                   </p>
                   <p className="left-txt">
                     {" "}
                     <b>To: </b> {departureFlight.to}{" "}
-                  </p>
-                  <p className="left-txt">
+                    <p className="left-txt">
                     {" "}
                     <b>Arrival Time: </b> {departureFlight.arrival_time}{" "}
                   </p>
-                  <p className="left-txt">
-                    {" "}
-                    <b>Price: </b>{" "}
-                    {departureFlight.price * +departureFlight.passengers}{" "}
                   </p>
+                  
+                  
                 </Typography>
               </p>
             </AccordionSummary>
@@ -75,6 +73,11 @@ const SummaryOfReservation = (props) => {
                   {" "}
                   <b>Total Number of Seats: </b> {departureFlight.passengers}{" "}
                 </p>
+                <p className="left-txt">
+                    {" "}
+                    <b>Price: </b>{" "}
+                    {departureFlight.price * +departureFlight.passengers}{" "}
+                  </p>
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -94,8 +97,9 @@ const SummaryOfReservation = (props) => {
               <p className="left-txt">
                 {" "}
                 <Typography>
-                  <b>From: </b> {returnFlight.from}{" "}
+                  
                   <p className="left-txt">
+                  <b>From: </b> {returnFlight.from}{" "}
                     {" "}
                     <br />
                     <b> Departure Time: </b> {returnFlight.departure_time}{" "}
@@ -103,16 +107,13 @@ const SummaryOfReservation = (props) => {
                   <p className="left-txt">
                     {" "}
                     <b>To: </b> {returnFlight.to}{" "}
-                  </p>
-                  <p className="left-txt">
+                    <p className="left-txt">
                     {" "}
                     <b>Arrival Time: </b> {returnFlight.arrival_time}{" "}
                   </p>
-                  <p className="left-txt">
-                    {" "}
-                    <b>Price: </b>{" "}
-                    {returnFlight.price * +returnFlight.passengers}
                   </p>
+                  
+                  
                 </Typography>
               </p>
             </AccordionSummary>
@@ -130,6 +131,11 @@ const SummaryOfReservation = (props) => {
                   {" "}
                   <b>Total Number of Seats: </b> {returnFlight.passengers}{" "}
                 </p>
+                <p className="left-txt">
+                    {" "}
+                    <b>Price: </b>{" "}
+                    {returnFlight.price * +returnFlight.passengers}
+                  </p>
               </Typography>
             </AccordionDetails>
           </Accordion>

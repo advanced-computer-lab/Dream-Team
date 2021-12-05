@@ -19,7 +19,7 @@ const ConfirmReservation = (props) => {
     const onProceed = () => {
       axios
       .put("http://localhost:8000/user/confirm_reservation", props.location.state)
-      .then(()=>{alert("reservation confirmed")
+      .then(()=>{alert("Reservation Confirmed.   Have a safe flight! ")
           history.push('/user_home', {user:props.location.state.user})});
     };
     
@@ -37,24 +37,25 @@ const ConfirmReservation = (props) => {
             aria-controls="panel1a-content"
             id="panel1a-header">
             
-              <p className="left-txt">
+            <p className="left-txt">
                 {" "}
                 <Typography>
                 <b>From: </b> {departureFlight.from}{" "}
+                <p className="left-txt">
+                {" "}
+                <b>Departure Time: </b> {departureFlight.departure_time } {" "}
+              </p>
                 
                 <p className="left-txt">
                 {" "}
-                <br/>
-                <b> Departure Time: </b> {departureFlight.departure_time } {" "}
-              </p>
-              <p className="left-txt">
-                {" "}
                 <b>To: </b> {departureFlight.to } {" "}
-              </p>
-              <p className="left-txt">
+                <p className="left-txt">
                 {" "}
-                <b>Arrival Time: </b> {departureFlight.arrival_time } {" "}
+                <b> Arrival Time: </b> {departureFlight.arrival_time } {" "}
+                
               </p>
+              </p>
+              
                 
               <p className="left-txt">
                 {" "}
@@ -109,20 +110,23 @@ const ConfirmReservation = (props) => {
                 {" "}
                 <Typography>
                 <b>From: </b> {returnFlight.from}{" "}
+                <p className="left-txt">
+                {" "}
+                <b>Departure Time: </b> {returnFlight.departure_time } {" "}
+              </p>
                 
                 <p className="left-txt">
                 {" "}
-                <br/>
-                <b> Departure Time: </b> {returnFlight.departure_time } {" "}
-              </p>
-              <p className="left-txt">
-                {" "}
                 <b>To: </b> {returnFlight.to } {" "}
-              </p>
-              <p className="left-txt">
+                <p className="left-txt">
                 {" "}
-                <b>Arrival Time: </b> {returnFlight.arrival_time } {" "}
+                <b> Arrival Time: </b> {returnFlight.arrival_time } {" "}
+                
               </p>
+              </p>
+                
+              
+              
                 
               <p className="left-txt">
                 {" "}

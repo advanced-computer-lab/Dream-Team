@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { useHistory } from "react-router";
 import axios from "axios";
 
+
 const SeatReservationDeparture = (props) => {
   console.log(props.location.state);
   const [departureFlight, setDepartureFlight] = useState(
@@ -50,6 +51,7 @@ const SeatReservationDeparture = (props) => {
     <div>
       <ul>
       <h3>Please Choose the Seats for the Departure Flight:</h3>
+      <br/>
         {departureFlight.seats.map((seat) => (
           <li key={seat._id}>
             <Button
