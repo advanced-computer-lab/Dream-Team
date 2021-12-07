@@ -241,11 +241,12 @@ const cancelReservation = async(req, res) => {
 const sendConfirmation = (req, res, next) => {
   var user=req.body.user;
   var price=req.body.price;
+  var id=req.body.id;
 
   var mailOptions = {
     to: user.email,
     subject: "Reservation cancellation",
-    text: `Your reservation has been cancelled. Total refunded price is ${price}`,
+    text: `Your reservation number: ${id} has been cancelled. Total refunded price is ${price}`,
   };
   req.mailOptions = mailOptions;
   email.sendMail(req, res, next);

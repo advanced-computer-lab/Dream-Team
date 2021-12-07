@@ -31,7 +31,7 @@ console.log(props.location.state);
 
 
   const onCancel = (user,id) => {
-    if (window.confirm("Delete?")) {
+    if (window.confirm("Cancel Reservation? If you cancel the reservation an email will be sent momentarily with amout to be refunded. ")) {
       const path = "http://localhost:8000/user/delete_reservation/" + user.email+"/"+id;
       const chosenReservation= reservations.find((reservation)=> reservation._id===id)
       const price=chosenReservation.departure_flight.price* Number(chosenReservation.departure_flight.passengers)+chosenReservation.return_flight.price* Number(chosenReservation.return_flight.passengers)
@@ -41,7 +41,7 @@ console.log(props.location.state);
 
       setDeleted(true)
 
-      axios.post("http://localhost:8000/user/send_confirmation",{user,price})
+      axios.post("http://localhost:8000/user/send_confirmation",{user,price,id})
     }
   };
   const onHome = (email,id) => {
