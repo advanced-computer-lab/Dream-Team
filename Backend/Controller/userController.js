@@ -8,7 +8,6 @@ const authUtils = require("../utils/auth");
 const createFlight = (req, res) => {
   const flight = req.body.flight;
 
-  console.log(req.body.flight);
   Flight.create(flight)
     .then((result) => {
       res.header("Content-Type", "application/json");
@@ -21,7 +20,6 @@ const createFlight = (req, res) => {
 
 const createUser = async (req, res) => {
   const user = req.body.user;
-  console.log(req.body.user);
   user.password = await authUtils.hashPass(user.password);
   await User.create(user)
     .then((result) => {
@@ -36,6 +34,7 @@ const createUser = async (req, res) => {
 
 const findUser = (req, res) => {
   User.findOne({ email: req.params.email }).then((result) => {
+    console.log(result);
     res.header("Content-Type", "application/json");
     res.send(JSON.stringify(result, null, 4));
   });
@@ -110,7 +109,6 @@ const updateFlight = (req, res) => {
 
 const userSearchFlights = (req, res) => {
   const flight = req.body;
-  console.log(req.body);
   const cabin = flight.cabin;
   const seats = Number(flight.passengers);
   delete flight.cabin;
@@ -119,7 +117,6 @@ const userSearchFlights = (req, res) => {
     Flight.find({ ...flight, economy_seats_available: { $gte: seats } }).then(
       (result) => {
         res.header("Content-Type", "application/json");
-        console.log("hi");
         res.send(JSON.stringify(result, null, 4));
       }
     );
@@ -155,6 +152,12 @@ const updateExistingUser = (req, res) => {
     if (req.body.email) {
       result.email = req.body.email;
     }
+    if (req.body.countryCode) {
+      result.countryCode = req.body.countryCode;
+    }
+    if (req.body.phoneNumber) {
+      result.phoneNumber = req.body.phoneNumber;
+    }
 
     result
       .save()
@@ -176,9 +179,7 @@ const cancelReservation = async (req, res) => {
   var retCabin = req.body.returnFlight.cabin;
   var depChosenSeats = req.body.departureFlight.chosenSeats;
   var retChosenSeats = req.body.returnFlight.chosenSeats;
-  // console.log(id);
-  console.log(email);
-  console.log(id);
+
 
   await User.findOne({ email: email }).then((result) => {
     result.reservations = result.reservations.filter(
@@ -252,6 +253,86 @@ const sendConfirmation = (req, res, next) => {
   req.mailOptions = mailOptions;
   email.sendMail(req, res, next);
   res.status(200).json({ message: "Sent successfully" });
+};
+
+const editReservation = async (req, res) => {
+  const email = req.body.user.email;
+  const newFlight = req.body.newFlight;
+
+  const { _id, cabin, chosenSeats } = req.body.newFlight;
+  var type = req.body.type;
+  var reservationID = req.body.reservationID;
+  let oldFlight;
+
+  await User.findOne({ email }).then((user) => {
+    const reservation = user.reservations.find(
+      (reservation) => reservation._id == reservationID
+    );
+    user.reservations.filter((reservation) => reservation._id != reservationID);
+    if (type === "departure") {
+      oldFlight = reservation.departure_flight;
+      reservation.departure_flight = newFlight;
+    } else if (type === "return") {
+      oldFlight = reservation.return_flight;
+      reservation.return_flight = newFlight;
+    }
+
+    user.reservations.push(reservation);
+    user
+      .save()
+      .then((user) => {
+        console.log("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+
+  await Flight.findOne({ _id }).then((flight) => {
+    for (let i = 0; i < chosenSeats.length; i++) {
+      var seat = Number(chosenSeats[i].seatNo) - 1;
+      flight.seats[seat].reserved = true;
+      if (cabin === "economy") {
+        flight.economy_seats_available--;
+      } else {
+        flight.business_seats_available--;
+      }
+    }
+
+    flight
+      .save()
+      .then((result) => {
+        console.log("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+  await Flight.findOne({ _id: oldFlight._id }).then((flight) => {
+    console.log(oldFlight.chosenSeats);
+
+    for (let i = 0; i < oldFlight.chosenSeats.length; i++) {
+      var seat = Number(oldFlight.chosenSeats[i].seatNo) - 1;
+      flight.seats[seat].reserved = false;
+      console.log(flight.seats[seat]);
+      if (oldFlight.cabin === "economy") {
+        flight.economy_seats_available++;
+      } else {
+        flight.business_seats_available++;
+      }
+    }
+
+    flight
+      .save()
+      .then((result) => {
+        console.log("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+
+  res.status(200).json({ msg: "updated" });
 };
 
 const addReservation = async (req, res) => {
@@ -409,4 +490,5 @@ module.exports = {
   cancelReservation,
   addReservation,
   sendConfirmation,
+  editReservation,
 };

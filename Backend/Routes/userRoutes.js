@@ -16,11 +16,9 @@ userRouter.post("/login", userController.loginPipeline, async (req, res) => {
 });
 
 userRouter.post("/search", userController.userSearchFlights);
-
 userRouter.get("/:email", userController.findUser);
-
 userRouter.put("/confirm_reservation", userController.addReservation);
-
+userRouter.put("/edit_reservation", userController.editReservation);
 userRouter.put(
   "/delete_reservation/:email/:id",
   userController.cancelReservation
