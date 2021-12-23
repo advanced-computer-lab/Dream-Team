@@ -40,36 +40,55 @@ export default function SignIn(props) {
   const [user, setUser] = useState({});
   const history = useHistory();
 
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    axios
-      .get("http://localhost:8000/user/" + data.get("email"))
-      .then((result) => {
-        if (result.data.length == 0) {
-          alert("This email is not signed up. Please Sign Up")
-        } else if (data.get("password") === result.data.password) {
-          
-          if(result.data.admin===true){
-            history.push("/admin_home", {
-              user: result.data[0],
-            });
-          }
+    // const data = new FormData(event.currentTarget);
 
-          else if (props.location.state == null) {
-            history.push("/user_home", {
-              user: result.data,
-            });
-          } else {
-            history.push("/seats_departure", {
-              ...props.location.state,
-              user: result.data,
-            });
-          }
-        } else {
-          alert("Wrong Password Please Try Again")
-        }
+    axios
+      .post("http://localhost:8000/user/login", { user: user })
+      .then((res) => {
+        localStorage.setItem(
+          "profile",
+          JSON.stringify({
+            message: res.data.message,
+            token: res.data.token,
+            typeOfUser: res.data.typeOfUser,
+            user: res.data.user,
+          })
+        );
+        console.log(res.data.typeOfUser);
+        history.push(
+          "/" + (res.data.typeOfUser === "admin" ? "admin_home" : "user_home"),
+          { ...props.location.state, user: res.data.user }
+        );
       });
+    // axios
+    //   .get("http://localhost:8000/user/" + data.get("email"))
+    //   .then((result) => {
+    //     if (result.data.length == 0) {
+    //       alert("This email is not signed up. Please Sign Up");
+    //     } else if (data.get("password") === result.data.password) {
+    //       if (result.data.admin === true) {
+    //         history.push("/admin_home", {
+    //           user: result.data[0],
+    //         });
+    //       } else if (props.location.state == null) {
+    //         history.push("/user_home", {
+    //           user: result.data,
+    //         });
+    //       } else {
+    //         history.push("/seats_departure", {
+    //           ...props.location.state,
+    //           user: result.data,
+    //         });
+    //       }
+    //     } else {
+    //       alert("Wrong Password Please Try Again");
+    //     }
+    //   });
     // // eslint-disable-next-line no-console
     // console.log({
     //   email: data.get('email'),
@@ -105,6 +124,7 @@ export default function SignIn(props) {
               margin="normal"
               required
               fullWidth
+              onChange={handleChange}
               id="email"
               label="Email Address"
               name="email"
@@ -114,6 +134,7 @@ export default function SignIn(props) {
             <TextField
               margin="normal"
               required
+              onChange={handleChange}
               fullWidth
               name="password"
               label="Password"

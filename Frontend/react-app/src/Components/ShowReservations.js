@@ -9,58 +9,79 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@mui/material/Button";
 
 const ShowReservations = (props) => {
-  
   const history = useHistory();
   const [deleted, setDeleted] = useState(false);
+
   const [user, setUser] = useState(props.location.state.user);
-  const [reservations, setReservations] = useState(props.location.state.user.reservations);
-//   console.log( props.location.state);
-//   console.log( reservations);
-
-
+  const [reservations, setReservations] = useState(
+    props.location.state.user.reservations
+  );
+  //   console.log( props.location.state);
+  //   console.log( reservations);
 
   useEffect(() => {
-
     // setReservations(user.reservations);
-    if(deleted){
-        setDeleted(false)
+    if (deleted) {
+      setDeleted(false);
     }
-    
   }, [deleted]);
-console.log(props.location.state);
+  console.log(props.location.state);
 
+  const onCancel = (user, id) => {
+    if (
+      window.confirm(
+        "Cancel Reservation? If you cancel the reservation an email will be sent momentarily with amout to be refunded. "
+      )
+    ) {
+      const path =
+        "http://localhost:8000/user/delete_reservation/" +
+        user.email +
+        "/" +
+        id;
+      const chosenReservation = reservations.find(
+        (reservation) => reservation._id === id
+      );
+      const price =
+        chosenReservation.departure_flight.price *
+          Number(chosenReservation.departure_flight.passengers) +
+        chosenReservation.return_flight.price *
+          Number(chosenReservation.return_flight.passengers);
 
-  const onCancel = (user,id) => {
-    if (window.confirm("Cancel Reservation? If you cancel the reservation an email will be sent momentarily with amout to be refunded. ")) {
-      const path = "http://localhost:8000/user/delete_reservation/" + user.email+"/"+id;
-      const chosenReservation= reservations.find((reservation)=> reservation._id===id)
-      const price=chosenReservation.departure_flight.price* Number(chosenReservation.departure_flight.passengers)+chosenReservation.return_flight.price* Number(chosenReservation.return_flight.passengers)
+      axios.put(path, {
+        departureFlight: chosenReservation.departure_flight,
+        returnFlight: chosenReservation.return_flight,
+      });
+      setReservations(
+        reservations.filter((reservation) => reservation._id !== id)
+      );
 
-      axios.put(path,{departureFlight:chosenReservation.departure_flight,returnFlight:chosenReservation.return_flight});
-      setReservations(reservations.filter((reservation)=> reservation._id!==id));
+      setDeleted(true);
 
-      setDeleted(true)
-
-      axios.post("http://localhost:8000/user/send_confirmation",{user,price,id})
+      axios.post("http://localhost:8000/user/send_confirmation", {
+        user,
+        price,
+        id,
+      });
     }
   };
-  const onHome = (email,id) => {
-
-    history.push("/user_home",{user:{...user,reservations:reservations}});
+  const onHome = (email, id) => {
+    history.push("/user_home", {
+      user: { ...user, reservations: reservations },
+    });
   };
 
   return (
     <div>
       <ul>
-        <h3>My Reservations</h3>
+        <Typography variant="h4">My Reservations</Typography>
         <Button
-              variant="contained"
-              onClick={() => {
-                onHome();
-              }}
-            >
-              Home
-            </Button>
+          variant="contained"
+          onClick={() => {
+            onHome();
+          }}
+        >
+          Home
+        </Button>
 
         {reservations.map((reservation) => (
           <li key={reservation._id}>
@@ -88,7 +109,8 @@ console.log(props.location.state);
                     </p>
                     <p className="left-txt">
                       {" "}
-                      <b>From:  </b>{reservation.departure_flight.from}{" "}
+                      <b>From: </b>
+                      {reservation.departure_flight.from}{" "}
                     </p>
                     <p className="left-txt">
                       {" "}
@@ -152,7 +174,8 @@ console.log(props.location.state);
                     </p>
                     <p className="left-txt">
                       {" "}
-                      <b>From:  </b>{reservation.return_flight.from}{" "}
+                      <b>From: </b>
+                      {reservation.return_flight.from}{" "}
                     </p>
                     <p className="left-txt">
                       {" "}
@@ -196,7 +219,7 @@ console.log(props.location.state);
             <Button
               variant="contained"
               onClick={() => {
-                onCancel(user,reservation._id);
+                onCancel(user, reservation._id);
               }}
             >
               Cancel Reservation

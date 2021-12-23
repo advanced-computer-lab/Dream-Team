@@ -2,32 +2,41 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  first_name: {
+  firstName: {
     type: String,
     required: true,
   },
-  last_name: {
+  lastName: {
     type: String,
     required: true,
   },
   admin: {
     type: Boolean,
+    default: false,
     required: true,
   },
   email: {
     type: String,
     required: true,
+    unique: true,
   },
-  passport_number: {
+  passportNumber: {
     type: String,
     required: true,
   },
-  age: {
-    type: Number,
+  countryCode: {
+    type: String,
     required: true,
   },
-
-  phone_number: {
+  address: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  username: {
     type: String,
     required: true,
   },
@@ -35,19 +44,18 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  reservations: [{
-
-  departure_flight:{
-      type: Object,
-      required: true,
-  },
-  return_flight:{
-      type: Object,
-      required: true,
-  },
- 
-    
-  }],
+  reservations: [
+    {
+      departure_flight: {
+        type: Object,
+        required: true,
+      },
+      return_flight: {
+        type: Object,
+        required: true,
+      },
+    },
+  ],
 });
 
 const user = mongoose.model("user", userSchema);

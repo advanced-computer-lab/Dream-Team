@@ -41,39 +41,38 @@ const flightSchema = new Schema({
     type: Number,
     required: true,
   },
-  price_economy:{
+  price_economy: {
     type: Number,
-    required:true,
+    required: true,
   },
-  price_business:{
+  price_business: {
     type: Number,
-    required:true,
+    required: true,
   },
-  departure_terminal:{
+  departure_terminal: {
     type: String,
     required: true,
   },
-  arrival_terminal:{
+  arrival_terminal: {
     type: String,
     required: true,
   },
-  baggage_allowance:{
+  baggage_allowance: {
     type: String,
     required: true,
   },
-  duration:{
+  duration: {
     type: String,
     required: true,
   },
-  seats:[{
-    seatNo: {type: String, required:true},
-    reserved: {type: Boolean, required:true},
-    cabin: {type: String, required:true}
-  }],
-  
-
+  seats: [
+    {
+      seatNo: { type: String, required: true },
+      reserved: { type: Boolean, required: true },
+      cabin: { type: String, required: true },
+    },
+  ],
 });
 
 const Flight = mongoose.model("Flight", flightSchema);
 module.exports = Flight;
-

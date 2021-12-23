@@ -15,11 +15,12 @@ import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const UserHomePage = (props) => {
-  console.log(props.location.state);
   const history = useHistory();
 
-  const [user, setUser] = useState(props.location.state.user);
-  const email = props.location.state.user.email;
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("profile")).user
+  );
+  const email = user.email;
   const [departureFlight, setDepartureFlight] = useState({});
   const [returnFlight, setReturnFlight] = useState({});
 
@@ -46,6 +47,21 @@ const UserHomePage = (props) => {
     } else if (e.target.name === "to") {
       setDepartureFlight({ ...departureFlight, to: e.target.value });
       setReturnFlight({ ...returnFlight, from: e.target.value });
+    } else if (e.target.name === "adults" || e.target.name === "children") {
+      if (departureFlight.hasOwnProperty("passengers")) {
+        let i = departureFlight.passengers;
+        setDepartureFlight({
+          ...departureFlight,
+          passengers: Number(i) + Number(e.target.value),
+        });
+        setReturnFlight({
+          ...returnFlight,
+          passengers: Number(i) + Number(e.target.value),
+        });
+      } else {
+        setDepartureFlight({ ...departureFlight, passengers: e.target.value });
+        setReturnFlight({ ...returnFlight, passengers: e.target.value });
+      }
     } else {
       setDepartureFlight({
         ...departureFlight,
@@ -83,7 +99,7 @@ const UserHomePage = (props) => {
 
   return (
     <div>
-      <h1>Dream Airlines</h1>
+      {/* <h1>Dream Airlines</h1>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -117,9 +133,10 @@ const UserHomePage = (props) => {
             </Button>
           </Toolbar>
         </AppBar>
-      </Box>
-      <br></br>
-      <h4>Search Flights</h4>
+      </Box> */}
+      <div style={{ margin: "1rem 0rem 2rem" }}>
+        <h4>Search Flights</h4>
+      </div>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <div>
@@ -175,10 +192,23 @@ const UserHomePage = (props) => {
         <div className="form-group">
           <div>
             <TextField
-              name="passengers"
+              name="adults"
               onChange={handleChange}
               variant="outlined"
-              label="Number of Passengers"
+              label="Number of Adult Passengers"
+              type="number"
+              InputLabelProps={{ shrink: true }}
+            />
+          </div>
+        </div>
+        <br />
+        <div className="form-group">
+          <div>
+            <TextField
+              name="children"
+              onChange={handleChange}
+              variant="outlined"
+              label="Number of Children Passengers"
               type="number"
               InputLabelProps={{ shrink: true }}
             />

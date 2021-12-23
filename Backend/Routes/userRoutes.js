@@ -1,25 +1,33 @@
 const express = require("express");
-const userController=require('../Controller/UserController');
-const userRouter=express.Router();
+const userController = require("../Controller/UserController");
+const userRouter = express.Router();
 userRouter.use(express.json());
-userRouter.use(express.urlencoded({extended: false}));
+userRouter.use(express.urlencoded({ extended: false }));
 
+userRouter.post("/create", userController.createUser);
 
+userRouter.post("/login", userController.loginPipeline, async (req, res) => {
+  res.status(200).json({
+    message: "Logged in successfully",
+    typeOfUser: req.typeOfUser,
+    token: req.token,
+    user: req.user,
+  });
+});
 
-userRouter.post('/create',userController.createUser);
+userRouter.post("/search", userController.userSearchFlights);
 
-userRouter.post('/search',userController.userSearchFlights);
+userRouter.get("/:email", userController.findUser);
 
-userRouter.get('/:email',userController.findUser);
+userRouter.put("/confirm_reservation", userController.addReservation);
 
-userRouter.put('/confirm_reservation',userController.addReservation);
+userRouter.put(
+  "/delete_reservation/:email/:id",
+  userController.cancelReservation
+);
 
-userRouter.put('/delete_reservation/:email/:id',userController.cancelReservation);
+userRouter.put("/edit_user/:email", userController.updateExistingUser);
 
-userRouter.put('/edit_user/:email', userController.updateExistingUser);
+userRouter.post("/send_confirmation", userController.sendConfirmation);
 
-userRouter.post('/send_confirmation', userController.sendConfirmation);
-
-
-
-module.exports=userRouter;
+module.exports = userRouter;

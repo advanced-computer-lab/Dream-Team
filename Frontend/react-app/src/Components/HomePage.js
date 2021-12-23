@@ -7,16 +7,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/material/Menu";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const HomePage = () => {
   const history = useHistory();
-  
 
   const [departureFlight, setDepartureFlight] = useState({});
   const [returnFlight, setReturnFlight] = useState({});
@@ -32,6 +31,18 @@ const HomePage = () => {
     } else if (e.target.name === "to") {
       setDepartureFlight({ ...departureFlight, to: e.target.value });
       setReturnFlight({ ...returnFlight, from: e.target.value });
+    } else if (e.target.name === "adults" || e.target.name === "children") {
+      if (departureFlight.hasOwnProperty("passengers")) {
+        let i = departureFlight.passengers;
+        setDepartureFlight({
+          ...departureFlight,
+          passengers: i + e.target.value,
+        });
+        setReturnFlight({ ...returnFlight, passengers: i + e.target.value });
+      } else {
+        setDepartureFlight({ ...departureFlight, passengers: e.target.value });
+        setReturnFlight({ ...returnFlight, passengers: e.target.value });
+      }
     } else {
       setDepartureFlight({
         ...departureFlight,
@@ -57,36 +68,15 @@ const HomePage = () => {
       returnFlight: returnFlight,
     });
   };
-  const handleClick=()=>{
+  const handleClick = () => {
     history.push("/login");
-  }
+  };
 
   return (
     <div>
-      <h1>Dream Airlines</h1>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Welcome
-            </Typography>
-            <Button color="inherit" onClick={() => {
-                handleClick();
-              }}>Login</Button>
-          </Toolbar>
-        </AppBar>
-      </Box>
-      <br></br>
-      <h4>Search Flights</h4>
+      <div style={{ margin: "1rem 0rem 2rem" }}>
+        <h4>Search Flights</h4>
+      </div>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <div>
@@ -142,10 +132,10 @@ const HomePage = () => {
         <div className="form-group">
           <div>
             <TextField
-              name="passengers"
+              name="adults"
               onChange={handleChange}
               variant="outlined"
-              label="Number of Passengers"
+              label="Number of Adult Passengers"
               type="number"
               InputLabelProps={{ shrink: true }}
             />
@@ -154,7 +144,20 @@ const HomePage = () => {
         <br />
         <div className="form-group">
           <div>
-          <InputLabel id="demo-simple-select-label">Cabin Class</InputLabel>
+            <TextField
+              name="children"
+              onChange={handleChange}
+              variant="outlined"
+              label="Number of Children Passengers"
+              type="number"
+              InputLabelProps={{ shrink: true }}
+            />
+          </div>
+        </div>
+        <br />
+        <div className="form-group">
+          <div>
+            <InputLabel id="demo-simple-select-label">Cabin Class</InputLabel>
             <Select name="cabin" placeholder="Cabin" onChange={handleChange}>
               <MenuItem value={"economy"}>Economy</MenuItem>
               <MenuItem value={"business"}>Business</MenuItem>

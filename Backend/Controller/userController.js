@@ -1,8 +1,9 @@
 const Flight = require("../model/flight");
 const User = require("../model/user");
 const Reservation = require("../model/reservation");
-const { emit } = require("../model/flight");
-const email = require("../Confirmation/email")
+// const { emit } = require("../model/flight");
+const email = require("../Confirmation/email");
+const authUtils = require("../utils/auth");
 
 const createFlight = (req, res) => {
   const flight = req.body.flight;
@@ -18,15 +19,17 @@ const createFlight = (req, res) => {
     });
 };
 
-const createUser = (req, res) => {
+const createUser = async (req, res) => {
   const user = req.body.user;
   console.log(req.body.user);
-  User.create(user)
+  user.password = await authUtils.hashPass(user.password);
+  await User.create(user)
     .then((result) => {
       res.header("Content-Type", "application/json");
       res.send(JSON.stringify(result, null, 4));
     })
     .catch((err) => {
+      console.log(err);
       res.status(400).send(err);
     });
 };
@@ -164,21 +167,23 @@ const updateExistingUser = (req, res) => {
   });
 };
 
-const cancelReservation = async(req, res) => {
+const cancelReservation = async (req, res) => {
   var email = req.params.email;
-  var id=req.params.id;
-  var depId=req.body.departureFlight._id;
-  var retId=req.body.returnFlight._id;
-  var depCabin=req.body.departureFlight.cabin;
-  var retCabin=req.body.returnFlight.cabin;
-  var depChosenSeats=req.body.departureFlight.chosenSeats
-  var retChosenSeats=req.body.returnFlight.chosenSeats
+  var id = req.params.id;
+  var depId = req.body.departureFlight._id;
+  var retId = req.body.returnFlight._id;
+  var depCabin = req.body.departureFlight.cabin;
+  var retCabin = req.body.returnFlight.cabin;
+  var depChosenSeats = req.body.departureFlight.chosenSeats;
+  var retChosenSeats = req.body.returnFlight.chosenSeats;
   // console.log(id);
-  console.log(email)
-  console.log(id)
+  console.log(email);
+  console.log(id);
 
- await User.findOne({ email: email }).then((result) => {
-    result.reservations = (result.reservations).filter((reservation)=>reservation._id !=id);
+  await User.findOne({ email: email }).then((result) => {
+    result.reservations = result.reservations.filter(
+      (reservation) => reservation._id != id
+    );
     // console.log((result.reservations).filter((reservation)=>reservation._id !=id));
 
     result
@@ -191,18 +196,16 @@ const cancelReservation = async(req, res) => {
       });
   });
   await Flight.findOne({ _id: depId }).then((result) => {
-
-    for (let i=0;i<depChosenSeats.length;i++){
-      var seat= (+depChosenSeats[i].seatNo) -1;
-      result.seats[seat].reserved=false;
-      if(depCabin==="economy"){
+    for (let i = 0; i < depChosenSeats.length; i++) {
+      var seat = +depChosenSeats[i].seatNo - 1;
+      result.seats[seat].reserved = false;
+      if (depCabin === "economy") {
         result.economy_seats_available++;
-      }else{
+      } else {
         result.business_seats_available++;
       }
-      
     }
-  
+
     result
       .save()
       .then((result) => {
@@ -212,18 +215,17 @@ const cancelReservation = async(req, res) => {
         console.log("Someting is wrong,Try again");
       });
   });
-   await Flight.findOne({ _id: retId }).then((result) => {
-
-    for (let i=0;i < retChosenSeats.length;i++){
-      var seat= (+retChosenSeats[i].seatNo )-1;
-      result.seats[seat].reserved=false;
-      if(retCabin==="economy"){
+  await Flight.findOne({ _id: retId }).then((result) => {
+    for (let i = 0; i < retChosenSeats.length; i++) {
+      var seat = +retChosenSeats[i].seatNo - 1;
+      result.seats[seat].reserved = false;
+      if (retCabin === "economy") {
         result.economy_seats_available++;
-      }else{
+      } else {
         result.business_seats_available++;
       }
     }
-  
+
     result
       .save()
       .then((result) => {
@@ -234,14 +236,13 @@ const cancelReservation = async(req, res) => {
       });
   });
 
-  res.status(200).json({msg:"deleted"});
-
+  res.status(200).json({ msg: "deleted" });
 };
 
 const sendConfirmation = (req, res, next) => {
-  var user=req.body.user;
-  var price=req.body.price;
-  var id=req.body.id;
+  var user = req.body.user;
+  var price = req.body.price;
+  var id = req.body.id;
 
   var mailOptions = {
     to: user.email,
@@ -250,20 +251,17 @@ const sendConfirmation = (req, res, next) => {
   };
   req.mailOptions = mailOptions;
   email.sendMail(req, res, next);
-  res.status(200).json({message:"Sent successfully"});
-}
+  res.status(200).json({ message: "Sent successfully" });
+};
 
-
-
-const addReservation = async(req, res) => {
+const addReservation = async (req, res) => {
   var em = req.body.user.email;
-  var depId=req.body.departureFlight._id;
-  var retId=req.body.returnFlight._id;
-  var depCabin=req.body.departureFlight.cabin;
-  var retCabin=req.body.returnFlight.cabin;
-  var depChosenSeats=req.body.departureFlight.chosenSeats
-  var retChosenSeats=req.body.returnFlight.chosenSeats
-
+  var depId = req.body.departureFlight._id;
+  var retId = req.body.returnFlight._id;
+  var depCabin = req.body.departureFlight.cabin;
+  var retCabin = req.body.returnFlight.cabin;
+  var depChosenSeats = req.body.departureFlight.chosenSeats;
+  var retChosenSeats = req.body.returnFlight.chosenSeats;
 
   await User.findOne({ email: em }).then((result) => {
     result.reservations = [
@@ -283,20 +281,18 @@ const addReservation = async(req, res) => {
         console.log("Someting is wrong,Try again");
       });
   });
-  
+
   await Flight.findOne({ _id: depId }).then((result) => {
-
-    for (let i=0;i<depChosenSeats.length;i++){
-      var seat= (+depChosenSeats[i].seatNo) -1;
-      result.seats[seat].reserved=true;
-      if(depCabin==="economy"){
+    for (let i = 0; i < depChosenSeats.length; i++) {
+      var seat = +depChosenSeats[i].seatNo - 1;
+      result.seats[seat].reserved = true;
+      if (depCabin === "economy") {
         result.economy_seats_available--;
-      }else{
+      } else {
         result.business_seats_available--;
       }
-      
     }
-  
+
     result
       .save()
       .then((result) => {
@@ -306,18 +302,17 @@ const addReservation = async(req, res) => {
         console.log("Someting is wrong,Try again");
       });
   });
-   await Flight.findOne({ _id: retId }).then((result) => {
-
-    for (let i=0;i < retChosenSeats.length;i++){
-      var seat= (+retChosenSeats[i].seatNo )-1;
-      result.seats[seat].reserved=true;
-      if(retCabin==="economy"){
+  await Flight.findOne({ _id: retId }).then((result) => {
+    for (let i = 0; i < retChosenSeats.length; i++) {
+      var seat = +retChosenSeats[i].seatNo - 1;
+      result.seats[seat].reserved = true;
+      if (retCabin === "economy") {
         result.economy_seats_available--;
-      }else{
+      } else {
         result.business_seats_available--;
       }
     }
-  
+
     result
       .save()
       .then((result) => {
@@ -328,16 +323,82 @@ const addReservation = async(req, res) => {
       });
   });
 
-  res.status(200).json({msg:"updated"});
-
-
+  res.status(200).json({ msg: "updated" });
 };
+
+const findUserEmail = async (req, res, next) => {
+  try {
+    const user = req.body.user;
+    const { email } = user;
+    const userFound = await User.findOne({ email });
+    if (userFound) {
+      req.user = userFound;
+      next();
+    } else {
+      const error = new Error("User Not Found");
+      next(error);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const checkAdmin = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (user.admin) {
+      req.typeOfUser = "admin";
+    } else {
+      req.typeOfUser = "user";
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
+const authenticateUser = async (req, res, next) => {
+  const passIsValid = await authUtils.comparePass(
+    req.body.user.password,
+    req.user.password
+  );
+  if (passIsValid) {
+    next();
+  } else {
+    const err = new Error("Invalid email or password");
+    next(err);
+  }
+};
+
+const generateJWT = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const token = authUtils.generateToken(user);
+    if (token) {
+      req.token = token;
+      next();
+    } else {
+      const error = new Error("Cannot generate token");
+      next(error);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const loginPipeline = [
+  findUserEmail,
+  checkAdmin,
+  authenticateUser,
+  generateJWT,
+];
 
 module.exports = {
   findUser,
   createUser,
   createFlight,
   listFlights,
+  loginPipeline,
   deleteFlight,
   updateFlight,
   showFlight,
