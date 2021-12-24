@@ -7,13 +7,14 @@ const authUtils = require("../utils/auth");
 
 const createFlight = (req, res) => {
   const flight = req.body.flight;
-
+console.log(flight);
   Flight.create(flight)
     .then((result) => {
       res.header("Content-Type", "application/json");
       res.send(JSON.stringify(result, null, 4));
     })
     .catch((err) => {
+      
       res.status(400).send(err);
     });
 };

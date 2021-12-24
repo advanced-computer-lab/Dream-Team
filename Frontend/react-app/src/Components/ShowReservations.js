@@ -38,7 +38,7 @@ const ShowReservations = (props) => {
   const onCancel = (user, id) => {
     if (
       window.confirm(
-        "Cancel Reservation? If you cancel the reservation an email will be sent momentarily with amout to be refunded. "
+        "Cancel Reservation? If you cancel the reservation an email will be sent momentarily with the amount to be refunded. "
       )
     ) {
       const path =
