@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import axios from "axios";
+import ChangePassword from "./ChangePassword";
 
 const UserProfile = () => {
   const [user, setUser] = useState({});
@@ -11,6 +12,7 @@ const UserProfile = () => {
   const onSubmit = () => {
     history.push("/edit_user/" + user.email);
   };
+
   const fetchUserInfoUrl = "http://localhost:8000/user/" + email;
   console.log(fetchUserInfoUrl);
   useEffect(() => {
@@ -47,6 +49,14 @@ const UserProfile = () => {
           }}
         >
           Edit Profile
+        </Button>
+        <Button
+          variant="contained"
+          component={Link}
+          to={"/change_password"}
+         
+        >
+          Change Password
         </Button>
       </div>
     </Container>

@@ -269,7 +269,8 @@ const editReservation = async (req, res) => {
     const reservation = user.reservations.find(
       (reservation) => reservation._id == reservationID
     );
-    user.reservations.filter((reservation) => reservation._id != reservationID);
+    user.reservations = user.reservations.filter((reservation) => reservation._id != reservationID);
+    console.log(user.reservations);
     if (type === "departure") {
       oldFlight = reservation.departure_flight;
       reservation.departure_flight = newFlight;
@@ -279,6 +280,7 @@ const editReservation = async (req, res) => {
     }
 
     user.reservations.push(reservation);
+    console.log(user);
     user
       .save()
       .then((user) => {
