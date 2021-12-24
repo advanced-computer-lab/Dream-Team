@@ -20,6 +20,12 @@ import EditExistingUser from "./Components/EditExistingUser";
 import SignUp from "./Components/SignUp";
 import Navbar from "./Components/Navbar";
 import { createTheme, MuiThemeProvider } from "@material-ui/core";
+import UserProfile from "./Components/UserProfile";
+import EditFlightSeats from "./Components/EditFlightSeats";
+import ChangeFlight from "./Components/ChangeFlight";
+import SearchEditedFlights from "./Components/SearchEditedFlights";
+import ChooseNewSeats from "./Components/ChooseNewSeats";
+import ChangedSummary from "./Components/ChangedSummary";
 
 const App = () => {
   const brandTheme = createTheme({
@@ -67,6 +73,12 @@ const App = () => {
               path="/edit_user/:email"
               component={EditExistingUser}
             />
+            <Route exact path="/user-profile" component={UserProfile} />
+            <Route exact path="/edit_flight_seat" component={EditFlightSeats} />
+            <Route exact path="/change_flight" component={ChangeFlight} />
+            <Route exact path="/new_search" component={SearchEditedFlights} />
+            <Route exact path="/new_seats" component={ChooseNewSeats} />
+            <Route exact path="/changed_summary" component={ChangedSummary} />
           </Switch>
         </div>
       </Router>

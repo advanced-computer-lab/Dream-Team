@@ -15,12 +15,9 @@ import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const UserHomePage = (props) => {
+  const [user, setUser] = useState({});
+  const email = JSON.parse(localStorage.getItem("profile")).user.email;
   const history = useHistory();
-
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("profile")).user
-  );
-  const email = user.email;
   const [departureFlight, setDepartureFlight] = useState({});
   const [returnFlight, setReturnFlight] = useState({});
 
@@ -34,6 +31,7 @@ const UserHomePage = (props) => {
       .catch(function (error) {
         console.log(error);
       });
+      
   }, []);
 
   const handleChange = (e) => {

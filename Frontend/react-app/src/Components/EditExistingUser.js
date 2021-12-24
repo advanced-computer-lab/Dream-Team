@@ -31,12 +31,13 @@ const EditExistingUser = () => {
     axios
       .put("http://localhost:8000/user/edit_user/" +email, user)
       .then(()=>{alert("Profile Updated.")
-      history.push('/user_home',{user:user})});
+      history.push('/user-profile',{user:user})});
   };
 
   return user?._id ? (
     <div>
       <h3>Edit Your Info</h3>
+      <br></br>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>First Name: </label>
@@ -44,7 +45,7 @@ const EditExistingUser = () => {
             type="text"
             className="form-control"
             name="first_name"
-            value={user.first_name}
+            value={user.firstName}
             onChange={handleChange}
           />
         </div>
@@ -54,7 +55,7 @@ const EditExistingUser = () => {
             type="text"
             className="form-control"
             name="last_name"
-            value={user.last_name}
+            value={user.lastName}
             onChange={handleChange}
           />   
         </div>
@@ -65,7 +66,7 @@ const EditExistingUser = () => {
             type="text"
             className="form-control"
             name="passport_number"
-            value={user.passport_number}
+            value={user.passportNumber}
             onChange={handleChange}
           />
         </div>
@@ -80,12 +81,40 @@ const EditExistingUser = () => {
           />
         </div>
         <div className="form-group">
+          <label>Address: </label>
+          <input
+            className="form-control"
+            name="address"
+            value={user.address}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Country Code: </label>
+          <input
+            className="form-control"
+            name="countryCode"
+            value={user.countryCode}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Phone Number: </label>
+          <input
+            className="form-control"
+            name="phoneNumber"
+            value={user.phoneNumber}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
           <input
             type="submit"
             value="Edit User Log"
             className="btn btn-primary"
           />
         </div>
+        
       </form>
     </div>
   ) : null;

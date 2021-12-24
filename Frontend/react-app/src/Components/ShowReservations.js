@@ -9,23 +9,31 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@mui/material/Button";
 
 const ShowReservations = (props) => {
-  const history = useHistory();
-  const [deleted, setDeleted] = useState(false);
 
-  const [user, setUser] = useState(props.location.state.user);
-  const [reservations, setReservations] = useState(
-    props.location.state.user.reservations
-  );
+  const [deleted, setDeleted] = useState(false);
+  const [user, setUser] = useState({});
+  const email = JSON.parse(localStorage.getItem("profile")).user.email;
+  const history = useHistory();
+  const [reservations, setReservations] = useState([]);
   //   console.log( props.location.state);
   //   console.log( reservations);
 
   useEffect(() => {
-    // setReservations(user.reservations);
+    axios
+      .get("http://localhost:8000/user/" + email)
+      .then((response) => {
+        console.log(response);
+        setUser(response.data);
+        setReservations(response.data.reservations);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     if (deleted) {
       setDeleted(false);
     }
-  }, [deleted]);
-  console.log(props.location.state);
+  }, [deleted,email]);
+
 
   const onCancel = (user, id) => {
     if (
@@ -64,17 +72,22 @@ const ShowReservations = (props) => {
       });
     }
   };
+  const onClick = (flight, id, type) =>{
+    history.push("/edit_flight_seat", {flight:flight, reservationID:id, type:type})
+  }
   const onHome = (email, id) => {
     history.push("/user_home", {
       user: { ...user, reservations: reservations },
     });
   };
+  const onChange=(oldPrice,from, to, rid, type)=>{
+    history.push("/change_flight", {oldPrice:oldPrice,from:from, to:to, reservationID:rid, type:type})
+  }
 
-  return (
+  return user?._id ?(
     <div>
       <ul>
-        <Typography variant="h4">My Reservations</Typography>
-        <Button
+      <Button
           variant="contained"
           onClick={() => {
             onHome();
@@ -82,7 +95,8 @@ const ShowReservations = (props) => {
         >
           Home
         </Button>
-
+        <Typography variant="h4">My Reservations</Typography>
+      
         {reservations.map((reservation) => (
           <li key={reservation._id}>
             <h3>Reservation Number: {reservation._id}</h3>
@@ -148,6 +162,9 @@ const ShowReservations = (props) => {
                       (seat) => seat.seatNo + ", "
                     )}{" "}
                   </p>
+                  <Button variant="contained" onClick={() => {onClick(reservation.departure_flight, reservation._id, "departure");}}>Change Seat</Button>
+                  <Button variant="contained" onClick={() => {onChange(reservation.departure_flight.price,reservation.departure_flight.from, reservation.departure_flight.to, reservation._id, "departure");}}>Change Flight</Button>
+
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -213,6 +230,8 @@ const ShowReservations = (props) => {
                       (seat) => seat.seatNo + ", "
                     )}{" "}
                   </p>
+                  <Button variant="contained" onClick={() => {onClick(reservation.return_flight, reservation._id, "return");}}>Change Seat</Button>
+                  <Button variant="contained" onClick={() => {onChange(reservation.departure_flight.price,reservation.return_flight.from, reservation.return_flight.to, reservation._id, "return");}}>Change Flight</Button>
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -228,7 +247,7 @@ const ShowReservations = (props) => {
         ))}
       </ul>
     </div>
-  );
+  ):null;
 };
 
 export default ShowReservations;

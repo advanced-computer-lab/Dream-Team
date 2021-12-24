@@ -92,7 +92,7 @@ const Navbar = (props) => {
                 DREAM AIRLINES
               </Typography>
             </div>
-            <Button component={Link} to={`/user/search`} color="secondary">
+            <Button component={Link} to={`/user_home`} color="secondary">
               Search
             </Button>
             <Button onClick={handleClick} color="secondary">
