@@ -36,9 +36,12 @@ const HomePage = () => {
         let i = departureFlight.passengers;
         setDepartureFlight({
           ...departureFlight,
-          passengers: i + e.target.value,
+          passengers: Number(i) + Number(e.target.value),
         });
-        setReturnFlight({ ...returnFlight, passengers: i + e.target.value });
+        setReturnFlight({
+          ...returnFlight,
+          passengers: Number(i) + Number(e.target.value),
+        });
       } else {
         setDepartureFlight({ ...departureFlight, passengers: e.target.value });
         setReturnFlight({ ...returnFlight, passengers: e.target.value });
