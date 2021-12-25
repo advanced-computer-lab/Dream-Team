@@ -321,6 +321,62 @@ const sendConfirmation = (req, res, next) => {
   res.status(200).json({ message: "Sent successfully" });
 };
 
+const sendConfirmationReservation = (req, res, next) => {
+  var user = req.body.user;
+  var departure_flight=req.body.departureFlight;
+  var return_flight=req.body.returnFlight
+
+  var mailOptions = {
+    to: user.email,
+    subject: "Reservation Confirmed ",
+    text: `
+
+    Departure Flight: ${departure_flight.flight_number} 
+    Date:${departure_flight.flight_date} 
+    From:${departure_flight.from} 
+    To:${departure_flight.to} .
+
+     Return Flight: ${return_flight.flight_number} 
+     Date:${return_flight.flight_date} 
+     From:${return_flight.from} 
+     To:${return_flight.to}. 
+
+     Total Price: ${Number(departure_flight.price)+Number (return_flight.price)}`,
+  
+    
+  };
+  req.mailOptions = mailOptions;
+  email.sendMail(req, res, next);
+  res.status(200).json({ message: "Sent successfully" });
+};
+const sendItenerary = (req, res, next) => {
+  var user = req.body.user;
+  var reservation = req.body.reservation;
+ 
+
+  var mailOptions = {
+    to: user.email,
+    subject: "Your Reservation ",
+    text: `Your reservation number: ${reservation._id}. 
+
+    Departure Flight: ${reservation.departure_flight.flight_number} 
+    Date:${reservation.departure_flight.flight_date} 
+    From:${reservation.departure_flight.from} 
+    To:${reservation.departure_flight.to} .
+
+     Return Flight: ${reservation.return_flight.flight_number} 
+     Date:${reservation.return_flight.flight_date} 
+     From:${reservation.return_flight.from} 
+     To:${reservation.return_flight.to}. 
+
+     Total Price: ${Number(reservation.departure_flight.price)+Number (reservation.return_flight.price)}`,
+  };
+  req.mailOptions = mailOptions;
+  email.sendMail(req, res, next);
+  res.status(200).json({ message: "Sent successfully" });
+};
+
+
 const editReservation = async (req, res) => {
   const email = req.body.user.email;
   const newFlight = req.body.newFlight;
@@ -618,4 +674,6 @@ module.exports = {
   sendConfirmation,
   editReservation,
   editSeats,
+  sendItenerary,
+  sendConfirmationReservation
 };

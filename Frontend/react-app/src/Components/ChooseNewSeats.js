@@ -56,7 +56,6 @@ import axios from "axios";
                 <Button
                   disabled={flight.cabin.toLowerCase()!==seat.cabin||seat.reserved?true:false}
                   style={{backgroundColor:arraySeats.includes(seat)?"#519259":""}}
-                  color="secondary"
                   variant="contained"
                   onClick={() => {
                     handleClick(seat);
