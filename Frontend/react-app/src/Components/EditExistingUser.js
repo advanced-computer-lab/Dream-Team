@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const EditExistingUser = () => {
   const [user, setUser] = useState({});
   const { email } = useParams();
-  const history=useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     axios
@@ -29,9 +29,11 @@ const EditExistingUser = () => {
     e.preventDefault();
 
     axios
-      .put("http://localhost:8000/user/edit_user/" +email, user)
-      .then(()=>{alert("Profile Updated.")
-      history.push('/user-profile',{user:user})});
+      .put("http://localhost:8000/user/edit_user/" + email, user)
+      .then(() => {
+        alert("Profile Updated.");
+        history.push("/user-profile", { user: user });
+      });
   };
 
   return user?._id ? (
@@ -42,7 +44,6 @@ const EditExistingUser = () => {
         <div className="form-group">
           <label>First Name: </label>
           <input
-            type="text"
             className="form-control"
             name="first_name"
             value={user.firstName}
@@ -52,24 +53,23 @@ const EditExistingUser = () => {
         <div className="form-group">
           <label>Last Name: </label>
           <input
-            type="text"
             className="form-control"
             name="last_name"
             value={user.lastName}
             onChange={handleChange}
-          />   
+          />
         </div>
 
         <div className="form-group">
           <label>Passport Number: </label>
           <input
-            type="text"
             className="form-control"
             name="passport_number"
             value={user.passportNumber}
             onChange={handleChange}
           />
         </div>
+
         <div className="form-group">
           <label>Email: </label>
           <input
@@ -114,7 +114,6 @@ const EditExistingUser = () => {
             className="btn btn-primary"
           />
         </div>
-        
       </form>
     </div>
   ) : null;
