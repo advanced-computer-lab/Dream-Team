@@ -13,6 +13,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { Grid } from "@mui/material";
+
 
 const HomePage = () => {
   const history = useHistory();
@@ -81,6 +83,8 @@ const HomePage = () => {
         <h4>Search Flights</h4>
       </div>
       <form onSubmit={onSubmit}>
+      <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
+
         <div className="form-group">
           <div>
             <TextField
@@ -93,6 +97,7 @@ const HomePage = () => {
             />
           </div>
         </div>
+
         <br />
         <div className="form-group">
           <div>
@@ -106,7 +111,9 @@ const HomePage = () => {
             />
           </div>
         </div>
+        </Grid>
         <br />
+        <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
 
         <div className="form-group">
           <div>
@@ -131,7 +138,10 @@ const HomePage = () => {
             />
           </div>
         </div>
+        </Grid>
         <br />
+        <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
+
         <div className="form-group">
           <div>
             <TextField
@@ -144,6 +154,7 @@ const HomePage = () => {
             />
           </div>
         </div>
+
         <br />
         <div className="form-group">
           <div>
@@ -157,6 +168,7 @@ const HomePage = () => {
             />
           </div>
         </div>
+        </Grid>
         <br />
         <div className="form-group">
           <div>
