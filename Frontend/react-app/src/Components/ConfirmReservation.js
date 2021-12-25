@@ -16,6 +16,7 @@ const ConfirmReservation = (props) => {
   const departureFlight = props.location.state.departureFlight;
   const returnFlight = props.location.state.returnFlight;
 
+  window.localStorage.setItem('reservationState', JSON.stringify(props.location.state))
   window.localStorage.setItem('departureFlight', JSON.stringify(departureFlight))
   window.localStorage.setItem('returnFlight', JSON.stringify(returnFlight))
 

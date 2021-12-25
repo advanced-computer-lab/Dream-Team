@@ -10,18 +10,23 @@ import { useHistory } from "react-router-dom";
 const onStripeCallback = (props, user) => {
 
   const departureFlight = JSON.parse(window.localStorage.getItem('departureFlight'))
-  const returnFlight = JSON.parse(window.localStorage.getItem('returnFlight'))
+  const returnFlight = JSON.parse(window.localStorage.getItem('returnFlight'))  
+  const reservationState = JSON.parse(window.localStorage.getItem('reservationState'))
 
+    
     axios
       .put(
         "http://localhost:8000/user/confirm_reservation",
-        props.location.state
+        { ...reservationState, user }
       )
       .then(() => {
-        
-        axios.post("http://localhost:8000/user/send_confirmation_reservation", {user, departureFlight, returnFlight})
+        console.log({user, departureFlight, returnFlight})
+        axios.post("http://localhost:8000/user/send_confirmation_reservation", { user, departureFlight, returnFlight })
         .then(() => {
           alert("Reservation Confirmed. An Email will be sent with your itenerary.   Have a safe flight! ");
+          window.localStorage.removeItem('departureFlight')
+          window.localStorage.removeItem('returnFlight')
+          window.localStorage.removeItem('reservationState')
         })
         .catch((error) => {
           console.log(error)
@@ -40,20 +45,24 @@ const UserHomePage = (props) => {
   const [returnFlight, setReturnFlight] = useState({});
 
   const searchParams = window.location.search.substr(1).split('=')
-  if (searchParams.indexOf('success') > -1) {
-    searchParams.indexOf('true') ? onStripeCallback(props, localUser) : alert('payment rejected');
-  }
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/user/" + email)
-      .then((response) => {
-        console.log(response.data);
-        setUser(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+
+
+    if (searchParams.indexOf('success') > -1) {
+      console.log(props)
+      searchParams.indexOf('true') ? onStripeCallback(props, localUser) : alert('payment rejected');
+    }
+    
+    // axios
+    //   .get("http://localhost:8000/user/" + email)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     setUser(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
       
   }, []);
 
