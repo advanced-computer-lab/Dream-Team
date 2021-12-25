@@ -9,6 +9,7 @@ const ChangePassword = () => {
   });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [error2, setError2] = useState(false);
   const history = useHistory();
 
   const handleChange = (e) => {
@@ -16,6 +17,7 @@ const ChangePassword = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError2(() => false);
     if (
       user?.newPassword?.length > 0 &&
       user?.confirmNewPassword?.length > 0 &&
@@ -25,15 +27,18 @@ const ChangePassword = () => {
     } else {
       setError(() => false);
     }
-    axios
-      .put("http://localhost:8000/user/reset-password", user)
-      .then(() => {
-        setSuccess(() => true);
-        setTimeout(() => {
-          history.push("/user_home");
-        }, 1000);
-      })
-      .catch((err) => setError(() => true));
+
+    if (user?.newPassword === user?.confirmNewPassword) {
+      axios
+        .put("http://localhost:8000/user/reset-password", user)
+        .then(() => {
+          setSuccess(() => true);
+          setTimeout(() => {
+            history.push("/user_home");
+          }, 1000);
+        })
+        .catch((err) => setError2(() => true));
+    }
   };
   return (
     <Container component="main" align="center">
@@ -48,6 +53,8 @@ const ChangePassword = () => {
               name="oldPassword"
               type="password"
               variant="outlined"
+              error={error2}
+              helperText={error2 ? "Incorrect password" : ""}
               onChange={handleChange}
               required
             ></TextField>

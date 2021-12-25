@@ -1,6 +1,6 @@
 const Flight = require("../model/flight");
 const User = require("../model/user");
-const Reservation = require("../model/reservation");
+
 // const { emit } = require("../model/flight");
 const email = require("../Confirmation/email");
 const authUtils = require("../utils/auth");
@@ -61,15 +61,15 @@ const showFlight = (req, res) => {
     res.send(JSON.stringify(result, null, 4));
   });
 };
-const editSeats = async(req,res) =>{
-  const flight=req.body.flight;
-  const _id=flight._id;
-  const chosenSeats=flight.chosenSeats;
-  const oldSeats=flight.oldSeats;
-  const email=req.body.user.email;
-  const reservationID=req.body.reservationID;
-  const type=req.body.type;
-  const cabin=flight.cabin;
+const editSeats = async (req, res) => {
+  const flight = req.body.flight;
+  const _id = flight._id;
+  const chosenSeats = flight.chosenSeats;
+  const oldSeats = flight.oldSeats;
+  const email = req.body.user.email;
+  const reservationID = req.body.reservationID;
+  const type = req.body.type;
+  const cabin = flight.cabin;
 
   await Flight.findOne({ _id }).then((flight) => {
     for (let i = 0; i < oldSeats.length; i++) {
@@ -109,9 +109,9 @@ const editSeats = async(req,res) =>{
     );
     console.log(user.reservations);
     if (type === "departure") {
-      reservation.departure_flight.chosenSeats=chosenSeats;
+      reservation.departure_flight.chosenSeats = chosenSeats;
     } else if (type === "return") {
-      reservation.return_flight.chosenSeats=chosenSeats;
+      reservation.return_flight.chosenSeats = chosenSeats;
     }
 
     user.reservations.push(reservation);
@@ -126,8 +126,7 @@ const editSeats = async(req,res) =>{
       });
   });
   res.status(200).json({ msg: "updated" });
-
-}
+};
 
 const deleteFlight = (req, res) => {
   Flight.findByIdAndRemove(req.params.id, req.body)
@@ -542,10 +541,11 @@ const verifyOldPassword = async (req, res, next) => {
   try {
     const _id = req.body._id;
     const user = await User.findOne({ _id });
-    const comparePassword = authUtils.comparePass(
+    const comparePassword = await authUtils.comparePass(
       req.body.oldPassword,
       user.password
     );
+    console.log(req.body.oldPassword);
     if (comparePassword) {
       req.user = user;
       next();

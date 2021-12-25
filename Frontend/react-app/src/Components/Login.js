@@ -38,6 +38,7 @@ const theme = createTheme();
 
 export default function SignIn(props) {
   const [user, setUser] = useState({});
+  const [error, setError] = useState(false);
   const history = useHistory();
 
   const handleChange = (e) => {
@@ -64,6 +65,9 @@ export default function SignIn(props) {
           "/" + (res.data.typeOfUser === "admin" ? "admin_home" : "user_home"),
           { ...props.location.state, user: res.data.user }
         );
+      })
+      .catch((err) => {
+        setError(() => true);
       });
     // axios
     //   .get("http://localhost:8000/user/" + data.get("email"))
@@ -126,6 +130,7 @@ export default function SignIn(props) {
               fullWidth
               onChange={handleChange}
               id="email"
+              error={error}
               label="Email Address"
               name="email"
               autoComplete="email"
@@ -136,16 +141,15 @@ export default function SignIn(props) {
               required
               onChange={handleChange}
               fullWidth
+              error={error}
+              helperText={error ? "Incorrect username or password" : ""}
               name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -155,13 +159,8 @@ export default function SignIn(props) {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
