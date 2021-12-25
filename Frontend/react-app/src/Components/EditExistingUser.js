@@ -45,7 +45,7 @@ const EditExistingUser = () => {
           <label>First Name: </label>
           <input
             className="form-control"
-            name="first_name"
+            name="firstName"
             value={user.firstName}
             onChange={handleChange}
           />
@@ -54,7 +54,7 @@ const EditExistingUser = () => {
           <label>Last Name: </label>
           <input
             className="form-control"
-            name="last_name"
+            name="lastName"
             value={user.lastName}
             onChange={handleChange}
           />
@@ -64,7 +64,7 @@ const EditExistingUser = () => {
           <label>Passport Number: </label>
           <input
             className="form-control"
-            name="passport_number"
+            name="passportNumber"
             value={user.passportNumber}
             onChange={handleChange}
           />
