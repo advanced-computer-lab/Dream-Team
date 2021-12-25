@@ -15,6 +15,17 @@ userRouter.post("/login", userController.loginPipeline, async (req, res) => {
   });
 });
 
+userRouter.put(
+  "/reset-password",
+  userController.resetPasswordPipeline,
+  (req, res) => {
+    res.status(200).json({
+      message: "Password updated successfully",
+      user: req.user,
+    });
+  }
+);
+
 userRouter.post("/search", userController.userSearchFlights);
 userRouter.get("/:email", userController.findUser);
 userRouter.put("/confirm_reservation", userController.addReservation);
@@ -27,5 +38,6 @@ userRouter.put(
 userRouter.put("/edit_user/:email", userController.updateExistingUser);
 
 userRouter.post("/send_confirmation", userController.sendConfirmation);
+userRouter.put("/edit_seats", userController.editSeats);
 
 module.exports = userRouter;
