@@ -1,0 +1,80 @@
+
+
+Sprint 1 :
+
+1-Nadeen Sayed:
+	1.Allowing the Administrator to create flights(FrontEnd).
+	2.Creating the User schema in the database.
+	3.Allowing the Administrator to edit all flights(FrontEnd).
+	4.Allowing the administrator to delete flights(FrontEnd).
+
+2-Mostafa el Watidy:
+	1.Allowing the administrator to show all available flgihts(FrontEnd).
+	2.Routing in the App Component(Backend).
+	3.Creating the Flight schema in the database.
+
+3-Haya Tawkol:
+	1.Allowing the administrator to show all available flights(BackEnd).
+	2.Allowing the administrator to edit all flights(BackEnd).
+
+4-John Magdy:
+	1.Allowing the administrator to search for all available flights (Frontend,Backend). 
+
+5-Ahmed Hisham:
+	1.Allowing the Administrator to create flights(BackEnd).
+	2.Allowing the administrator to delete flights(BackEnd).
+
+
+Sprint 2 : 
+
+1- Nadeen Sayed : 
+	1.Allowing any Guest User/Existing User to select one of the return flights from the list of available departure flights.
+	2.Allowing any Guest User/Existing User to see all the detalis of the selected flight.
+	3.Allowing any Guest User/Existing User to see a summary of the chosen departure and return flights.
+	4.Allowing Existing User to confirm reserving the chosen flight.
+	5.Non-functional Requirements : 1.Navigation is Reversible - 2.Information Architecture.
+
+2-Mostafa El Watidy :
+	1.Allowing any Guest User/Existing User to search for available flights based on number of passengers (children and adults), departure airport and arrival airport terminals, departure and arrival dates and cabin class.
+	2.Allowing any Guest User/Existing User to select one of the departure flights from the list of available departure flights.
+	3.Allowing any Guest User/Existing User to see all the details of a particular departure flight.
+	4.Allowing any Guest User/Existing User to view a list of all available return flights based on the search criteria.
+	5.Non Functional Requirments : 1.Feedback and Responsiveness - 2.Design for errors 
+
+3-Haya Tawkol:
+	1.Allowing any Existing User to view the available seats in the chosen cabin of the chosen departure flight.
+	2.Allowing any Existing User to select one or more of the available seats in the chosen cabin of the chosen departure flight(based on the the number of passengers the booking is for).
+	3.Allowing any Existing User to view the available seats in the chosen cabin of the chosen return flight.
+	4.Allowing allow any Existing User to select one or more of the available seats in the chosen cabin of the chosen return flight(based on the the number of passengers the booking is for).
+
+4-John Magdy:
+	1.Allowing any Existing User to view all their current reserved flights.
+	2.Allowing any Existing User to cancel a reservation.
+	3.Allowing any Existing User to confirm canceling a reservation.
+	4.Automatically email any Existing User with their cancelled reservation and the amount to be refunded.
+	5.Allowing any Existing User to edit their information including first name, last name, passport number and email.
+	6.Reflecting any changes made to the Existing User's information on any current reservations/ itinerarys.
+
+5-Ahmed Hisham:
+	1.Allowing any Existing User to pay for the reservation using MasterCard or Visa (using Stripe's API).
+	2.Providing any Existing User with his/her itinerary (a summary of the chosen departure and return flights, including the dates and times of the departure and return flights, the chosen cabin (Economy/ Business Class), the chosen seat and the total price paid for the entire ticket along with a confirmation/ booking number).
+	3.Automatically email any Existing User with their itinerary once the reservation is made and paid for (using nodemailer's API).
+ 
+
+
+Sprint 3:
+
+1-Nadeen Sayed: 
+-Authentication and hashed password, sign up and sign in backend and frontend.
+
+2-Ahmed Hisham:
+-ReadMe File
+
+3-Haya Tawakol:
+-Edit a selected departure/return flight, change password
+
+4-John Magdy:
+-Change seats of reserved departure/return flight
+
+5-Mostafa Elwatidy:
+-Edit a selected departure/return flight, Email with confirmation/cancellation/itinerary 

@@ -1,7 +1,5 @@
 const Flight = require("../model/flight");
 const User = require("../model/user");
-
-// const { emit } = require("../model/flight");
 const email = require("../Confirmation/email");
 const authUtils = require("../utils/auth");
 
@@ -323,8 +321,8 @@ const sendConfirmation = (req, res, next) => {
 
 const sendConfirmationReservation = (req, res, next) => {
   var user = req.body.user;
-  var departure_flight=req.body.departureFlight;
-  var return_flight=req.body.returnFlight
+  var departure_flight = req.body.departureFlight;
+  var return_flight = req.body.returnFlight;
 
   var mailOptions = {
     to: user.email,
@@ -341,9 +339,9 @@ const sendConfirmationReservation = (req, res, next) => {
      From:${return_flight.from} 
      To:${return_flight.to}. 
 
-     Total Price: ${Number(departure_flight.price)+Number (return_flight.price)}`,
-  
-    
+     Total Price: ${
+       Number(departure_flight.price) + Number(return_flight.price)
+     }`,
   };
   req.mailOptions = mailOptions;
   email.sendMail(req, res, next);
@@ -352,7 +350,6 @@ const sendConfirmationReservation = (req, res, next) => {
 const sendItenerary = (req, res, next) => {
   var user = req.body.user;
   var reservation = req.body.reservation;
- 
 
   var mailOptions = {
     to: user.email,
@@ -369,13 +366,15 @@ const sendItenerary = (req, res, next) => {
      From:${reservation.return_flight.from} 
      To:${reservation.return_flight.to}. 
 
-     Total Price: ${Number(reservation.departure_flight.price)+Number (reservation.return_flight.price)}`,
+     Total Price: ${
+       Number(reservation.departure_flight.price) +
+       Number(reservation.return_flight.price)
+     }`,
   };
   req.mailOptions = mailOptions;
   email.sendMail(req, res, next);
   res.status(200).json({ message: "Sent successfully" });
 };
-
 
 const editReservation = async (req, res) => {
   const email = req.body.user.email;
@@ -573,7 +572,6 @@ const authenticateUser = async (req, res, next) => {
   if (passIsValid) {
     next();
   } else {
-
     const err = new Error("Invalid email or password");
     next(err);
   }
@@ -677,5 +675,5 @@ module.exports = {
   editReservation,
   editSeats,
   sendItenerary,
-  sendConfirmationReservation
+  sendConfirmationReservation,
 };

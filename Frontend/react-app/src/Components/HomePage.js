@@ -9,11 +9,10 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/material/Menu";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
+import { Grid } from "@mui/material";
 import Select from "@mui/material/Select";
 import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { Grid } from "@mui/material";
 
 
 const HomePage = () => {
@@ -60,13 +59,6 @@ const HomePage = () => {
     e.preventDefault();
     console.log(departureFlight);
     console.log(returnFlight);
-    //   let searchUrl = "/search/departure?";
-    //   const noOfKeys = Object.keys(flight).length;
-    //   Object.entries(flight).map((entry, i) => {
-    //     let [key, value] = entry;
-    //     let last = i + 1 === noOfKeys ? "" : "&";
-    //     return (searchUrl += key + "=" + value + last);
-    //   });
 
     history.push("/user/search", {
       departureFlight: departureFlight,
@@ -80,94 +72,106 @@ const HomePage = () => {
   return (
     <div>
       <div style={{ margin: "1rem 0rem 2rem" }}>
-        <h4>Search Flights</h4>
+        <h3>Search Flights</h3>
       </div>
       <form onSubmit={onSubmit}>
-      <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
-
-        <div className="form-group">
-          <div>
-            <TextField
-              name="departure_date"
-              onChange={handleChange}
-              variant="outlined"
-              label="Departure"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-            />
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <div className="form-group">
+            <div>
+              <TextField
+                name="departure_date"
+                onChange={handleChange}
+                variant="outlined"
+                label="Departure"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
           </div>
-        </div>
 
-        <br />
-        <div className="form-group">
-          <div>
-            <TextField
-              name="return_date"
-              onChange={handleChange}
-              variant="outlined"
-              label="Return"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-            />
+          <br />
+          <div className="form-group">
+            <div>
+              <TextField
+                name="return_date"
+                onChange={handleChange}
+                variant="outlined"
+                label="Return"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
           </div>
-        </div>
         </Grid>
         <br />
-        <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
-
-        <div className="form-group">
-          <div>
-            <TextField
-              name="from"
-              onChange={handleChange}
-              variant="outlined"
-              label="From"
-              InputLabelProps={{ shrink: true }}
-            />
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <div className="form-group">
+            <div>
+              <TextField
+                name="from"
+                onChange={handleChange}
+                variant="outlined"
+                label="From"
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
+            <br />
+            <div className="form-group">
+              <div>
+                <TextField
+                  name="to"
+                  onChange={handleChange}
+                  variant="outlined"
+                  label="To"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <br />
-        <div className="form-group">
-          <div>
-            <TextField
-              name="to"
-              onChange={handleChange}
-              variant="outlined"
-              label="To"
-              InputLabelProps={{ shrink: true }}
-            />
-          </div>
-        </div>
         </Grid>
         <br />
-        <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
-
-        <div className="form-group">
-          <div>
-            <TextField
-              name="adults"
-              onChange={handleChange}
-              variant="outlined"
-              label="Number of Adult Passengers"
-              type="number"
-              InputLabelProps={{ shrink: true }}
-            />
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <div className="form-group">
+            <div>
+              <TextField
+                name="adults"
+                onChange={handleChange}
+                variant="outlined"
+                label="Number of Adult Passengers"
+                type="number"
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
           </div>
-        </div>
 
-        <br />
-        <div className="form-group">
-          <div>
-            <TextField
-              name="children"
-              onChange={handleChange}
-              variant="outlined"
-              label="Number of Children Passengers"
-              type="number"
-              InputLabelProps={{ shrink: true }}
-            />
+          <br />
+          <div className="form-group">
+            <div>
+              <TextField
+                name="children"
+                onChange={handleChange}
+                variant="outlined"
+                label="Number of Children Passengers"
+                type="number"
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
           </div>
-        </div>
         </Grid>
         <br />
         <div className="form-group">
@@ -177,11 +181,6 @@ const HomePage = () => {
               <MenuItem value={"economy"}>Economy</MenuItem>
               <MenuItem value={"business"}>Business</MenuItem>
             </Select>
-            {/* <InputLabel id="demo-simple-select-label">Cabin Class</InputLabel>
-            <Select name="cabin" label="Age" onChange={handleChange}>
-              <MenuItem value={"economy"}>Ecocnomy</MenuItem>
-              <MenuItem value={"business"}>Business</MenuItem>
-  </Select>*/}
           </div>
         </div>
 
