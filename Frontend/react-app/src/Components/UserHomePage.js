@@ -1,27 +1,48 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/material/Menu";
-import { palette } from '@mui/system';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { Grid } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
+const onStripeCallback = (props, user) => {
+
+  const departureFlight = JSON.parse(window.localStorage.getItem('departureFlight'))
+  const returnFlight = JSON.parse(window.localStorage.getItem('returnFlight'))
+
+    axios
+      .put(
+        "http://localhost:8000/user/confirm_reservation",
+        props.location.state
+      )
+      .then(() => {
+        
+        axios.post("http://localhost:8000/user/send_confirmation_reservation", {user, departureFlight, returnFlight})
+        .then(() => {
+          alert("Reservation Confirmed. An Email will be sent with your itenerary.   Have a safe flight! ");
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      });
+};
+
+
 const UserHomePage = (props) => {
   const [user, setUser] = useState({});
-  const email = JSON.parse(localStorage.getItem("profile")).user.email;
+
+  const localUser = JSON.parse(localStorage.getItem("profile")).user;
+  const email = localUser.email;
   const history = useHistory();
   const [departureFlight, setDepartureFlight] = useState({});
   const [returnFlight, setReturnFlight] = useState({});
+
+  const searchParams = window.location.search.substr(1).split('=')
+  if (searchParams.indexOf('success') > -1) {
+    searchParams.indexOf('true') ? onStripeCallback(props, localUser) : alert('payment rejected');
+  }
 
   useEffect(() => {
     axios

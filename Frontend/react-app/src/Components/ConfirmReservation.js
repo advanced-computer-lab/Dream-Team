@@ -9,34 +9,19 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@mui/material/Button";
 
 const ConfirmReservation = (props) => {
+  
   const history = useHistory();
   const user=JSON.parse(localStorage.getItem("profile")).user
+
   const departureFlight = props.location.state.departureFlight;
   const returnFlight = props.location.state.returnFlight;
 
-  const onProceed = () => {
-    if (window.confirm("Are you sure you want to confirm?")) {
-      axios
-        .put(
-          "http://localhost:8000/user/confirm_reservation",
-          props.location.state
-        )
-        .then(() => {
-          
-          axios.post("http://localhost:8000/user/send_confirmation_reservation", {user, departureFlight, returnFlight})
-          .then(() => {
-            alert("Reservation Confirmed. An Email will be sent with your itenerary.   Have a safe flight! ");
-          history.push("/user_home", { user: props.location.state.user });
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-          
-          
-          
-        });
-    }
-  };
+  window.localStorage.setItem('departureFlight', JSON.stringify(departureFlight))
+  window.localStorage.setItem('returnFlight', JSON.stringify(returnFlight))
+
+  const totalPrice = returnFlight.price * +returnFlight.passengers +
+          departureFlight.price * +departureFlight.passengers
+
 
   return (
     <div>
@@ -172,13 +157,17 @@ const ConfirmReservation = (props) => {
       <p className="left-txt">
         {" "}
         <b>Total Price: </b>{" "}
-        {returnFlight.price * +returnFlight.passengers +
-          departureFlight.price * +departureFlight.passengers}{" "}
+        {totalPrice}{" "}
       </p>
+      <form method="POST" action="http://localhost:8000/payment/pay">
+        <input type="hidden" name="totalPrice" value={totalPrice} />
+        <input type="hidden" name="name" value={`${user.firstName} ${user.lastName}`} />
+        <input type="hidden" name="email" value={user.email} />
+        <Button type="submit" variant="contained">
+          Confirm Reservation
+        </Button>
+      </form>
 
-      <Button variant="contained" onClick={() => onProceed()}>
-        Confirm Reservation
-      </Button>
     </div>
   );
 };

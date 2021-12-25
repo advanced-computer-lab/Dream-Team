@@ -12,10 +12,12 @@ const SearchResults = () => {
   const location = useLocation();
 
   const url = "http://localhost:8000/flights/search" + location.search;
-
+  console.log(url)
+  
   const [flights, setFlights] = useState([]);
 
   useEffect(() => {
+    
     axios.get(url).then((result) => {
       setFlights(result.data);
     });

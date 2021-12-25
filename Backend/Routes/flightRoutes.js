@@ -1,10 +1,6 @@
 const express = require("express");
 const userController=require('../Controller/UserController');
 const flightRouter=express.Router();
-flightRouter.use(express.json());
-flightRouter.use(express.urlencoded({extended: false}));
-
-
 
 
 flightRouter.get('/',userController.listFlights);

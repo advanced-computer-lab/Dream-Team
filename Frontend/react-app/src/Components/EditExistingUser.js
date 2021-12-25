@@ -7,7 +7,15 @@ import { useHistory, useParams } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const EditExistingUser = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    passportNumber: '',
+    email: '',
+    address: '',
+    countryCode: '',
+    phoneNumber: ''
+  });
   const { email } = useParams();
   const history=useHistory();
 
@@ -44,7 +52,7 @@ const EditExistingUser = () => {
           <input
             type="text"
             className="form-control"
-            name="first_name"
+            name="firstName"
             value={user.firstName}
             onChange={handleChange}
           />
@@ -54,7 +62,7 @@ const EditExistingUser = () => {
           <input
             type="text"
             className="form-control"
-            name="last_name"
+            name="lastName"
             value={user.lastName}
             onChange={handleChange}
           />   
@@ -65,7 +73,7 @@ const EditExistingUser = () => {
           <input
             type="text"
             className="form-control"
-            name="passport_number"
+            name="passportNumber"
             value={user.passportNumber}
             onChange={handleChange}
           />
