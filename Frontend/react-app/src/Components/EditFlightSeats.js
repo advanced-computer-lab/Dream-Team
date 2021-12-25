@@ -3,77 +3,111 @@ import Button from "@mui/material/Button";
 import { useHistory } from "react-router";
 import axios from "axios";
 
-
 const EditFlightSeats = (props) => {
-  console.log(props.location.state);
-  const [flight, setFlight] = useState(
-    {}
-  );
-  const flightId=props.location.state.flight._id;
+  const { price, passengers, chosenSeats, cabin } = props.location.state.flight;
+  const [flight, setFlight] = useState({});
+  const flightId = props.location.state.flight._id;
   const history = useHistory();
-  const [arraySeats, setArraySeats] = useState(props.location.state.flight.chosenSeats);
-  const [seatsClicked, setSeatsClicked] = useState(Number(props.location.state.flight.passengers));
-//  console.log(arraySeats);
-//  console.log(flight.seats);
+  const reservationID=props.location.state.reservationID
+  const type=props.location.state.type;
+  const user=JSON.parse(localStorage.getItem("profile")).user
+  const [arraySeats, setArraySeats] = useState(
+    props.location.state.flight.chosenSeats.map((seat) => ({
+      ...seat,
+      reserved: true,
+    }))
+  );
 
+  const oldSeats = props.location.state.flight.chosenSeats.map((seat) => ({
+    ...seat,
+    reserved: true,
+  }));
+  const oldSeatNumbers = oldSeats.map((seat) => seat.seatNo);
 
+  const [seatsClicked, setSeatsClicked] = useState(
+    Number(props.location.state.flight.passengers)
+  );
+  //  console.log(arraySeats);
+  //  console.log(flight.seats);
 
- useEffect(() => {
-  axios
-    .get("http://localhost:8000/flights/" + flightId)
-    .then((response) => {
-      console.log(response.data);
-      setFlight(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
-}, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/flights/" + flightId)
+      .then((response) => {
+        //setFlight((prev) => ({ ...prev, ...response.data }));
+
+        setFlight({ ...response.data, cabin, price, passengers, chosenSeats });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
   const handleClick = (clickedSeat) => {
-    if (seatsClicked === Number(flight.passengers)&&!arraySeats.includes(clickedSeat)) {
-      
-      alert("You can't choose more than "+flight.passengers+" seats")
-      return;}
+    console.log(arraySeats);
+    console.log(clickedSeat);
+    if (
+      seatsClicked === Number(flight.passengers) &&
+      !arraySeats.find((seat) => seat._id === clickedSeat._id)
+    ) {
+      alert("You can't choose more than " + flight.passengers + " seats");
+      return;
+    }
 
-    if (arraySeats.includes(clickedSeat)) {
+    if (arraySeats.find((seat) => seat._id === clickedSeat._id)) {
       setArraySeats((prev) =>
         prev.filter((seat) => clickedSeat._id !== seat._id)
       );
       setSeatsClicked((prev) => prev - 1);
-    } 
-    
-    else {
+    } else {
       setSeatsClicked((prev) => prev + 1);
-      console.log(seatsClicked);
 
       setArraySeats((prev) => [...prev, clickedSeat]);
     }
-    console.log(arraySeats);
   };
 
   const onSubmit = () => {
-    if (seatsClicked<Number(flight.passengers)){
-        alert("Please choose "+ (Number(flight.passengers)-seatsClicked) +" more seat(s)")
+    if (seatsClicked < Number(flight.passengers)) {
+      alert(
+        "Please choose " +
+          (Number(flight.passengers) - seatsClicked) +
+          " more seat(s)"
+      );
       return;
     }
-    console.log(flight);
-    history.push("/seats_return", {
-      ...props.location.state,
-      flight: { ...flight, chosenSeats: arraySeats },
+    axios
+    .put(
+      "http://localhost:8000/user/edit_seats",
+     { flight: { ...flight, chosenSeats: arraySeats, oldSeats},reservationID, type, user})
+    .then(() => {
+      alert("Seats have been changed!");
+      history.push("/user_reservations");
     });
+    
+     
+      
+    
   };
-
-  return (
+  return flight?._id ? (
     <div>
       <ul>
-      <h3>Please Choose the Seats for the Departure Flight:</h3>
-      <br/>
+        <h3>Please choose the new seats for the flight:</h3>
+        <br />
         {flight.seats.map((seat) => (
           <li key={seat._id}>
             <Button
-              disabled={flight.cabin.toLowerCase()!==seat.cabin||seat.reserved?true:false}
-              style={{backgroundColor:arraySeats.includes(seat)?"#519259":""}}
+              disabled={
+                (flight.cabin.toLowerCase() !== seat.cabin || seat.reserved) &&
+                !oldSeatNumbers.includes(seat.seatNo)
+                  ? true
+                  : false
+              }
+              style={{
+                backgroundColor: arraySeats.find(
+                  (arraySeat) => seat._id === arraySeat._id
+                )
+                  ? "#519259"
+                  : "",
+              }}
               variant="contained"
               onClick={() => {
                 handleClick(seat);
@@ -87,13 +121,13 @@ const EditFlightSeats = (props) => {
       <Button
         variant="contained"
         onClick={() => {
-          onSubmit()
+          onSubmit();
         }}
       >
-        Choose Return Flight Seats
+        Confirm Seats
       </Button>
     </div>
-  );
+  ) : null;
 };
 
 export default EditFlightSeats;

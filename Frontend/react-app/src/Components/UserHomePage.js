@@ -7,8 +7,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/material/Menu";
+import { palette } from '@mui/system';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import { Grid } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { TextField } from "@material-ui/core";
@@ -133,10 +135,12 @@ const UserHomePage = (props) => {
         </AppBar>
       </Box> */}
       <div style={{ margin: "1rem 0rem 2rem" }}>
-        <h4>Search Flights</h4>
+        <h3>Search Flights</h3>
       </div>
       <form onSubmit={onSubmit}>
+      <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
         <div className="form-group">
+
           <div>
             <TextField
               name="departure_date"
@@ -147,6 +151,7 @@ const UserHomePage = (props) => {
               InputLabelProps={{ shrink: true }}
             />
           </div>
+
         </div>
         <br />
         <div className="form-group">
@@ -161,8 +166,9 @@ const UserHomePage = (props) => {
             />
           </div>
         </div>
+        </Grid>
         <br />
-
+        <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
         <div className="form-group">
           <div>
             <TextField
@@ -186,7 +192,9 @@ const UserHomePage = (props) => {
             />
           </div>
         </div>
+        </Grid>
         <br />
+        <Grid container direction="row" justifyContent="flex-start" alignItems="center"> 
         <div className="form-group">
           <div>
             <TextField
@@ -212,17 +220,11 @@ const UserHomePage = (props) => {
             />
           </div>
         </div>
+        </Grid>
         <br />
         <div className="form-group">
           <div>
-            {/* <TextField
-              name="cabin"
-              onChange={handleChange}
-              variant="outlined"
-              label="Cabin Class"
-              InputLabelProps={{ shrink: true }}
-            /> 
-          */}
+           
             <InputLabel id="demo-simple-select-label">Cabin Class</InputLabel>
             <Select name="cabin" placeholder="Cabin" onChange={handleChange}>
               <MenuItem value={"economy"}>Economy</MenuItem>
@@ -230,16 +232,18 @@ const UserHomePage = (props) => {
             </Select>
           </div>
         </div>
-
+        
         <br />
 
         <div className="form-group">
+       
           <input
             type="submit"
             value="Search Flights"
             className="btn btn-primary"
           />
         </div>
+        
       </form>
     </div>
   );

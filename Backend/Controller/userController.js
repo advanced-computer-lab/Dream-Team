@@ -7,14 +7,13 @@ const authUtils = require("../utils/auth");
 
 const createFlight = (req, res) => {
   const flight = req.body.flight;
-console.log(flight);
+  console.log(flight);
   Flight.create(flight)
     .then((result) => {
       res.header("Content-Type", "application/json");
       res.send(JSON.stringify(result, null, 4));
     })
     .catch((err) => {
-      
       res.status(400).send(err);
     });
 };
@@ -57,10 +56,78 @@ const searchFlights = (req, res) => {
 
 const showFlight = (req, res) => {
   Flight.findById(req.params.id).then((result) => {
+    console.log(result);
     res.header("Content-Type", "application/json");
     res.send(JSON.stringify(result, null, 4));
   });
 };
+const editSeats = async(req,res) =>{
+  const flight=req.body.flight;
+  const _id=flight._id;
+  const chosenSeats=flight.chosenSeats;
+  const oldSeats=flight.oldSeats;
+  const email=req.body.user.email;
+  const reservationID=req.body.reservationID;
+  const type=req.body.type;
+  const cabin=flight.cabin;
+
+  await Flight.findOne({ _id }).then((flight) => {
+    for (let i = 0; i < oldSeats.length; i++) {
+      var seat = Number(oldSeats[i].seatNo) - 1;
+      flight.seats[seat].reserved = false;
+      if (cabin === "economy") {
+        flight.economy_seats_available++;
+      } else {
+        flight.business_seats_available++;
+      }
+    }
+    for (let i = 0; i < chosenSeats.length; i++) {
+      var seat = Number(chosenSeats[i].seatNo) - 1;
+      flight.seats[seat].reserved = true;
+      if (cabin === "economy") {
+        flight.economy_seats_available--;
+      } else {
+        flight.business_seats_available--;
+      }
+    }
+
+    flight
+      .save()
+      .then((result) => {
+        console.log("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+  await User.findOne({ email }).then((user) => {
+    const reservation = user.reservations.find(
+      (reservation) => reservation._id == reservationID
+    );
+    user.reservations = user.reservations.filter(
+      (reservation) => reservation._id != reservationID
+    );
+    console.log(user.reservations);
+    if (type === "departure") {
+      reservation.departure_flight.chosenSeats=chosenSeats;
+    } else if (type === "return") {
+      reservation.return_flight.chosenSeats=chosenSeats;
+    }
+
+    user.reservations.push(reservation);
+    console.log(user);
+    user
+      .save()
+      .then((user) => {
+        console.log("update is done");
+      })
+      .catch(() => {
+        console.log("Someting is wrong,Try again");
+      });
+  });
+  res.status(200).json({ msg: "updated" });
+
+}
 
 const deleteFlight = (req, res) => {
   Flight.findByIdAndRemove(req.params.id, req.body)
@@ -181,7 +248,6 @@ const cancelReservation = async (req, res) => {
   var depChosenSeats = req.body.departureFlight.chosenSeats;
   var retChosenSeats = req.body.returnFlight.chosenSeats;
 
-
   await User.findOne({ email: email }).then((result) => {
     result.reservations = result.reservations.filter(
       (reservation) => reservation._id != id
@@ -269,7 +335,9 @@ const editReservation = async (req, res) => {
     const reservation = user.reservations.find(
       (reservation) => reservation._id == reservationID
     );
-    user.reservations = user.reservations.filter((reservation) => reservation._id != reservationID);
+    user.reservations = user.reservations.filter(
+      (reservation) => reservation._id != reservationID
+    );
     console.log(user.reservations);
     if (type === "departure") {
       oldFlight = reservation.departure_flight;
@@ -449,6 +517,7 @@ const authenticateUser = async (req, res, next) => {
   if (passIsValid) {
     next();
   } else {
+
     const err = new Error("Invalid email or password");
     next(err);
   }
@@ -470,6 +539,60 @@ const generateJWT = async (req, res, next) => {
   }
 };
 
+const verifyOldPassword = async (req, res, next) => {
+  try {
+    const _id = req.body._id;
+    const user = await User.findOne({ _id });
+    const comparePassword = authUtils.comparePass(
+      req.body.oldPassword,
+      user.password
+    );
+    if (comparePassword) {
+      req.user = user;
+      next();
+    } else {
+      const error = new Error("Wrong password");
+      next(error);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const hashPassword = async (req, res, next) => {
+  try {
+    const { newPassword } = req.body;
+    const hashedPassword = await authUtils.hashPass(newPassword);
+    req.user.password = hashedPassword;
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateUserPassword = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const { _id } = req.body;
+    const userUpdated = await User.findByIdAndUpdate(_id, user);
+    if (userUpdated) {
+      req.user = userUpdated;
+      next();
+    } else {
+      const error = new Error("Cannot update user");
+      next(error);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const resetPasswordPipeline = [
+  verifyOldPassword,
+  hashPassword,
+  updateUserPassword,
+];
+
 const loginPipeline = [
   findUserEmail,
   checkAdmin,
@@ -483,6 +606,7 @@ module.exports = {
   createFlight,
   listFlights,
   loginPipeline,
+  resetPasswordPipeline,
   deleteFlight,
   updateFlight,
   showFlight,
@@ -494,4 +618,5 @@ module.exports = {
   addReservation,
   sendConfirmation,
   editReservation,
+  editSeats,
 };

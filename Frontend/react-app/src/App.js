@@ -81,6 +81,7 @@ const App = () => {
             <Route exact path="/new_seats" component={ChooseNewSeats} />
             <Route exact path="/changed_summary" component={ChangedSummary} />
             <Route exact path="/change_password" component={ChangePassword} />
+            <Route exact path="/payment" component={SummaryOfReservation} />
           </Switch>
         </div>
       </Router>
