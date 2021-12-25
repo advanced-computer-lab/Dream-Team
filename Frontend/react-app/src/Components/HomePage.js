@@ -13,6 +13,7 @@ import { Grid } from "@mui/material";
 import Select from "@mui/material/Select";
 import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 const HomePage = () => {
   const history = useHistory();
@@ -58,13 +59,6 @@ const HomePage = () => {
     e.preventDefault();
     console.log(departureFlight);
     console.log(returnFlight);
-    //   let searchUrl = "/search/departure?";
-    //   const noOfKeys = Object.keys(flight).length;
-    //   Object.entries(flight).map((entry, i) => {
-    //     let [key, value] = entry;
-    //     let last = i + 1 === noOfKeys ? "" : "&";
-    //     return (searchUrl += key + "=" + value + last);
-    //   });
 
     history.push("/user/search", {
       departureFlight: departureFlight,
@@ -99,6 +93,7 @@ const HomePage = () => {
               />
             </div>
           </div>
+
           <br />
           <div className="form-group">
             <div>
@@ -130,17 +125,17 @@ const HomePage = () => {
                 InputLabelProps={{ shrink: true }}
               />
             </div>
-          </div>
-          <br />
-          <div className="form-group">
-            <div>
-              <TextField
-                name="to"
-                onChange={handleChange}
-                variant="outlined"
-                label="To"
-                InputLabelProps={{ shrink: true }}
-              />
+            <br />
+            <div className="form-group">
+              <div>
+                <TextField
+                  name="to"
+                  onChange={handleChange}
+                  variant="outlined"
+                  label="To"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </div>
             </div>
           </div>
         </Grid>
@@ -163,6 +158,7 @@ const HomePage = () => {
               />
             </div>
           </div>
+
           <br />
           <div className="form-group">
             <div>
