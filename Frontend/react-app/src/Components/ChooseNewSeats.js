@@ -48,14 +48,20 @@ import axios from "axios";
     
       return (
         <div>
-          <ul>
           <h3>Please Choose the Seats for the New Flight:</h3>
           <br/>
+          <ul style={{
+        listStyleType: 'none',
+        display: 'flex',
+        flexWrap: 'wrap',
+        maxWidth: '250px'
+      }}>
+          
             {flight.seats.map((seat) => (
               <li key={seat._id}>
                 <Button
                   disabled={flight.cabin.toLowerCase()!==seat.cabin||seat.reserved?true:false}
-                  style={{backgroundColor:arraySeats.includes(seat)?"#519259":""}}
+                  style={{backgroundColor:arraySeats.includes(seat)?"#519259":"", borderRadius: 0,}}
                   variant="contained"
                   onClick={() => {
                     handleClick(seat);

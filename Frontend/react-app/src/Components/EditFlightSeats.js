@@ -89,9 +89,15 @@ const EditFlightSeats = (props) => {
   };
   return flight?._id ? (
     <div>
-      <ul>
-        <h3>Please choose the new seats for the flight:</h3>
+      <h3>Please choose the new seats for the flight:</h3>
         <br />
+      <ul style={{
+        listStyleType: 'none',
+        display: 'flex',
+        flexWrap: 'wrap',
+        maxWidth: '250px'
+      }}>
+        
         {flight.seats.map((seat) => (
           <li key={seat._id}>
             <Button
@@ -101,7 +107,7 @@ const EditFlightSeats = (props) => {
                   ? true
                   : false
               }
-              style={{
+              style={{borderRadius: 0,
                 backgroundColor: arraySeats.find(
                   (arraySeat) => seat._id === arraySeat._id
                 )

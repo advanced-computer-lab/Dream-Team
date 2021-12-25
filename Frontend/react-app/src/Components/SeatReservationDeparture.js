@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
+import { Grid } from "@mui/material";
+
 import { useHistory } from "react-router";
+
 import axios from "axios";
 
 const SeatReservationDeparture = (props) => {
@@ -55,11 +58,17 @@ const SeatReservationDeparture = (props) => {
 
   return (
     <div>
-      <ul>
-        <h3>Please Choose the Seats for your Departure Flight:</h3>
-        <br />
+      <h3>Please Choose the Seats for your Departure Flight:</h3>
+      <br />
+      <ul style={{
+        listStyleType: 'none',
+        display: 'flex',
+        flexWrap: 'wrap',
+        maxWidth: '250px'
+      }}>
         {departureFlight.seats.map((seat) => (
           <li key={seat._id}>
+           
             <Button
               disabled={
                 departureFlight.cabin.toLowerCase() !== seat.cabin ||
@@ -69,6 +78,7 @@ const SeatReservationDeparture = (props) => {
               }
               style={{
                 backgroundColor: arraySeats.includes(seat) ? "#519259" : "",
+                borderRadius: 0
               }}
               variant="contained"
               onClick={() => {
