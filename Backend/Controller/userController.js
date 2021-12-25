@@ -205,14 +205,14 @@ const updateExistingUser = (req, res) => {
   var email = req.params.email;
 
   User.findOne({ email: email }).then((result) => {
-    if (req.body.first_name) {
-      result.first_name = req.body.first_name;
+    if (req.body.firstName) {
+      result.firstName = req.body.firstName;
     }
-    if (req.body.last_name) {
-      result.last_name = req.body.last_name;
+    if (req.body.lastName) {
+      result.last_name = req.body.lastName;
     }
     if (req.body.passport_number) {
-      result.passport_number = req.body.passport_number;
+      result.passportNumber = req.body.passportNumber;
     }
     if (req.body.email) {
       result.email = req.body.email;
