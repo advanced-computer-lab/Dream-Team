@@ -72,6 +72,12 @@ const ShowReservations = (props) => {
       });
     }
   };
+  const onEmail = (user, reservation) =>{
+    axios.post("http://localhost:8000/user/send_itenerary", {
+        user,
+        reservation,
+      });
+  }
   const onClick = (flight, id, type) =>{
     history.push("/edit_flight_seat", {flight:flight, reservationID:id, type:type})
   }
@@ -242,6 +248,14 @@ const ShowReservations = (props) => {
               }}
             >
               Cancel Reservation
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                onEmail(user, reservation);
+              }}
+            >
+              Email Reservation
             </Button>
           </li>
         ))}

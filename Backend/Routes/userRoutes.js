@@ -38,6 +38,8 @@ userRouter.put(
 userRouter.put("/edit_user/:email", userController.updateExistingUser);
 
 userRouter.post("/send_confirmation", userController.sendConfirmation);
+userRouter.post("/send_itenerary", userController.sendItenerary);
+userRouter.post("/send_confirmation_reservation", userController.sendConfirmationReservation);
 userRouter.put("/edit_seats", userController.editSeats);
 
 module.exports = userRouter;

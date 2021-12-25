@@ -27,6 +27,7 @@ import SearchEditedFlights from "./Components/SearchEditedFlights";
 import ChooseNewSeats from "./Components/ChooseNewSeats";
 import ChangedSummary from "./Components/ChangedSummary";
 import ChangePassword from "./Components/ChangePassword";
+import Payment from "./Components/Payment";
 
 const App = () => {
   const brandTheme = createTheme({
@@ -81,7 +82,7 @@ const App = () => {
             <Route exact path="/new_seats" component={ChooseNewSeats} />
             <Route exact path="/changed_summary" component={ChangedSummary} />
             <Route exact path="/change_password" component={ChangePassword} />
-            <Route exact path="/payment" component={SummaryOfReservation} />
+            <Route exact path="/payment" component={Payment} />
           </Switch>
         </div>
       </Router>

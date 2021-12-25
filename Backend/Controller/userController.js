@@ -61,17 +61,6 @@ const showFlight = (req, res) => {
     res.send(JSON.stringify(result, null, 4));
   });
 };
-<<<<<<< HEAD
-const editSeats = async(req,res) =>{
-  const flight=req.body.flight;
-  const _id=flight._id;
-  const chosenSeats=flight.chosenSeats;
-  const oldSeats=flight.oldSeats;
-  const email=req.body.user.email;
-  const reservationID=req.body.reservationID;
-  const type=req.body.type;
-  const cabin=flight.cabin;
-=======
 const editSeats = async (req, res) => {
   const flight = req.body.flight;
   const _id = flight._id;
@@ -81,7 +70,6 @@ const editSeats = async (req, res) => {
   const reservationID = req.body.reservationID;
   const type = req.body.type;
   const cabin = flight.cabin;
->>>>>>> df7104bb3f339c715d58d0b5f5f8ac1683ea8919
 
   await Flight.findOne({ _id }).then((flight) => {
     for (let i = 0; i < oldSeats.length; i++) {
@@ -121,15 +109,9 @@ const editSeats = async (req, res) => {
     );
     console.log(user.reservations);
     if (type === "departure") {
-<<<<<<< HEAD
-      reservation.departure_flight.chosenSeats=chosenSeats;
-    } else if (type === "return") {
-      reservation.return_flight.chosenSeats=chosenSeats;
-=======
       reservation.departure_flight.chosenSeats = chosenSeats;
     } else if (type === "return") {
       reservation.return_flight.chosenSeats = chosenSeats;
->>>>>>> df7104bb3f339c715d58d0b5f5f8ac1683ea8919
     }
 
     user.reservations.push(reservation);
@@ -144,12 +126,7 @@ const editSeats = async (req, res) => {
       });
   });
   res.status(200).json({ msg: "updated" });
-<<<<<<< HEAD
-
-}
-=======
 };
->>>>>>> df7104bb3f339c715d58d0b5f5f8ac1683ea8919
 
 const deleteFlight = (req, res) => {
   Flight.findByIdAndRemove(req.params.id, req.body)
@@ -343,6 +320,62 @@ const sendConfirmation = (req, res, next) => {
   email.sendMail(req, res, next);
   res.status(200).json({ message: "Sent successfully" });
 };
+
+const sendConfirmationReservation = (req, res, next) => {
+  var user = req.body.user;
+  var departure_flight=req.body.departureFlight;
+  var return_flight=req.body.returnFlight
+
+  var mailOptions = {
+    to: user.email,
+    subject: "Reservation Confirmed ",
+    text: `
+
+    Departure Flight: ${departure_flight.flight_number} 
+    Date:${departure_flight.flight_date} 
+    From:${departure_flight.from} 
+    To:${departure_flight.to} .
+
+     Return Flight: ${return_flight.flight_number} 
+     Date:${return_flight.flight_date} 
+     From:${return_flight.from} 
+     To:${return_flight.to}. 
+
+     Total Price: ${Number(departure_flight.price)+Number (return_flight.price)}`,
+  
+    
+  };
+  req.mailOptions = mailOptions;
+  email.sendMail(req, res, next);
+  res.status(200).json({ message: "Sent successfully" });
+};
+const sendItenerary = (req, res, next) => {
+  var user = req.body.user;
+  var reservation = req.body.reservation;
+ 
+
+  var mailOptions = {
+    to: user.email,
+    subject: "Your Reservation ",
+    text: `Your reservation number: ${reservation._id}. 
+
+    Departure Flight: ${reservation.departure_flight.flight_number} 
+    Date:${reservation.departure_flight.flight_date} 
+    From:${reservation.departure_flight.from} 
+    To:${reservation.departure_flight.to} .
+
+     Return Flight: ${reservation.return_flight.flight_number} 
+     Date:${reservation.return_flight.flight_date} 
+     From:${reservation.return_flight.from} 
+     To:${reservation.return_flight.to}. 
+
+     Total Price: ${Number(reservation.departure_flight.price)+Number (reservation.return_flight.price)}`,
+  };
+  req.mailOptions = mailOptions;
+  email.sendMail(req, res, next);
+  res.status(200).json({ message: "Sent successfully" });
+};
+
 
 const editReservation = async (req, res) => {
   const email = req.body.user.email;
@@ -565,18 +598,11 @@ const verifyOldPassword = async (req, res, next) => {
   try {
     const _id = req.body._id;
     const user = await User.findOne({ _id });
-<<<<<<< HEAD
-    const comparePassword = authUtils.comparePass(
-      req.body.oldPassword,
-      user.password
-    );
-=======
     const comparePassword = await authUtils.comparePass(
       req.body.oldPassword,
       user.password
     );
     console.log(req.body.oldPassword);
->>>>>>> df7104bb3f339c715d58d0b5f5f8ac1683ea8919
     if (comparePassword) {
       req.user = user;
       next();
@@ -649,4 +675,6 @@ module.exports = {
   sendConfirmation,
   editReservation,
   editSeats,
+  sendItenerary,
+  sendConfirmationReservation
 };

@@ -61,10 +61,19 @@ export default function SignIn(props) {
           })
         );
         console.log(res.data.typeOfUser);
-        history.push(
-          "/" + (res.data.typeOfUser === "admin" ? "admin_home" : "user_home"),
-          { ...props.location.state, user: res.data.user }
-        );
+        if (props.location.state == null) {
+          history.push(
+            "/" + (res.data.typeOfUser === "admin" ? "admin_home" : "user_home"),
+            { ...props.location.state, user: res.data.user }
+          );
+        }
+         else {
+          history.push("/seats_departure", {
+            ...props.location.state,
+            user: res.data.user,
+          });
+        }
+        
       })
       .catch((err) => {
         setError(() => true);
@@ -88,7 +97,7 @@ export default function SignIn(props) {
     //           ...props.location.state,
     //           user: result.data,
     //         });
-    //       }
+    //        }
     //     } else {
     //       alert("Wrong Password Please Try Again");
     //     }
